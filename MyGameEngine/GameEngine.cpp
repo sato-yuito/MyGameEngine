@@ -1,14 +1,24 @@
 #include <Windows.h>
+#include <d3d11.h>
 
+
+//ƒŠƒ“ƒJ
+#pragma comment(lib, "d3d11.lib")
 
 //’è”éŒ¾
 const char* WIN_CLASS_NAME = "SampleGame";  //ƒEƒBƒ“ƒhƒEƒNƒ‰ƒX–¼
+const int WINDOW_WIDTH = 800;  //ƒEƒBƒ“ƒhƒE‚Ì•
+const int WINDOW_HEIGHT = 600; //ƒEƒBƒ“ƒhƒE‚Ì‚‚³
+
 
 
 //ƒvƒƒgƒ^ƒCƒvéŒ¾
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-const int WINDOW_WIDTH = 800;  //ƒEƒBƒ“ƒhƒE‚Ì•
-const int WINDOW_HEIGHT = 600; //ƒEƒBƒ“ƒhƒE‚Ì‚‚³
+
+ID3D11Device* pDevice;		//ƒfƒoƒCƒX
+ID3D11DeviceContext* pContext;		//ƒfƒoƒCƒXƒRƒ“ƒeƒLƒXƒg
+IDXGISwapChain* pSwapChain;		//ƒXƒƒbƒvƒ`ƒFƒCƒ“
+ID3D11RenderTargetView* pRenderTargetView;	//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒrƒ…[
 
 //ƒGƒ“ƒgƒŠ[ƒ|ƒCƒ“ƒg
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nCmdShow)
@@ -52,8 +62,69 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
     );
     //ƒEƒBƒ“ƒhƒE‚ð•\Ž¦
     ShowWindow(hWnd, nCmdShow);
-   //ƒƒbƒZ[ƒWƒ‹[ƒvi‰½‚©‹N‚«‚é‚Ì‚ð‘Ò‚Âj
 
+    //‚¢‚ë‚¢‚ë‚ÈÝ’è€–Ú‚ð‚Ü‚Æ‚ß‚½\‘¢‘Ì
+    DXGI_SWAP_CHAIN_DESC scDesc;
+
+    //‚Æ‚è‚ ‚¦‚¸‘S•”0
+    ZeroMemory(&scDesc, sizeof(scDesc));
+
+    //•`‰ææ‚ÌƒtƒH[ƒ}ƒbƒg
+    scDesc.BufferDesc.Width = WINDOW_WIDTH;		//‰æ–Ê•
+    scDesc.BufferDesc.Height = WINDOW_HEIGHT;	//‰æ–Ê‚‚³
+    scDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;	// ‰½FŽg‚¦‚é‚©
+
+    //FPSi1/60•b‚É1‰ñj
+    scDesc.BufferDesc.RefreshRate.Numerator = 60;
+    scDesc.BufferDesc.RefreshRate.Denominator = 1;
+
+    //‚»‚Ì‘¼
+    scDesc.Windowed = TRUE;			//ƒEƒBƒ“ƒhƒEƒ‚[ƒh‚©ƒtƒ‹ƒXƒNƒŠ[ƒ“‚©
+    scDesc.OutputWindow = hWnd;		//ƒEƒBƒ“ƒhƒEƒnƒ“ƒhƒ‹
+    scDesc.BufferCount = 1;			//ƒoƒbƒNƒoƒbƒtƒ@‚Ì–‡”
+    scDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;	//ƒoƒbƒNƒoƒbƒtƒ@‚ÌŽg‚¢“¹‰æ–Ê‚É•`‰æ‚·‚é‚½‚ß‚É
+    scDesc.SampleDesc.Count = 1;		//MSAAiƒAƒ“ƒ`ƒGƒCƒŠƒAƒXj‚ÌÝ’è
+    scDesc.SampleDesc.Quality = 0;		//@V
+
+
+    D3D_FEATURE_LEVEL level;
+    D3D11CreateDeviceAndSwapChain(
+        nullptr,				// ‚Ç‚ÌƒrƒfƒIƒAƒ_ƒvƒ^‚ðŽg—p‚·‚é‚©HŠù’è‚È‚ç‚Înullptr‚Å
+        D3D_DRIVER_TYPE_HARDWARE,		// ƒhƒ‰ƒCƒo‚Ìƒ^ƒCƒv‚ð“n‚·B‚Ó‚Â‚¤‚ÍHARDWARE
+        nullptr,				// ã‹L‚ðD3D_DRIVER_TYPE_SOFTWARE‚ÉÝ’è‚µ‚È‚¢‚©‚¬‚ènullptr
+        0,					// ‰½‚ç‚©‚Ìƒtƒ‰ƒO‚ðŽw’è‚·‚éBiƒfƒoƒbƒOŽž‚ÍD3D11_CREATE_DEVICE_DEBUGHj
+        nullptr,				// ƒfƒoƒCƒXAƒRƒ“ƒeƒLƒXƒg‚ÌƒŒƒxƒ‹‚ðÝ’èBnullptr‚É‚µ‚Æ‚¯‚ÎOK
+        0,					// ã‚Ìˆø”‚ÅƒŒƒxƒ‹‚ð‰½ŒÂŽw’è‚µ‚½‚©
+        D3D11_SDK_VERSION,			// SDK‚Ìƒo[ƒWƒ‡ƒ“B•K‚¸‚±‚Ì’l
+        &scDesc,				// ã‚Å‚¢‚ë‚¢‚ëÝ’è‚µ‚½\‘¢‘Ì
+        &pSwapChain,				// –³Ž–Š®¬‚µ‚½SwapChain‚ÌƒAƒhƒŒƒX‚ª•Ô‚Á‚Ä‚­‚é
+        &pDevice,				// –³Ž–Š®¬‚µ‚½DeviceƒAƒhƒŒƒX‚ª•Ô‚Á‚Ä‚­‚é
+        &level,					// –³Ž–Š®¬‚µ‚½DeviceAContext‚ÌƒŒƒxƒ‹‚ª•Ô‚Á‚Ä‚­‚é
+        &pContext);				// –³Ž–Š®¬‚µ‚½Context‚ÌƒAƒhƒŒƒX‚ª•Ô‚Á‚Ä‚­‚é
+
+    ID3D11Texture2D* pBackBuffer;
+    pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
+
+    //ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒrƒ…[‚ðì¬
+    pDevice->CreateRenderTargetView(pBackBuffer, NULL, &pRenderTargetView);
+
+    //ˆêŽž“I‚ÉƒoƒbƒNƒoƒbƒtƒ@‚ðŽæ“¾‚µ‚½‚¾‚¯‚È‚Ì‚Å‰ð•ú
+    pBackBuffer->Release();
+
+    D3D11_VIEWPORT vp;
+    vp.Width = (float)WINDOW_WIDTH;	//•
+    vp.Height = (float)WINDOW_HEIGHT;//‚‚³
+    vp.MinDepth = 0.0f;	//Žè‘O
+    vp.MaxDepth = 1.0f;	//‰œ
+    vp.TopLeftX = 0;	//¶
+    vp.TopLeftY = 0;	//ã
+
+    //ƒf[ƒ^‚ð‰æ–Ê‚É•`‰æ‚·‚é‚½‚ß‚Ìˆê’Ê‚è‚ÌÝ’èiƒpƒCƒvƒ‰ƒCƒ“j
+    pContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);  // ƒf[ƒ^‚Ì“ü—ÍŽí—Þ‚ðŽw’è
+    pContext->OMSetRenderTargets(1, &pRenderTargetView, nullptr);            // •`‰ææ‚ðÝ’è
+    pContext->RSSetViewports(1, &vp);
+
+    //ƒƒbƒZ[ƒWƒ‹[ƒvi‰½‚©‹N‚«‚é‚Ì‚ð‘Ò‚Âj
     MSG msg;
     ZeroMemory(&msg, sizeof(msg));
     while (msg.message != WM_QUIT)
@@ -69,7 +140,18 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
         else
         {
             //ƒQ[ƒ€‚Ìˆ—
+            //”wŒi‚ÌF
+            float clearColor[4] = { 0.0f, 0.5f, 0.5f, 1.0f };//R,G,B,A
 
+            //‰æ–Ê‚ðƒNƒŠƒA
+            pContext->ClearRenderTargetView(pRenderTargetView, clearColor);
+
+
+            //•`‰æˆ—
+
+
+            //ƒXƒƒbƒviƒoƒbƒNƒoƒbƒtƒ@‚ð•\‚É•\Ž¦‚·‚éj
+            pSwapChain->Present(0, 0);
 
         }
     }
@@ -88,4 +170,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)//–¼‘
         return 0;
     }
     return DefWindowProc(hWnd, msg, wParam, lParam);
+
+    //‰ð•úˆ—
+    pRenderTargetView->Release();
+    pSwapChain->Release();
+    pContext->Release();
+    pDevice->Release();
 }
