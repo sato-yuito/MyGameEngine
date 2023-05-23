@@ -7,6 +7,7 @@
 
 //’è”éŒ¾
 const char* WIN_CLASS_NAME = "SampleGame";  //ƒEƒBƒ“ƒhƒEƒNƒ‰ƒX–¼
+const char* MENU_BAR_NAME = "Let's make game";
 const int WINDOW_WIDTH = 800;  //ƒEƒBƒ“ƒhƒE‚Ì•
 const int WINDOW_HEIGHT = 600; //ƒEƒBƒ“ƒhƒE‚Ì‚‚³
 
@@ -25,9 +26,10 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 {
 	//ƒEƒBƒ“ƒhƒEƒNƒ‰ƒXiÝŒv}j‚ðì¬
     WNDCLASSEX wc;
-     wc.cbSize = sizeof(WNDCLASSEX);             //‚±‚Ì\‘¢‘Ì‚ÌƒTƒCƒY
+   wc.cbSize = sizeof(WNDCLASSEX);             //‚±‚Ì\‘¢‘Ì‚ÌƒTƒCƒY
    wc.hInstance = hInstance;                   //ƒCƒ“ƒXƒ^ƒ“ƒXƒnƒ“ƒhƒ‹
    wc.lpszClassName = WIN_CLASS_NAME;            //ƒEƒBƒ“ƒhƒEƒNƒ‰ƒX–¼
+   wc.lpszMenuName = MENU_BAR_NAME;
    wc.lpfnWndProc = WndProc;                   //ƒEƒBƒ“ƒhƒEƒvƒƒV[ƒWƒƒ
    wc.style = CS_VREDRAW | CS_HREDRAW;         //ƒXƒ^ƒCƒ‹iƒfƒtƒHƒ‹ƒgj
    wc.hIcon = LoadIcon(NULL, IDI_EXCLAMATION); //ƒAƒCƒRƒ“
@@ -49,7 +51,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
     //ƒEƒBƒ“ƒhƒE‚ðì¬
     HWND hWnd = CreateWindow(
         WIN_CLASS_NAME,         //ƒEƒBƒ“ƒhƒEƒNƒ‰ƒX–¼
-        "Titele_GAME",     //ƒ^ƒCƒgƒ‹ƒo[‚É•\Ž¦‚·‚é“à—e
+        MENU_BAR_NAME,     //ƒ^ƒCƒgƒ‹ƒo[‚É•\Ž¦‚·‚é“à—e
         WS_OVERLAPPEDWINDOW , //ƒXƒ^ƒCƒ‹i•’Ê‚ÌƒEƒBƒ“ƒhƒEj
         CW_USEDEFAULT,       //•\Ž¦ˆÊ’u¶i‚¨‚Ü‚©‚¹j
         CW_USEDEFAULT,       //•\Ž¦ˆÊ’uãi‚¨‚Ü‚©‚¹j
@@ -96,15 +98,16 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
         nullptr,				// ƒfƒoƒCƒXAƒRƒ“ƒeƒLƒXƒg‚ÌƒŒƒxƒ‹‚ðÝ’èBnullptr‚É‚µ‚Æ‚¯‚ÎOK
         0,					// ã‚Ìˆø”‚ÅƒŒƒxƒ‹‚ð‰½ŒÂŽw’è‚µ‚½‚©
         D3D11_SDK_VERSION,			// SDK‚Ìƒo[ƒWƒ‡ƒ“B•K‚¸‚±‚Ì’l
-        &scDesc,				// ã‚Å‚¢‚ë‚¢‚ëÝ’è‚µ‚½\‘¢‘Ì
+        &scDesc,				// ã‚Å‚¢‚ë‚¢‚ëÝ’è‚µ‚½\‘¢‘Ì‚ð“ü‚ê‚é‚Ì‚Íâ‘Î
         &pSwapChain,				// –³Ž–Š®¬‚µ‚½SwapChain‚ÌƒAƒhƒŒƒX‚ª•Ô‚Á‚Ä‚­‚é
         &pDevice,				// –³Ž–Š®¬‚µ‚½DeviceƒAƒhƒŒƒX‚ª•Ô‚Á‚Ä‚­‚é
         &level,					// –³Ž–Š®¬‚µ‚½DeviceAContext‚ÌƒŒƒxƒ‹‚ª•Ô‚Á‚Ä‚­‚é
         &pContext);				// –³Ž–Š®¬‚µ‚½Context‚ÌƒAƒhƒŒƒX‚ª•Ô‚Á‚Ä‚­‚é
 
+    ///////////////////////////ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒrƒ…[ì¬///////////////////////////////
+    //ƒXƒƒbƒvƒ`ƒF[ƒ“‚©‚çƒoƒbƒNƒoƒbƒtƒ@‚ðŽæ“¾iƒoƒbƒNƒoƒbƒtƒ@  ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgj
     ID3D11Texture2D* pBackBuffer;
     pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
-
     //ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒrƒ…[‚ðì¬
     pDevice->CreateRenderTargetView(pBackBuffer, NULL, &pRenderTargetView);
 
@@ -156,7 +159,11 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
         }
     }
 
-
+    //‰ð•úˆ—
+    pRenderTargetView->Release();
+    pSwapChain->Release();
+    pContext->Release();
+    pDevice->Release();
 	return 0;
 }
 
@@ -171,9 +178,5 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)//–¼‘
     }
     return DefWindowProc(hWnd, msg, wParam, lParam);
 
-    //‰ð•úˆ—
-    pRenderTargetView->Release();
-    pSwapChain->Release();
-    pContext->Release();
-    pDevice->Release();
+    
 }
