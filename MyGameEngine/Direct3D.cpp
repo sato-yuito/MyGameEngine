@@ -15,7 +15,7 @@ namespace Direct3D
     ID3D11VertexShader* pVertexShader = nullptr;	//頂点シェーダー
     ID3D11PixelShader* pPixelShader = nullptr;		//ピクセルシェーダー
     ID3D11InputLayout* pVertexLayout = nullptr;	//頂点インプットレイアウト
-    ID3D11RasterizerState* pRasterizerState = nullptr;	//ラスタライザー
+    
 }
 
 
