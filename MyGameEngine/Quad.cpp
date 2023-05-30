@@ -1,7 +1,7 @@
 #include "Quad.h"
 //新しい変数を作ったら必ず初期化する
 Quad::Quad()
-	:pVertexBuffer_(nullptr),pIndexBuffer_(nullptr)
+	:pVertexBuffer_(nullptr),pIndexBuffer_(nullptr),pConstantBuffer_(nullptr)
 {
 }
 
@@ -49,6 +49,18 @@ void Quad::Initialize()
 	InitData.SysMemPitch = 0;
 	InitData.SysMemSlicePitch = 0;
 	Direct3D::pDevice->CreateBuffer(&bd, &InitData, &pIndexBuffer_);
+
+	//コンスタントバッファ作成
+	D3D11_BUFFER_DESC cb;
+	cb.ByteWidth = sizeof(CONSTANT_BUFFER);
+	cb.Usage = D3D11_USAGE_DYNAMIC;
+	cb.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	cb.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	cb.MiscFlags = 0;
+	cb.StructureByteStride = 0;
+
+	// コンスタントバッファの作成
+	Direct3D::pDevice->CreateBuffer(&cb, nullptr, &pConstantBuffer_);
 }
 
 void Quad::Draw()
