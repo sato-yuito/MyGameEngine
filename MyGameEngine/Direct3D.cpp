@@ -153,6 +153,7 @@ void Direct3D::EndDraw()
 void Direct3D::Release()
 
 {
+    
     pRasterizerState->Release();
     pVertexLayout->Release();
     pPixelShader->Release();

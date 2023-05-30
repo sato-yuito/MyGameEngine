@@ -1,6 +1,6 @@
 #include <Windows.h>
 #include"Direct3D.h"
-
+#include"Quad.h"
 //定数宣言
 const char* WIN_CLASS_NAME = "SampleGame";  //ウィンドウクラス名
 const char* MENU_BAR_NAME = "Let's make game";
@@ -62,7 +62,10 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
     Direct3D::Initialize(winW, winH, hWnd);
 
 
-    //いろいろな設定項目をまとめた構造体
+    //Quad関数初期化
+    
+    Quad* quad = new Quad;
+    quad->Initialize();
    
 
     //メッセージループ（何か起きるのを待つ）
@@ -82,9 +85,11 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
         {
             //ゲームの処理
             Direct3D::BeginDraw();
-
+           
             //描画処理
+            quad->Draw();
             Direct3D::EndDraw();
+           
             //スワップ（バックバッファを表に表示する）
            
 
@@ -93,6 +98,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 
     //解放処理
     Direct3D::Release();
+    quad->Release();
+    delete quad;
 }
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)//名前は何でもいい
