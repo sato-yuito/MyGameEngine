@@ -7,6 +7,9 @@ Quad::Quad()
 
 Quad::~Quad()
 {
+	SAFE_RELEASE(pConstantBuffer_);
+	SAFE_RELEASE(pIndexBuffer_);
+	SAFE_RELEASE(pVertexBuffer_);
 }
 
 void Quad::Initialize()
@@ -34,7 +37,7 @@ void Quad::Initialize()
 	Direct3D::pDevice->CreateBuffer(&bd_vertex, &data_vertex, &pVertexBuffer_);
 
 	//インデックス情報
-	int index[] = { 0,2,3, 0,1,2 ,0,4,1};
+	int index[] = { 0,2,3, 0,1,2 };
 
 	// インデックスバッファを生成する
 	D3D11_BUFFER_DESC   bd;
@@ -98,7 +101,4 @@ void Quad::Draw()
 
 void Quad::Release()
 {
-	pConstantBuffer_->Release();
-	pIndexBuffer_->Release();
-	pVertexBuffer_->Release();
 }

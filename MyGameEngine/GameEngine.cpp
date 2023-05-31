@@ -97,9 +97,10 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
     }
 
     //‰ð•úˆ—
+    SAFE_DELETE(quad);
     Direct3D::Release();
-    quad->Release();
-    delete quad;
+   
+
 }
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)//–¼‘O‚Í‰½‚Å‚à‚¢‚¢
