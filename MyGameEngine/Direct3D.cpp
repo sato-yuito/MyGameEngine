@@ -62,6 +62,7 @@ HRESULT Direct3D::Initialize(int winW, int winH, HWND hWnd)
         &pContext);				// 無事完成したContextのアドレスが返ってくる
     if (FAILED(hr))
     {
+        MessageBox(nullptr, "デバイス、コンテキスト、スワップチェインの作成に失敗しました", "エラー", MB_OK);
         return hr;
     }
 
@@ -75,6 +76,7 @@ HRESULT Direct3D::Initialize(int winW, int winH, HWND hWnd)
     hr = pDevice->CreateRenderTargetView(pBackBuffer, NULL, &pRenderTargetView);
     if (FAILED(hr))
     {
+        MessageBox(nullptr, "レンダリングビューの作成に失敗しました", "エラー", MB_OK);
         return hr;
     }
         
@@ -99,6 +101,7 @@ HRESULT Direct3D::Initialize(int winW, int winH, HWND hWnd)
     hr = InitShader();
     if (FAILED(hr))
     {
+        MessageBox(nullptr, "シェーダーの準備中に失敗しました", "エラー", MB_OK);
         return hr;
     }
     return S_OK;
@@ -116,6 +119,7 @@ HRESULT Direct3D::InitShader()
     hr = pDevice->CreateVertexShader(pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), NULL, &pVertexShader);
     if (FAILED(hr))
     {
+        MessageBox(nullptr, "頂点シェーダーの作成に失敗しました", "エラー", MB_OK);
         return hr;
     }
     //頂点インプットレイアウト
@@ -125,13 +129,11 @@ HRESULT Direct3D::InitShader()
     hr =pDevice->CreateInputLayout(layout, 1, pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), &pVertexLayout);
     if (FAILED(hr))
     {
+        MessageBox(nullptr, "インプットレイアウトの作成に失敗しました", "エラー", MB_OK);
         return hr;
     }
-    hr = pCompileVS->Release();
-    if (FAILED(hr))
-    {
-        return hr;
-    }
+     pCompileVS->Release();
+   
 
     // ピクセルシェーダの作成（コンパイル）
     ID3DBlob* pCompilePS = nullptr;
@@ -141,6 +143,7 @@ HRESULT Direct3D::InitShader()
     hr =pDevice->CreatePixelShader(pCompilePS->GetBufferPointer(), pCompilePS->GetBufferSize(), NULL, &pPixelShader);
     if (FAILED(hr))
     {
+        MessageBox(nullptr, "ピクセルシェーダの作成に失敗しました", "エラー", MB_OK);
         return hr;
     }
    
@@ -154,6 +157,7 @@ HRESULT Direct3D::InitShader()
     hr =pDevice->CreateRasterizerState(&rdc, &pRasterizerState);
     if (FAILED(hr))
     {
+        MessageBox(nullptr, "ラスタライザの作成に失敗しました", "エラー", MB_OK);
         return hr;
     }
     //それぞれをデバイスコンテキストにセット

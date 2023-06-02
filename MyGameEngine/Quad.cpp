@@ -38,6 +38,7 @@ HRESULT Quad::Initialize()
 	hr=Direct3D::pDevice->CreateBuffer(&bd_vertex, &data_vertex, &pVertexBuffer_);
 	if (FAILED(hr))
 	{
+		MessageBox(nullptr, "頂点バッファの作成に失敗しました", "エラー", MB_OK);
 		return hr;
 	}
 	//インデックス情報
@@ -60,7 +61,7 @@ HRESULT Quad::Initialize()
 	hr =Direct3D::pDevice->CreateBuffer(&bd, &InitData, &pIndexBuffer_);
 	if (FAILED(hr))
 	{
-		MessageBox(nullptr, "頂点バッファの作成に失敗しました", "エラー", MB_OK);
+		MessageBox(nullptr, "インデックスバッファの作成に失敗しました", "エラー", MB_OK);
 		return hr;
 	}
 
@@ -70,7 +71,7 @@ HRESULT Quad::Initialize()
 	cb.Usage = D3D11_USAGE_DYNAMIC;
 	cb.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 	cb.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-	cb.MiscFlags = -1;
+	cb.MiscFlags = 0;
 	cb.StructureByteStride = 0;
 
 	// コンスタントバッファの作成
