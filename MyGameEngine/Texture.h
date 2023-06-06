@@ -3,7 +3,7 @@
 #include "string"
 #include<wrl.h>
 using namespace Microsoft::WRL;
-using namespace DirectX;
+
 class Texture
 {
 	ID3D11SamplerState* pSampler_;

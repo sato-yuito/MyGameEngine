@@ -18,6 +18,7 @@ Texture::~Texture()
 
 HRESULT Texture::Load(std::string fileName)
 {
+	using namespace DirectX;
 	wchar_t wtext[FILENAME_MAX];
 	size_t ret;
 	mbstowcs_s(&ret, wtext, fileName.c_str(), fileName.length());
