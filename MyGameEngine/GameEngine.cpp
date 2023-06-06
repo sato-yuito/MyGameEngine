@@ -1,7 +1,7 @@
 #include <Windows.h>
 #include"Direct3D.h"
 #include"Quad.h"
-
+#include"Camera.h"
 //定数宣言
 const char* WIN_CLASS_NAME = "SampleGame";  //ウィンドウクラス名
 const char* MENU_BAR_NAME = "Let's make game";
@@ -71,6 +71,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
         PostQuitMessage(0);  //プログラム終了
     }
 
+    Camera::Initialize();
+
     //メッセージループ（何か起きるのを待つ）
     MSG msg;
     ZeroMemory(&msg, sizeof(msg));
@@ -87,6 +89,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
         else
         {
             //ゲームの処理
+            Camera::Update();
             Direct3D::BeginDraw();
            
             //描画処理
