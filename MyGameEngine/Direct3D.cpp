@@ -169,10 +169,8 @@ HRESULT Direct3D::InitShader()
     return S_OK;
 }
 
-
 //ï`âÊäJén
 void Direct3D::BeginDraw()
-
 {
     float clearColor[4] = { 0.0f, 0.5f, 0.5f, 1.0f };//R,G,B,A
 
@@ -182,21 +180,15 @@ void Direct3D::BeginDraw()
 }
 
 
-
 //ï`âÊèIóπ
 void Direct3D::EndDraw()
-
 {
     pSwapChain->Present(0, 0);
 }
 
-
-
 //âï˙èàóù
 void Direct3D::Release()
-
 {
-    
     SAFE_RELEASE(pRasterizerState);
     SAFE_RELEASE(pVertexLayout);
     SAFE_RELEASE(pPixelShader);
@@ -205,6 +197,5 @@ void Direct3D::Release()
     SAFE_RELEASE(pRenderTargetView);
     SAFE_RELEASE(pSwapChain);
     SAFE_RELEASE(pContext);
-    SAFE_RELEASE(pDevice);
-    
+    SAFE_RELEASE(pDevice);  
 }
