@@ -2,6 +2,7 @@
 #include"Direct3D.h"
 #include"Quad.h"
 #include"Camera.h"
+
 //’è”éŒ¾
 const char* WIN_CLASS_NAME = "SampleGame";  //ƒEƒBƒ“ƒhƒEƒNƒ‰ƒX–¼
 const char* MENU_BAR_NAME = "Let's make game";
@@ -88,17 +89,23 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
         //ƒƒbƒZ[ƒW‚È‚µ
         else
         {
-            //ƒQ[ƒ€‚Ìˆ—
             Camera::Update();
+            //ƒQ[ƒ€‚Ìˆ—
             Direct3D::BeginDraw();
            
             //•`‰æˆ—
-            quad->Draw();
-            Direct3D::EndDraw();
-           
-            //ƒXƒƒbƒviƒoƒbƒNƒoƒbƒtƒ@‚ð•\‚É•\Ž¦‚·‚éj
-           
+            //XMMATRIX matA = XMMatrixRotationZ(XMConvertToRadians(45));
+            //XMMATRIX matB = XMMatrixTranslation(4, 0, 0);
+            //XMMATRIX matC = XMMatrixScaling(1, 3, 1);
+            //XMMATRIX mat = matC * matA * matB;
+            static int a = 0;
+            a += 1;
+            XMMATRIX mat= XMMatrixRotationZ(XMConvertToRadians(a));   //ZŽ²‚Å30‹‰ñ“]‚³‚¹‚és—ñ
+            //XMMATRIX matB = XMMatrixTranslation(4, 0, 0);
+            //XMMATRIX mat = matA * matB;
+            quad->Draw(mat);
 
+            Direct3D::EndDraw();
         }
     }
 
@@ -118,6 +125,4 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)//–¼‘
         return 0;
     }
     return DefWindowProc(hWnd, msg, wParam, lParam);
-
-    
 }
