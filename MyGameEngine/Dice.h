@@ -18,7 +18,7 @@ struct VERTEX
 	XMVECTOR uv;
 };
 
-class Quad
+class Dice
 {
 	ID3D11Buffer* pVertexBuffer_;	//頂点バッファ
 	ID3D11Buffer* pIndexBuffer_;//
@@ -26,10 +26,11 @@ class Quad
 
 	Texture* pTexture_;
 public:
-	Quad();
-	~Quad();
+	Dice();
+	~Dice();
 	HRESULT Initialize();
 	void Draw(XMMATRIX& worldMatrix);
 	void Release();
 };
+
 
