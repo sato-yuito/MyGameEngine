@@ -1,8 +1,8 @@
 #include "Quad.h"
-#include"Camera.h"
-//新しい変数を作ったら必ず初期化する
-Quad::Quad()
-	:pVertexBuffer_(nullptr),pIndexBuffer_(nullptr),pConstantBuffer_(nullptr),pTexture_(nullptr)
+#include "Camera.h"
+
+Quad::Quad() :
+	pVertexBuffer_(nullptr), pTexture_(nullptr)
 {
 }
 
@@ -13,14 +13,14 @@ Quad::~Quad()
 
 HRESULT Quad::Initialize()
 {
-	HRESULT hr ;
+	HRESULT hr;
 	// 頂点情報
 	VERTEX vertices[] =
 	{
-		{XMVectorSet(-1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) },   // 四角形の頂点（左上）
-		{XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) },   // 四角形の頂点（右上）
-		{ XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f),	XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（右下）
-		{ XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（左下）
+		{XMVectorSet(-1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.0f,  0.0f, 0.0f, 0.0f)},	// 四角形の頂点（左上）
+		{XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(1.0f,  0.0f, 0.0f, 0.0f)},	// 四角形の頂点（右上）
+		{XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f)},	// 四角形の頂点（右下）
+		{XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.0f,  1.0f, 0.0f, 0.0f)}	// 四角形の頂点（左下）		
 	};
 
 	// 頂点データ用バッファの設定
@@ -33,12 +33,14 @@ HRESULT Quad::Initialize()
 	bd_vertex.StructureByteStride = 0;
 	D3D11_SUBRESOURCE_DATA data_vertex;
 	data_vertex.pSysMem = vertices;
-	hr=Direct3D::pDevice_->CreateBuffer(&bd_vertex, &data_vertex, &pVertexBuffer_);
+	hr = Direct3D::pDevice_->CreateBuffer(&bd_vertex, &data_vertex, &pVertexBuffer_);
 	if (FAILED(hr))
 	{
-		MessageBox(nullptr, "頂点バッファの作成に失敗しました", "エラー", MB_OK);
+		MessageBox(NULL, "頂点バッファの作成に失敗しました", "エラー", MB_OK);
 		return hr;
 	}
+
+
 	//インデックス情報
 	int index[] = { 0,2,3, 0,1,2 };
 
@@ -50,16 +52,14 @@ HRESULT Quad::Initialize()
 	bd.CPUAccessFlags = 0;
 	bd.MiscFlags = 0;
 
-	
 	D3D11_SUBRESOURCE_DATA InitData;
 	InitData.pSysMem = index;
 	InitData.SysMemPitch = 0;
 	InitData.SysMemSlicePitch = 0;
-
-	hr =Direct3D::pDevice_->CreateBuffer(&bd, &InitData, &pIndexBuffer_);
+	hr = Direct3D::pDevice_->CreateBuffer(&bd, &InitData, &pIndexBuffer_);
 	if (FAILED(hr))
 	{
-		MessageBox(nullptr, "インデックスバッファの作成に失敗しました", "エラー", MB_OK);
+		MessageBox(NULL, "インデックスバッファの作成に失敗しました", "エラー", MB_OK);
 		return hr;
 	}
 
@@ -76,11 +76,11 @@ HRESULT Quad::Initialize()
 	hr = Direct3D::pDevice_->CreateBuffer(&cb, nullptr, &pConstantBuffer_);
 	if (FAILED(hr))
 	{
-		MessageBox(nullptr, "コンスタントバッファの作成に失敗しました", "エラー", MB_OK);
+		MessageBox(NULL, "コンスタントバッファの作成に失敗しました", "エラー", MB_OK);
 		return hr;
 	}
 
-	pTexture_ = new Texture;
+	pTexture_ = new Texture();
 	pTexture_->Load("Assets\\Dice.png");
 
 	return S_OK;
@@ -89,20 +89,26 @@ HRESULT Quad::Initialize()
 void Quad::Draw(XMMATRIX& worldMatrix)
 {
 	//コンスタントバッファに渡す情報
+
 	CONSTANT_BUFFER cb;
-	cb.matWVP = XMMatrixTranspose(worldMatrix*Camera::GetViewMatrix() * Camera::GetProjectionMatrix());
+	cb.matWVP = XMMatrixTranspose(worldMatrix * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());
 
 	D3D11_MAPPED_SUBRESOURCE pdata;
 	Direct3D::pContext_->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのデータアクセスを止める
 	memcpy_s(pdata.pData, pdata.RowPitch, (void*)(&cb), sizeof(cb));	// データを値を送る
-	
+
 	ID3D11SamplerState* pSampler = pTexture_->GetSampler();
+
 	Direct3D::pContext_->PSSetSamplers(0, 1, &pSampler);
 
 	ID3D11ShaderResourceView* pSRV = pTexture_->GetSRV();
-    Direct3D::pContext_->PSSetShaderResources(0, 1, &pSRV);
-	
+
+	Direct3D::pContext_->PSSetShaderResources(0, 1, &pSRV);
+
+
+
 	Direct3D::pContext_->Unmap(pConstantBuffer_, 0);	//再開
+
 
 	//頂点バッファ
 	UINT stride = sizeof(VERTEX);
@@ -117,16 +123,13 @@ void Quad::Draw(XMMATRIX& worldMatrix)
 	//コンスタントバッファ
 	Direct3D::pContext_->VSSetConstantBuffers(0, 1, &pConstantBuffer_);	//頂点シェーダー用	
 	Direct3D::pContext_->PSSetConstantBuffers(0, 1, &pConstantBuffer_);	//ピクセルシェーダー用
+
 	Direct3D::pContext_->DrawIndexed(6, 0, 0);
 }
 
 void Quad::Release()
 {
-	pTexture_->Release();
-	SAFE_DELETE(pTexture_);
-
 	SAFE_RELEASE(pConstantBuffer_);
 	SAFE_RELEASE(pIndexBuffer_);
 	SAFE_RELEASE(pVertexBuffer_);
-	
 }

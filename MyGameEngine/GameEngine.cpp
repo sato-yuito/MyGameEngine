@@ -17,7 +17,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nCmdShow)
 {  
 	//ウィンドウクラス（設計図）を作成
-    WNDCLASSEX wc;
+   WNDCLASSEX wc;
    wc.cbSize = sizeof(WNDCLASSEX);             //この構造体のサイズ
    wc.hInstance = hInstance;                   //インスタンスハンドル
    wc.lpszClassName = WIN_CLASS_NAME;            //ウィンドウクラス名
@@ -64,8 +64,9 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
         PostQuitMessage(0);  //プログラム終了
     }
 
+    Camera::Initialize();
     //Quad関数初期化
-    //Quad* quad = new Quad;
+   // Quad* quad = new Quad;
     Dice* dice = new Dice;
     //hr = quad->Initialize();
     hr = dice->Initialize();
@@ -74,7 +75,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
         PostQuitMessage(0);  //プログラム終了
     }
 
-    Camera::Initialize();
+  
 
     //メッセージループ（何か起きるのを待つ）
     MSG msg;
@@ -101,8 +102,15 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
             //XMMATRIX matC = XMMatrixScaling(1, 3, 1);
             //XMMATRIX mat = matC * matA * matB;
             static int a = 0;
+            //static int b = 0;
+            //static int c = 0;
             a += 1;
-            XMMATRIX mat= XMMatrixRotationZ(XMConvertToRadians(a));   //Z軸で30°回転させる行列
+            //b += 1;
+            //c += 1;
+            XMMATRIX mat = XMMatrixRotationX(XMConvertToRadians(a));   //X軸で30°回転させる行列
+            //XMMATRIX matY = XMMatrixRotationY(XMConvertToRadians(b));   //Y軸で30°回転させる行列
+            //XMMATRIX matZ= XMMatrixRotationZ(XMConvertToRadians(c));   //Z軸で30°回転させる行列
+            //XMMATRIX mat = matZ*matX*matY;//回す掛け算
             //XMMATRIX matB = XMMatrixTranslation(4, 0, 0);
             //XMMATRIX mat = matA * matB;
             //quad->Draw(mat);

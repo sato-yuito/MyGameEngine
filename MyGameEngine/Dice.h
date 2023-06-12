@@ -23,7 +23,6 @@ class Dice
 	ID3D11Buffer* pVertexBuffer_;	//頂点バッファ
 	ID3D11Buffer* pIndexBuffer_;//
 	ID3D11Buffer* pConstantBuffer_;	//コンスタントバッファ
-
 	Texture* pTexture_;
 public:
 	Dice();

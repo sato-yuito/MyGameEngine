@@ -1,7 +1,7 @@
 #include <d3dcompiler.h>
 #include "Direct3D.h"
 #include <DirectXMath.h>
-
+#include <cassert>
 //変数
 namespace Direct3D
 {
@@ -69,8 +69,13 @@ HRESULT Direct3D::Initialize(int winW, int winH, HWND hWnd)
     ///////////////////////////レンダーターゲットビュー作成///////////////////////////////
     //スワップチェーンからバックバッファを取得（バックバッファ ＝ レンダーターゲット）
     ID3D11Texture2D* pBackBuffer;
-    pSwapChain_->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
-    
+    hr = pSwapChain_->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
+    if (FAILED(hr))
+    {
+        MessageBox(NULL, "バックバッファの取得に失敗しました", "エラー", MB_OK);
+        //エラー処理
+        return hr;
+    }
     //レンダーターゲットビューを作成
  
     hr = pDevice_->CreateRenderTargetView(pBackBuffer, NULL, &pRenderTargetView_);
@@ -80,7 +85,6 @@ HRESULT Direct3D::Initialize(int winW, int winH, HWND hWnd)
         return hr;
     }
         
-
     //一時的にバックバッファを取得しただけなので解放
     pBackBuffer->Release();
 
@@ -101,7 +105,7 @@ HRESULT Direct3D::Initialize(int winW, int winH, HWND hWnd)
     hr = InitShader();
     if (FAILED(hr))
     {
-        MessageBox(nullptr, "シェーダーの準備中に失敗しました", "エラー", MB_OK);
+        
         return hr;
     }
     return S_OK;
@@ -122,6 +126,7 @@ HRESULT Direct3D::InitShader()
         MessageBox(nullptr, "頂点シェーダーの作成に失敗しました", "エラー", MB_OK);
         return hr;
     }
+
     //頂点インプットレイアウト
     D3D11_INPUT_ELEMENT_DESC layout[] = {
         { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,  D3D11_INPUT_PER_VERTEX_DATA, 0 },	//位置
@@ -133,8 +138,7 @@ HRESULT Direct3D::InitShader()
         MessageBox(nullptr, "インプットレイアウトの作成に失敗しました", "エラー", MB_OK);
         return hr;
     }
-     pCompileVS->Release();
-   
+    SAFE_RELEASE(pCompileVS);
 
     // ピクセルシェーダの作成（コンパイル）
     ID3DBlob* pCompilePS = nullptr;
@@ -148,7 +152,8 @@ HRESULT Direct3D::InitShader()
         return hr;
     }
    
-    pCompilePS->Release();
+    SAFE_RELEASE(pCompilePS);
+
    
     //ラスタライザ作成
     D3D11_RASTERIZER_DESC rdc = {};

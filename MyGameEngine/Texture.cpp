@@ -1,6 +1,5 @@
 #include "Texture.h"
 #include "Direct3D.h"
-
 #include <DirectXTex.h>
 
 #pragma comment(lib,"DirectXTex.lib")

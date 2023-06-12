@@ -22,10 +22,30 @@ HRESULT Dice::Initialize()
 		{XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f),	XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（右下）
 		{XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（左下
 
-		{XMVectorSet(-1.0f,  1.0f, 1.0f, 0.0f),XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) },   // 四角形の頂点（奥左上）
-		{XMVectorSet(1.0f,  1.0f, 1.0f, 0.0f),XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) },   // 四角形の頂点（奥右上）
-		{XMVectorSet(1.0f, -1.0f, 1.0f, 0.0f),XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（奥右下）
-		{XMVectorSet(-1.0f, -1.0f, 1.0f, 0.0f),XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（左下）
+		{XMVectorSet(-0.5f,  0.5f, 0.5f, 0.0f),XMVectorSet(0.25f, 0.25f, 0.25f, 0.0f) },   // 四角形の頂点（奥左上）
+		{XMVectorSet(0.5f,  0.5f, 0.5f, 0.0f),XMVectorSet(0.75f, 0.25f, 0.25f, 0.0f) },   // 四角形の頂点（奥右上）
+		{XMVectorSet(0.5f, -0.5f, 0.5f, 0.0f),XMVectorSet(0.75f, 0.75f, 0.25f, 0.0f) },   // 四角形の頂点（奥右下）
+		{XMVectorSet(-0.5f, -0.5f, 0.5f, 0.0f),XMVectorSet(0.25f, 0.25f, 0.25f, 0.0f) },   // 四角形の頂点（左下）
+
+		{XMVectorSet(0.5f,  0.5f, 0.5f, 0.0f),XMVectorSet(0.25f, 0.25f, 0.25f, 0.0f) },   // 四角形の頂点（奥左上）
+		{XMVectorSet(0.5f,  0.5f, 0.5f, 0.0f),XMVectorSet(0.75f, 0.25f, 0.25f, 0.0f) },   // 四角形の頂点（奥右上）
+		{XMVectorSet(0.5f, -0.5f, 0.5f, 0.0f),XMVectorSet(0.75f, 0.75f, 0.25f, 0.0f) },   // 四角形の頂点（奥右下）
+		{XMVectorSet(-0.5f, -0.5f, 0.5f, 0.0f),XMVectorSet(0.25f, 0.25f, 0.25f, 0.0f) },   // 四角形の頂点（左下）
+
+		{XMVectorSet(-0.5f,  0.5f, 0.5f, 0.0f),XMVectorSet(0.25f, 0.25f, 0.25f, 0.0f) },   // 四角形の頂点（奥左上）
+		{XMVectorSet(0.5f,  0.5f, 0.5f, 0.0f),XMVectorSet(0.75f, 0.25f, 0.25f, 0.0f) },   // 四角形の頂点（奥右上）
+		{XMVectorSet(0.5f, -0.5f, 0.5f, 0.0f),XMVectorSet(0.75f, 0.75f, 0.25f, 0.0f) },   // 四角形の頂点（奥右下）
+		{XMVectorSet(-0.5f, -0.5f, 0.5f, 0.0f),XMVectorSet(0.25f, 0.25f, 0.25f, 0.0f) },   // 四角形の頂点（左下）
+
+		{XMVectorSet(-0.5f,  0.5f, 0.5f, 0.0f),XMVectorSet(0.25f, 0.25f, 0.25f, 0.0f) },   // 四角形の頂点（奥左上）
+		{XMVectorSet(0.5f,  0.5f, 0.5f, 0.0f),XMVectorSet(0.75f, 0.25f, 0.25f, 0.0f) },   // 四角形の頂点（奥右上）
+		{XMVectorSet(0.5f, -0.5f, 0.5f, 0.0f),XMVectorSet(0.75f, 0.75f, 0.25f, 0.0f) },   // 四角形の頂点（奥右下）
+		{XMVectorSet(-0.5f, -0.5f, 0.5f, 0.0f),XMVectorSet(0.25f, 0.25f, 0.25f, 0.0f) },   // 四角形の頂点（左下）
+
+		{XMVectorSet(-0.5f,  0.5f, 0.5f, 0.0f),XMVectorSet(0.25f, 0.25f, 0.25f, 0.0f) },   // 四角形の頂点（奥左上）
+		{XMVectorSet(0.5f,  0.5f, 0.5f, 0.0f),XMVectorSet(0.75f, 0.25f, 0.25f, 0.0f) },   // 四角形の頂点（奥右上）
+		{XMVectorSet(0.5f, -0.5f, 0.5f, 0.0f),XMVectorSet(0.75f, 0.75f, 0.25f, 0.0f) },   // 四角形の頂点（奥右下）
+		{XMVectorSet(-0.5f, -0.5f, 0.5f, 0.0f),XMVectorSet(0.25f, 0.25f, 0.25f, 0.0f) },   // 四角形の頂点（左下）
 	};
 
 	// 頂点データ用バッファの設定
@@ -122,7 +142,7 @@ void Dice::Draw(XMMATRIX& worldMatrix)
 	//コンスタントバッファ
 	Direct3D::pContext_->VSSetConstantBuffers(0, 1, &pConstantBuffer_);	//頂点シェーダー用	
 	Direct3D::pContext_->PSSetConstantBuffers(0, 1, &pConstantBuffer_);	//ピクセルシェーダー用
-	Direct3D::pContext_->DrawIndexed(6, 0, 0);
+	Direct3D::pContext_->DrawIndexed(36, 0, 0);
 }
 
 void Dice::Release()
