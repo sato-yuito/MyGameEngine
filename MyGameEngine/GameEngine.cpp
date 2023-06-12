@@ -1,6 +1,6 @@
 #include <Windows.h>
 #include"Direct3D.h"
-#include"Quad.h"
+//#include"Quad.h"
 #include"Dice.h"
 #include"Camera.h"
 
@@ -65,9 +65,10 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
     }
 
     //Quad関数初期化
-    Quad* quad = new Quad;
-
-    hr = quad->Initialize();
+    //Quad* quad = new Quad;
+    Dice* dice = new Dice;
+    //hr = quad->Initialize();
+    hr = dice->Initialize();
     if (FAILED(hr))
     {
         PostQuitMessage(0);  //プログラム終了
@@ -104,14 +105,15 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
             XMMATRIX mat= XMMatrixRotationZ(XMConvertToRadians(a));   //Z軸で30°回転させる行列
             //XMMATRIX matB = XMMatrixTranslation(4, 0, 0);
             //XMMATRIX mat = matA * matB;
-            quad->Draw(mat);
+            //quad->Draw(mat);
 
             Direct3D::EndDraw();
         }
     }
 
     //解放処理
-    SAFE_DELETE(quad);
+    //SAFE_DELETE(quad);
+    SAFE_DELETE(dice);
     Direct3D::Release();
    
 }
