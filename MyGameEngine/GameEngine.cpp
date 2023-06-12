@@ -1,6 +1,6 @@
 #include <Windows.h>
 #include"Direct3D.h"
-#include"Quad.h"
+//#include"Quad.h"
 #include"Dice.h"
 #include"Camera.h"
 
@@ -65,9 +65,9 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
     }
 
     //QuadŠÖ”‰Šú‰»
-    Quad* quad = new Quad;
+    //Quad* quad = new Quad;
     Dice* dice = new Dice;
-    hr = quad->Initialize();
+    //hr = quad->Initialize();
     hr = dice->Initialize();
     if (FAILED(hr))
     {
@@ -105,14 +105,14 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
             XMMATRIX mat= XMMatrixRotationZ(XMConvertToRadians(a));   //Z²‚Å30‹‰ñ“]‚³‚¹‚és—ñ
             //XMMATRIX matB = XMMatrixTranslation(4, 0, 0);
             //XMMATRIX mat = matA * matB;
-            quad->Draw(mat);
+            //quad->Draw(mat);
             dice->Draw(mat);
             Direct3D::EndDraw();
         }
     }
 
     //‰ğ•úˆ—
-    SAFE_DELETE(quad);
+    //SAFE_DELETE(quad);
     SAFE_DELETE(dice);
     Direct3D::Release();
    

@@ -1,4 +1,3 @@
-
 #include"Camera.h"
 #include"Dice.h"
 //新しい変数を作ったら必ず初期化する
@@ -20,12 +19,13 @@ HRESULT Dice::Initialize()
 	{
 		{XMVectorSet(-1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) },   // 四角形の頂点（左上）
 		{XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) },   // 四角形の頂点（右上）
-		{ XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f),	XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（右下）
-		{ XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（左下）
+		{XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f),	XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（右下）
+		{XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（左下
+
 		{XMVectorSet(-1.0f,  1.0f, 1.0f, 0.0f),XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) },   // 四角形の頂点（奥左上）
 		{XMVectorSet(1.0f,  1.0f, 1.0f, 0.0f),XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) },   // 四角形の頂点（奥右上）
-		{ XMVectorSet(1.0f, -1.0f, 1.0f, 0.0f),	XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（奥右下）
-		{ XMVectorSet(-1.0f, -1.0f, 1.0f, 0.0f),XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（左下）
+		{XMVectorSet(1.0f, -1.0f, 1.0f, 0.0f),XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（奥右下）
+		{XMVectorSet(-1.0f, -1.0f, 1.0f, 0.0f),XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（左下）
 	};
 
 	// 頂点データ用バッファの設定
