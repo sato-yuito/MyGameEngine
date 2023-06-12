@@ -1,4 +1,4 @@
-/*#include "Quad.h"
+#include "Quad.h"
 #include"Camera.h"
 //V‚µ‚¢•Ï”‚ğì‚Á‚½‚ç•K‚¸‰Šú‰»‚·‚é
 Quad::Quad()
@@ -10,8 +10,8 @@ Quad::~Quad()
 {
 	Release();
 }
-*/
-/*HRESULT Quad::Initialize()
+
+HRESULT Quad::Initialize()
 {
 	HRESULT hr ;
 	// ’¸“_î•ñ
@@ -129,4 +129,4 @@ void Quad::Release()
 	SAFE_RELEASE(pIndexBuffer_);
 	SAFE_RELEASE(pVertexBuffer_);
 	
-}*/
+}
