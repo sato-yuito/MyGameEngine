@@ -28,25 +28,25 @@ HRESULT Dice::Initialize()
 		{XMVectorSet(1.0f, -1.0f, 2.0f, 0.0f),	XMVectorSet(0.5f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（右下）6
 		{XMVectorSet(-1.0f, -1.0f, 2.0f, 0.0f),XMVectorSet(0.25f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（左下) 7
 		//左面
-		{XMVectorSet(-1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f)},   // 四角形の頂点（左上）8
-		{XMVectorSet(-1.0f,  1.0f, 2.0f, 0.0f),XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) },   // 四角形の頂点（右上）9
-		{XMVectorSet(-1.0f, -1.0f, 2.0f, 0.0f),XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（右下）10
-		{XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f)},   // 四角形の頂点（左下) 11
+		{XMVectorSet(-1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.25f, 0.0f, 0.0f, 0.0f)},   // 四角形の頂点（左上）8
+		{XMVectorSet(-1.0f,  1.0f, 2.0f, 0.0f),XMVectorSet(0.5f, 0.0f, 0.0f, 0.0f) },   // 四角形の頂点（右上）9
+		{XMVectorSet(-1.0f, -1.0f, 2.0f, 0.0f),XMVectorSet(0.5f, 0.5f, 0.0f, 0.0f) },   // 四角形の頂点（右下）10
+		{XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.25f, 0.5f, 0.0f, 0.0f)},   // 四角形の頂点（左下) 11
 		//右面
-		{XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f)},   // 四角形の頂点（左上）12
-		{XMVectorSet(1.0f, 1.0f, 2.0f, 0.0f),XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) },   // 四角形の頂点（右上）13
-		{XMVectorSet(1.0f, -1.0f, 2.0f, 0.0f),	XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（右下）14
+		{XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.5f, 0.0f, 0.0f)},   // 四角形の頂点（左上）12
+		{XMVectorSet(1.0f, 1.0f, 2.0f, 0.0f),XMVectorSet(0.25f, 0.5f, 0.0f, 0.0f) },   // 四角形の頂点（右上）13
+		{XMVectorSet(1.0f, -1.0f, 2.0f, 0.0f),	XMVectorSet(0.25f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（右下）14
 		{XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（左下 15
 		//上面
-		{XMVectorSet(-1.0f,  1.0f, 2.0f, 0.0f),XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f)},   // 四角形の頂点（左上）16
-		{XMVectorSet(1.0f, 1.0f, 2.0f, 0.0f),XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) },   // 四角形の頂点（右上）17
-		{XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f),	XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（右下）18
-		{XMVectorSet(-1.0f, 1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（左下)19
+		{XMVectorSet(-1.0f,  1.0f, 2.0f, 0.0f),XMVectorSet(0.5f, 0.0f, 0.0f, 0.0f)},   // 四角形の頂点（左上）16
+		{XMVectorSet(1.0f, 1.0f, 2.0f, 0.0f),XMVectorSet(0.75f, 0.0f, 0.0f, 0.0f) },   // 四角形の頂点（右上）17
+		{XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f),	XMVectorSet(0.75f, 0.5f, 0.0f, 0.0f) },   // 四角形の頂点（右下）18
+		{XMVectorSet(-1.0f, 1.0f, 0.0f, 0.0f),XMVectorSet(0.5f, 0.5f, 0.0f, 0.0f) },   // 四角形の頂点（左下)19
 
-		{XMVectorSet(-1.0f, -1.0f, 2.0f, 0.0f),XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f)},   // 四角形の頂点（左上）20
+		{XMVectorSet(-1.0f, -1.0f, 2.0f, 0.0f),XMVectorSet(0.75f, 0.0f, 0.0f, 0.0f)},   // 四角形の頂点（左上）20
 		{XMVectorSet(1.0f, -1.0f, 2.0f, 0.0f),XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) },   // 四角形の頂点（右上）21
-		{XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f),	XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（右下）22
-		{XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（左下)23
+		{XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f),	XMVectorSet(1.0f, 0.5f, 0.0f, 0.0f) },   // 四角形の頂点（右下）22
+		{XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.75f, 0.5f, 0.0f, 0.0f) },   // 四角形の頂点（左下)23
 
 	};
 
@@ -68,11 +68,11 @@ HRESULT Dice::Initialize()
 	}
 	//インデックス情報
 	int index[] = { 0,2,3, 0,1,2,
-		            4,6,7, 4,5,6,
-		            8,10,11, 8,9,10,
+		            4,7,6, 4,6,5,
+		            8,11,10, 8,10,9,
 		            12,14,15, 12,13,14,
 		            16,18,19, 16,17,18
-		            ,20,22,23, 20,21,22};
+		            ,20,23,22, 20,22,21};
 
 	// インデックスバッファを生成する
 	D3D11_BUFFER_DESC   bd;
