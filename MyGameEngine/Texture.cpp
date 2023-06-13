@@ -26,8 +26,8 @@ HRESULT Texture::Load(string filename)
 
 	TexMetadata metadata;
 	ScratchImage image;
-	HRESULT hr;
-	hr = LoadFromWICFile(wtext, WIC_FLAGS::WIC_FLAGS_NONE, &metadata, image);
+	HRESULT hr=S_OK;
+	hr = LoadFromWICFile(wtext, WIC_FLAGS::WIC_FLAGS_NONE, &metadata, image);//
 	/////////
 	if (FAILED(hr))
 	{
