@@ -98,8 +98,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
            
             //ï`âÊèàóù
             //XMMATRIX matA = XMMatrixRotationZ(XMConvertToRadians(45));
-            //XMMATRIX mat = XMMatrixTranslation(0, 0, 0);
-            //XMMATRIX matC = XMMatrixScaling(1, 3, 1);
+            XMMATRIX matS = XMMatrixTranslation(0, 0, 0);
+            XMMATRIX matC = XMMatrixScaling(2.0, 2.0, 2.0);
             //XMMATRIX mat = matC * matA * matB;
             static float a = 0;
             //static int b = 0;
@@ -108,8 +108,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
             //b += 1;
             //c += 1;
             XMMATRIX matA = XMMatrixRotationY(XMConvertToRadians(a));   
-            XMMATRIX matS = XMMatrixRotationZ(XMConvertToRadians(a));
-            XMMATRIX mat = matA * matS;
+            //XMMATRIX matS = XMMatrixRotationZ(XMConvertToRadians(a));
+            XMMATRIX mat = matA * matC *matS;
             //XMMATRIX matY = XMMatrixRotationY(XMConvertToRadians(b));   //Yé≤Ç≈30ÅãâÒì]Ç≥ÇπÇÈçsóÒ
             //XMMATRIX matZ= XMMatrixRotationZ(XMConvertToRadians(c));   //Zé≤Ç≈30ÅãâÒì]Ç≥ÇπÇÈçsóÒ
             //XMMATRIX mat = matZ*matX*matY;//âÒÇ∑ä|ÇØéZ
