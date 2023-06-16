@@ -7,21 +7,22 @@ using namespace DirectX;
 
 #define SAFE_DELETE(p) if(p != nullptr){ delete p; p = nullptr;}
 
+//コンスタントバッファー
+struct CONSTANT_BUFFER
+{
+	XMMATRIX	matW;
+};
+
+//頂点情報
+struct VERTEX
+{
+	XMVECTOR position;
+	XMVECTOR uv;
+};
+
 class Sprite
 {
-	//コンスタントバッファー
-	struct CONSTANT_BUFFER
-	{
-		XMMATRIX	matW;
-	};
-
-	//頂点情報
-	struct VERTEX
-	{
-		XMVECTOR position;
-		XMVECTOR uv;
-		XMVECTOR normal;
-	};
+	
 protected:
 	UINT64 vertexNum_;
 	std::vector<VERTEX> vertices_;

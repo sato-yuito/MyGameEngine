@@ -1,8 +1,9 @@
 #include <d3dcompiler.h>
+#
 #include "Direct3D.h"
 #include <DirectXMath.h>
 #include <cassert>
-#include<vector>
+
 //変数
 namespace Direct3D
 {
@@ -123,7 +124,7 @@ HRESULT Direct3D::Initialize(int winW, int winH, HWND hWnd)
 //シェーダー準備
 HRESULT Direct3D::InitShader()
 {
-	HRESULT hr;
+	HRESULT hr = S_OK;
 	// 頂点シェーダの作成（コンパイル）
 	//ID3DBlob* pCompileVS = nullptr;
 	//D3DCompileFromFile(L"Simple3D.hlsl", nullptr, nullptr, "VS", "vs_5_0", NULL, 0, &pCompileVS, NULL);
@@ -185,63 +186,64 @@ HRESULT Direct3D::InitShader()
 	//}
 
  //頂点シェーダの作成（コンパイル）
-  ID3DBlob* pCompileVS = nullptr;
-D3DCompileFromFile(L"Simple2D.hlsl", nullptr, nullptr, "VS", "vs_5_0", NULL, 0, &pCompileVS, NULL);
-assert(pCompileVS != nullptr); //ここはassertionで処理
+	//頂点シェーダの作成（コンパイル）
+	ID3DBlob* pCompileVS = nullptr;
+	D3DCompileFromFile(L"Simple2D.hlsl", nullptr, nullptr, "VS", "vs_5_0", NULL, 0, &pCompileVS, NULL);
+	assert(pCompileVS != nullptr);
+	hr = pDevice_->CreateVertexShader(pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), NULL, &pVertexShader_);
+	if (FAILED(hr)) {
+		//エラー処理
+		MessageBox(nullptr, "頂点シェーダ―の作成に失敗しました", "エラー", MB_OK);
+		return hr;
+	}
 
-hr = pDevice_->CreateVertexShader(pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), NULL, &pVertexShader_);
-if (FAILED(hr))
-{
-	//エラー処理
-	MessageBox(NULL, "頂点シェーダーの作成に失敗しました", "エラー", MB_OK);
-	//解放処理
-	return hr;
-}
 
-//頂点インプットレイアウト
-D3D11_INPUT_ELEMENT_DESC layout[] = {
-	{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,  D3D11_INPUT_PER_VERTEX_DATA, 0 },	//位置
-	{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, sizeof(DirectX::XMVECTOR) , D3D11_INPUT_PER_VERTEX_DATA, 0 },//UV座標
-};
-hr = pDevice_->CreateInputLayout(layout, 2, pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), &pVertexLayout_);
-if (FAILED(hr))
-{
-	//エラー処理
-	MessageBox(NULL, "頂点インプットレイアウトの作成に失敗しました", "エラー", MB_OK);
-	//解放処理
+
+	//頂点インプットレイアウト
+	D3D11_INPUT_ELEMENT_DESC layout[] = {
+		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,  D3D11_INPUT_PER_VERTEX_DATA, 0 },    //位置
+		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, sizeof(DirectX::XMVECTOR) , D3D11_INPUT_PER_VERTEX_DATA, 0 },    //UV座標
+	};
+	hr = pDevice_->CreateInputLayout(layout, sizeof(layout) / sizeof(D3D11_INPUT_ELEMENT_DESC), pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), &pVertexLayout_);
+	if (FAILED(hr)) {
+		//エラー処理
+		MessageBox(nullptr, "頂点インプットレイアウトの作成に失敗しました", "エラー", MB_OK);
+		return hr;
+	}
+
+
+
 	SAFE_RELEASE(pCompileVS);
-	return hr;
-}
-SAFE_RELEASE(pCompileVS);
 
- //ピクセルシェーダの作成（コンパイル）
-ID3DBlob* pCompilePS = nullptr;
-D3DCompileFromFile(L"Simple3D.hlsl", nullptr, nullptr, "PS", "ps_5_0", NULL, 0, &pCompilePS, NULL);
-assert(pCompilePS != nullptr);
 
-hr = pDevice_->CreatePixelShader(pCompilePS->GetBufferPointer(), pCompilePS->GetBufferSize(), NULL, &pPixelShader_);
-if (FAILED(hr))
-{
-	//エラー処理
-	MessageBox(NULL, "ピクセルシェーダの作成に失敗しました", "エラー", MB_OK);
+
+	//ピクセルシェーダの作成（コンパイル）
+	ID3DBlob* pCompilePS = nullptr;
+	D3DCompileFromFile(L"Simple2D.hlsl", nullptr, nullptr, "PS", "ps_5_0", NULL, 0, &pCompilePS, NULL);
+	assert(pCompilePS != nullptr);
+	hr = pDevice_->CreatePixelShader(pCompilePS->GetBufferPointer(), pCompilePS->GetBufferSize(), NULL, &pPixelShader_);
+	if (FAILED(hr)) {
+		//エラー処理
+		MessageBox(nullptr, "ピクセルシェーダ―の作成に失敗しました", "エラー", MB_OK);
+		return hr;
+	}
 	SAFE_RELEASE(pCompilePS);
-	return hr;
-}
 
-SAFE_RELEASE(pCompilePS);
 
-//ラスタライザ作成
-D3D11_RASTERIZER_DESC rdc = {};
-rdc.CullMode = D3D11_CULL_BACK;
-rdc.FillMode = D3D11_FILL_SOLID;
-rdc.FrontCounterClockwise = FALSE;
-hr = pDevice_->CreateRasterizerState(&rdc, &pRasterizerState_);
-if (FAILED(hr))
-{
-	//エラー処理
-	MessageBox(NULL, "ラスタライザの作成に失敗しました", "エラー", MB_OK);
-	return hr;
-}
+
+	//ラスタライザ作成
+	D3D11_RASTERIZER_DESC rdc = {};
+	rdc.CullMode = D3D11_CULL_BACK;
+	rdc.FillMode = D3D11_FILL_SOLID;
+	rdc.FrontCounterClockwise = FALSE;
+	hr = pDevice_->CreateRasterizerState(&rdc, &pRasterizerState_);
+	if (FAILED(hr)) {
+		//エラー処理
+		MessageBox(nullptr, "ラスタライザの作成に失敗しました", "エラー", MB_OK);
+		return hr;
+	}
+
+	
 	//それぞれをデバイスコンテキストにセット
 	pContext_->VSSetShader(pVertexShader_, NULL, 0);	//頂点シェーダー
 	pContext_->PSSetShader(pPixelShader_, NULL, 0);	//ピクセルシェーダー
