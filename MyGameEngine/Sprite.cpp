@@ -15,9 +15,7 @@ HRESULT Sprite::Initialize()
 {
 	HRESULT hr = S_OK;
 	// 頂点情報
-	
-
-	
+	InitVertexData();
 
 	hr = CreateVertexBuffer();
 	if (FAILED(hr))
@@ -27,9 +25,6 @@ HRESULT Sprite::Initialize()
 		return hr;
 	}
 
-
-
-	
 	hr = CreateIndexBuffer();
 	if (FAILED(hr))
 	{
@@ -38,12 +33,10 @@ HRESULT Sprite::Initialize()
 		return hr;
 	}
 
-
-
-	
+	InitIndexData();
 
 	// コンスタントバッファの作成
-	hr = Direct3D::pDevice_->CreateBuffer(&cb, nullptr, &pConstantBuffer_);
+	hr = CreateConstantBuffer();
 	if (FAILED(hr))
 	{
 		//エラー処理
@@ -51,7 +44,13 @@ HRESULT Sprite::Initialize()
 		return hr;
 	}
 
-	
+	hr = LoadTexture();
+		if (FAILED(hr))
+		{
+			//エラー処理
+			MessageBox(nullptr, "画像の読み込みに失敗しました", "エラー", MB_OK);
+			return hr;
+		}
 
 	return S_OK;
 }
@@ -102,7 +101,7 @@ void Sprite::Release()
 
 void Sprite::InitVertexData()
 {
-	
+	VERTEX& vertexNum_
 	VERTEX vertices[] =
 	{
 		{ XMVectorSet(-1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f)},   // 四角形の頂点（左上）
@@ -115,6 +114,7 @@ void Sprite::InitVertexData()
 
 HRESULT Sprite::CreateVertexBuffer()
 {
+	
 	// 頂点データ用バッファの設定
 	D3D11_BUFFER_DESC bd_vertex;
 	bd_vertex.ByteWidth = sizeof(vertices_);
@@ -125,6 +125,8 @@ HRESULT Sprite::CreateVertexBuffer()
 	bd_vertex.StructureByteStride = 0;
 	D3D11_SUBRESOURCE_DATA data_vertex;
 	data_vertex.pSysMem = &vertices_;
+
+	return Direct3D::pDevice_->CreateBuffer(&bd_vertex, &data_vertex, &pVertexBuffer_);
 }
 
 void Sprite::InitIndexData()
@@ -148,7 +150,7 @@ HRESULT Sprite::CreateIndexBuffer()
 	InitData.SysMemPitch = 0;
 	InitData.SysMemSlicePitch = 0;
 
-	
+	return Direct3D::pDevice_->CreateBuffer(&bd, &InitData, &pIndexBuffer_);
 }
 
 HRESULT Sprite::CreateConstantBuffer()
@@ -161,12 +163,15 @@ HRESULT Sprite::CreateConstantBuffer()
 	cb.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 	cb.MiscFlags = 0;
 	cb.StructureByteStride = 0;
+
+	return Direct3D::pDevice_->CreateBuffer(&cb, nullptr, &pConstantBuffer_);
 }
 
 HRESULT Sprite::LoadTexture()
 {
 	pTexture_ = new Texture;
-	pTexture_->Load("Assets\\Dice.png");
+	return pTexture_->Load("Assets\\Dice.png");
+
 }
 
 void Sprite::PassDataToCV(DirectX::XMMATRIX& worldMatrix)
