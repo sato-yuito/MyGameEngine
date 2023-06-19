@@ -176,7 +176,6 @@ HRESULT Sprite::LoadTexture()
 {
 	pTexture_ = new Texture;
 	return pTexture_->Load("Assets\\Dice.png");
-
 }
 
 void Sprite::PassDataToCV(DirectX::XMMATRIX& worldMatrix)
