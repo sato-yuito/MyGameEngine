@@ -137,7 +137,7 @@ HRESULT Sprite::CreateVertexBuffer()
 void Sprite::InitIndexData()
 {
 	//インデックス情報
-	std::vector<VERTEX> index_ = { {0,2,3, 0,1,2 } };
+	std::vector<VERTEX> index_ = { {0,2,3, 0,1,2} };
 }
 
 HRESULT Sprite::CreateIndexBuffer()
