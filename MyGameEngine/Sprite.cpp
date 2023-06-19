@@ -106,8 +106,8 @@ void Sprite::Release()
 
 void Sprite::InitVertexData()
 {
-	
-	std::vector<VERTEX> vertices_ =
+	 
+	 VERTEX vertices[]
 	{
 		{ XMVectorSet(-1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f)},   // 四角形の頂点（左上）
 		{ XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f),	XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) },   // 四角形の頂点（右上）
@@ -122,7 +122,7 @@ HRESULT Sprite::CreateVertexBuffer()
 	
 	// 頂点データ用バッファの設定
 	D3D11_BUFFER_DESC bd_vertex;
-	bd_vertex.ByteWidth = sizeof(vertices_);
+	bd_vertex.ByteWidth = sizeof(vertices_.data());
 	bd_vertex.Usage = D3D11_USAGE_DEFAULT;
 	bd_vertex.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 	bd_vertex.CPUAccessFlags = 0;
@@ -137,7 +137,7 @@ HRESULT Sprite::CreateVertexBuffer()
 void Sprite::InitIndexData()
 {
 	//インデックス情報
-	std::vector<VERTEX> index_ = { {0,2,3, 0,1,2} };
+	int index[] = {0,2,3, 0,1,2};
 }
 
 HRESULT Sprite::CreateIndexBuffer()
@@ -145,13 +145,13 @@ HRESULT Sprite::CreateIndexBuffer()
 	//インデックスバッファを生成する
 	D3D11_BUFFER_DESC   bd;
 	bd.Usage = D3D11_USAGE_DEFAULT;
-	bd.ByteWidth = sizeof(index_);
+	bd.ByteWidth = sizeof(index_.data());
 	bd.BindFlags = D3D11_BIND_INDEX_BUFFER;
 	bd.CPUAccessFlags = 0;
 	bd.MiscFlags = 0;
 
 	D3D11_SUBRESOURCE_DATA InitData;
-	InitData.pSysMem = &index_;
+	InitData.pSysMem = index_.data();
 	InitData.SysMemPitch = 0;
 	InitData.SysMemSlicePitch = 0;
 
