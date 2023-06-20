@@ -3,7 +3,7 @@
 #include "Texture.h"
 #include <vector>
 #include<DirectXMath.h>
-
+#include"Transform.h"
 using namespace DirectX;
 
 #define SAFE_DELETE_ARRAY(p) if(p != nullptr){ delete[] p; p = nullptr;}
@@ -50,7 +50,7 @@ public:
 
 	//描画
 	//引数：worldMatrix	ワールド行列
-	void Draw(XMMATRIX& worldMatrix);
+	void Draw(Transform&transform);
 
 	//解放
 	void Release();

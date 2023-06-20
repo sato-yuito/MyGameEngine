@@ -46,12 +46,12 @@ HRESULT Sprite::Initialize()
 
 }
 
-void Sprite::Draw(XMMATRIX& worldMatrix)
+void Sprite::Draw(Transform&transform)
 {
 	Direct3D::SetShader(SHADER_2D);
-
+	transform.Calclation();
 	//コンスタントバッファに渡す情報
-	PassDataToCB(worldMatrix);
+	PassDataToCB(transform.GetWorldMatrix());
 
 	SetBufferToPipeline();
 	Direct3D::pContext_->DrawIndexed(indexNum, 0, 0);
