@@ -1,7 +1,7 @@
 #include <Windows.h>
 #include"Direct3D.h"
 //#include"Quad.h"
-//#include"Dice.h"
+#include"Dice.h"
 #include"Camera.h"
 #include"Sprite.h"
 //定数宣言
@@ -65,23 +65,15 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
     }
 
     Camera::Initialize();
-    //Quad関数初期化
-   //Quad* quad = new Quad;
-    //Dice* dice = new Dice;
-    //hr = quad->Initialize();
-    //hr = dice->Initialize();
-    ///if (FAILED(hr))
-    //{
-        //PostQuitMessage(0);  //プログラム終了
-    //}
+ 
+    //pQuad = new Quad;
+      //pQuad->Initialize();
 
-    Sprite* sprite = new Sprite;
-    hr = sprite->Initialize();
-    if (FAILED(hr))
-    {
-        PostQuitMessage(0);  //プログラム終了
-    }
-  
+    Dice* pDice = new Dice;
+    hr = pDice->Initialize();
+    Sprite* pSprite = new Sprite;
+    hr = pSprite->Initialize();
+
 
     //メッセージループ（何か起きるのを待つ）
     MSG msg;
@@ -102,36 +94,22 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
             //ゲームの処理
             Direct3D::BeginDraw();
            
-            //描画処理
-            //XMMATRIX matA = XMMatrixRotationZ(XMConvertToRadians(45));
-            XMMATRIX mat = XMMatrixTranslation(0, 0, 0);
-            //XMMATRIX matC = XMMatrixScaling(2.0, 2.0, 2.0);
-            //XMMATRIX mat = matC * matA * matB;
-            //static float a = 0;
-            //static int b = 0;
-            //static int c = 0;
-            //a += 0.05;
-            //b += 1;
-            //c += 1;
-            //XMMATRIX matA = XMMatrixRotationY(XMConvertToRadians(a));   
-            //XMMATRIX matS = XMMatrixRotationZ(XMConvertToRadians(a));
-            //XMMATRIX mat = matA * matC *matS;
-            //XMMATRIX matY = XMMatrixRotationY(XMConvertToRadians(b));   //Y軸で30°回転させる行列
-            //XMMATRIX matZ= XMMatrixRotationZ(XMConvertToRadians(c));   //Z軸で30°回転させる行列
-            //XMMATRIX mat = matZ*matX*matY;//回す掛け算
-            //XMMATRIX matB = XMMatrixTranslation(4, 0, 0);
-            //XMMATRIX mat = matA * matB;
-            //quad->Draw(mat);
-           // dice->Draw(mat);
-            sprite->Draw(mat);
+            static float angle = 0;
+            angle += 0.05;
+            XMMATRIX mat = XMMatrixRotationY(XMConvertToRadians(angle)) * XMMatrixTranslation(0, 3, 0);
+            pDice->Draw(mat);
+
+            mat = XMMatrixScaling(512.0f / 800.0f, 256.0f / 600.0f, 1.0f);
+            pSprite->Draw(mat);
+
             Direct3D::EndDraw();
         }
     }
 
     //解放処理
-    //SAFE_DELETE(quad);
-    //SAFE_DELETE(dice);
-    SAFE_DELETE(sprite);
+    //SAFE_DELETE(pQuad);
+    SAFE_DELETE(pDice);
+    SAFE_DELETE(pSprite);
     Direct3D::Release();
    
 }

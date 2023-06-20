@@ -11,7 +11,7 @@ SamplerState	g_sampler : register(s0);	//サンプラー
 cbuffer global
 {
 	float4x4	matWVP;			// ワールド・ビュー・プロジェクションの合成行列
-	float4x4	matW;	//ワールド行列
+	float4x4	matNormal;           // ワールド行列
 };
 
 //───────────────────────────────────────
@@ -36,13 +36,11 @@ VS_OUT VS(float4 pos : POSITION, float4 uv : TEXCOORD, float4 normal : NORMAL)
 	//スクリーン座標に変換し、ピクセルシェーダーへ
 	outData.pos = mul(pos, matWVP);
 	outData.uv = uv;
-	
-	//法線を回転
-	normal = mul(normal,matW);
-	
-	float4 light = float4(-1, 0.5, -0.7, 0);
+
+	normal = mul(normal, matNormal);
+	float4 light = float4(1, 0.8, -0.3, 0);
 	light = normalize(light);
-	outData.color = dot(normal, light);
+	outData.color = clamp(dot(normal, light), 0, 1);
 
 	//まとめて出力
 	return outData;
@@ -52,11 +50,10 @@ VS_OUT VS(float4 pos : POSITION, float4 uv : TEXCOORD, float4 normal : NORMAL)
 // ピクセルシェーダ
 //───────────────────────────────────────
 float4 PS(VS_OUT inData) : SV_Target
-{ 
-	float4 lightSource = float4(1.0,1.0,1.0,1.0);
+{
+	float4 lightSource = float4(1.0, 1.0, 1.0, 1.0);
 	float4 ambentSource = float4(0.2, 0.2, 0.2, 1.0);
 	float4 diffuse = lightSource * g_texture.Sample(g_sampler, inData.uv) * inData.color;
 	float4 ambient = lightSource * g_texture.Sample(g_sampler, inData.uv) * ambentSource;
-	return diffuse + ambient;
-	//return g_texture.Sample(g_sampler, inData.uv) * inData.color;
+	return (diffuse + ambient);
 }

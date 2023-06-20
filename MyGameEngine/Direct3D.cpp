@@ -2,6 +2,8 @@
 #include "Direct3D.h"
 #include <DirectXMath.h>
 #include <cassert>
+#include <vector>
+
 
 //変数
 namespace Direct3D
@@ -127,22 +129,16 @@ HRESULT Direct3D::Initialize(int winW, int winH, HWND hWnd)
 //シェーダー準備
 HRESULT Direct3D::InitShader()
 {
-	HRESULT hr = S_OK;
-	
-	hr = InitShader3D();
-	if (FAILED(hr))
+	if (FAILED(InitShader3D()))
 	{
-			return hr;
+		return E_FAIL;
 	}
 
-	hr = InitShader2D();
-	if (FAILED(hr))
+	if (FAILED(InitShader2D()))
 	{
-		return hr;
+		return E_FAIL;
 	}
 
-	//それぞれをデバイスコンテキストにセット
-	
 	return S_OK;
 }
 HRESULT Direct3D::InitShader3D()
@@ -193,7 +189,7 @@ HRESULT Direct3D::InitShader3D()
 	{
 		//エラー処理
 		MessageBox(NULL, "ピクセルシェーダの作成に失敗しました", "エラー", MB_OK);
-		SAFE_RELEASE(pCompilePS);
+		
 		return hr;
 	}
 
@@ -211,6 +207,7 @@ HRESULT Direct3D::InitShader3D()
 		MessageBox(NULL, "ラスタライザの作成に失敗しました", "エラー", MB_OK);
 		return hr;
 	}
+	return S_OK;
 }
 
 HRESULT Direct3D::InitShader2D()
@@ -225,16 +222,17 @@ HRESULT Direct3D::InitShader2D()
 	if (FAILED(hr)) {
 		//エラー処理
 		MessageBox(nullptr, "頂点シェーダ―の作成に失敗しました", "エラー", MB_OK);
+		SAFE_RELEASE(pCompileVS);
 		return hr;
 	}
 
 	//頂点インプットレイアウト
-	D3D11_INPUT_ELEMENT_DESC layout[] = {
+	std::vector<D3D11_INPUT_ELEMENT_DESC> layout = {
 		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,  D3D11_INPUT_PER_VERTEX_DATA, 0 },    //位置
 		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, sizeof(DirectX::XMVECTOR) , D3D11_INPUT_PER_VERTEX_DATA, 0 },    //UV座標
 	};
-	hr = pDevice_->CreateInputLayout(layout, 2, pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), 
-		& (shaderBundle[SHADER_2D].pVertexLayout_));
+	hr = pDevice_->CreateInputLayout(layout.data(), layout.size(),
+		pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), &(shaderBundle[SHADER_2D].pVertexLayout_));
 	if (FAILED(hr)) {
 		//エラー処理
 		MessageBox(nullptr, "頂点インプットレイアウトの作成に失敗しました", "エラー", MB_OK);
@@ -266,7 +264,7 @@ HRESULT Direct3D::InitShader2D()
 		MessageBox(nullptr, "ラスタライザの作成に失敗しました", "エラー", MB_OK);
 		return hr;
 	}
-
+	return S_OK;
 }
 
 void Direct3D::SetShader(SHADER_TYPE type)
