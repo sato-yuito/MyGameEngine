@@ -29,7 +29,7 @@ protected:
 	ID3D11Buffer* pVertexBuffer_;
 
 	UINT64 indexNum;
-	std::vector<VERTEX> index_;
+	std::vector<int> index_;
 
 	ID3D11Buffer* pIndexBuffer_;//
 	ID3D11Buffer* pConstantBuffer_;	//コンスタントバッファ
