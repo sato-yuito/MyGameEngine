@@ -4,6 +4,7 @@
 #include"Dice.h"
 #include"Camera.h"
 #include"Sprite.h"
+#include"Fbx.h"
 //定数宣言
 const char* WIN_CLASS_NAME = "SampleGame";  //ウィンドウクラス名
 const char* MENU_BAR_NAME = "Let's make game";
@@ -73,7 +74,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
     hr = pDice->Initialize();
     Sprite* pSprite = new Sprite;
     hr = pSprite->Initialize();
-
+    Fbx* pFbx = new Fbx;
+    hr = pFbx->Load();
 
     //メッセージループ（何か起きるのを待つ）
     MSG msg;

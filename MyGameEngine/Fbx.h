@@ -27,7 +27,7 @@ class Fbx
 	ID3D11Buffer* pVertexBuffer_;
 	ID3D11Buffer* pIndexBuffer_;
 	ID3D11Buffer* pConstantBuffer_;
-
+	
 public:
 
 	Fbx();
@@ -35,10 +35,10 @@ public:
 	void    Draw(Transform& transform);
 	void    Release();
 
-	void InitVertex(fbxsdk::FbxMesh* mesh);
+	HRESULT InitVertex(fbxsdk::FbxMesh* mesh);
 	
-	void InitIndex(fbxsdk::FbxMesh* mesh);
+	HRESULT InitIndex(fbxsdk::FbxMesh* mesh);
 
-	void IntConstantBuffer();	//コンスタントバッファ準備
+	HRESULT IntConstantBuffer();	//コンスタントバッファ準備
 };
 
