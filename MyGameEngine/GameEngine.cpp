@@ -75,7 +75,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
     Sprite* pSprite = new Sprite;
     hr = pSprite->Initialize();
     Fbx* pFbx = new Fbx;
-    hr = pFbx->Load();
+    hr = pFbx->Load("oden.fbx");
 
     //メッセージループ（何か起きるのを待つ）
     MSG msg;
@@ -99,9 +99,11 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
             //XMMATRIX mat = XMMatrixRotationY(XMConvertToRadians(angle)) * XMMatrixTranslation(0,3,0);
 
             Transform diceTransform;
+            Transform fbxTransform;
             diceTransform.position_.y = 3.0f;
             diceTransform.rotate_.y = angle;
             pDice->Draw(diceTransform);
+            pFbx->Draw(fbxTransform);
 
             Transform spriteTransform;
             spriteTransform.scale_.x = 512.0f / 800.0f;

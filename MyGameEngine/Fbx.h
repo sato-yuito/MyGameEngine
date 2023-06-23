@@ -4,6 +4,7 @@
 #include <string>
 #include "Transform.h"
 #include"Direct3D.h"
+#include"Camera.h"
 #pragma comment(lib, "LibFbxSDK-MD.lib")
 #pragma comment(lib, "LibXml2-MT.lib")
 #pragma comment(lib, "zlib-MT.lib")

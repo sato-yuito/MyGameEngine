@@ -43,6 +43,50 @@ void Fbx::Release()
 	SAFE_RELEASE(pVertexBuffer_);
 }
 
+void Fbx::Draw(Transform& transform)
+{
+	Direct3D::SetShader(SHADER_3D);
+	transform.Calclation();//トランスフォームを計算
+	//コンスタントバッファに情報を渡す
+
+	CONSTANT_BUFFER cb;
+	cb.matWVP = XMMatrixTranspose(transform.GetWorldMatrix() * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());
+	cb.matNormal = XMMatrixTranspose(transform.GetNormalMatrix());
+
+	D3D11_MAPPED_SUBRESOURCE pdata;
+	Direct3D::pContext_->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのデータアクセスを止める
+	memcpy_s(pdata.pData, pdata.RowPitch, (void*)(&cb), sizeof(cb));	// データを値を送る
+
+	/*D3D11SamplerState* pSampler = pTexture_->GetSampler();
+
+	Direct3D::pContext_->PSSetSamplers(0, 1, &pSampler);
+
+	ID3D11ShaderResourceView* pSRV = pTexture_->GetSRV();
+
+	Direct3D::pContext_->PSSetShaderResources(0, 1, &pSRV);*/
+
+	Direct3D::pContext_->Unmap(pConstantBuffer_, 0);	//再開
+
+	//頂点バッファ、インデックスバッファ、コンスタントバッファをパイプラインにセット
+	UINT stride = sizeof(VERTEX);
+	UINT offset = 0;
+	Direct3D::pContext_->IASetVertexBuffers(0, 1, &pVertexBuffer_, &stride, &offset);
+
+	// インデックスバッファーをセット
+	stride = sizeof(int);
+	offset = 0;
+	Direct3D::pContext_->IASetIndexBuffer(pIndexBuffer_, DXGI_FORMAT_R32_UINT, 0);
+
+	//コンスタントバッファ
+	Direct3D::pContext_->VSSetConstantBuffers(0, 1, &pConstantBuffer_);	//頂点シェーダー用	
+	Direct3D::pContext_->PSSetConstantBuffers(0, 1, &pConstantBuffer_);	//ピクセルシェーダー用
+
+	//Direct3D::pContext_->DrawIndexed(indexNum_, 0, 0);
+
+	//描画
+	Direct3D::pContext_->DrawIndexed(, 0, 0);
+}
+
 HRESULT Fbx::InitVertex(fbxsdk::FbxMesh* mesh)
 {
 	VERTEX* vertices = new VERTEX[vertexCount_];
@@ -71,7 +115,7 @@ HRESULT Fbx::InitVertex(fbxsdk::FbxMesh* mesh)
 	bd_vertex.StructureByteStride = 0;
 	D3D11_SUBRESOURCE_DATA data_vertex;
 	data_vertex.pSysMem = vertices;
-	HRESULT hr;
+	
 	hr = Direct3D::pDevice_->CreateBuffer(&bd_vertex, &data_vertex, &pVertexBuffer_);
 	
 	if (FAILED(hr))
@@ -140,6 +184,3 @@ HRESULT Fbx::IntConstantBuffer()
 	return S_OK;
 }
 
-void Fbx::Draw(Transform& transform)
-{
-}
