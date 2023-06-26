@@ -1,5 +1,10 @@
 #include "Fbx.h"
 
+Fbx::Fbx()
+	:pVertexBuffer_(nullptr),pIndexBuffer_(nullptr),pConstantBuffer_(nullptr),vertexCount_(0),polygonCount_(0)
+{
+}
+
 HRESULT Fbx::Load(std::string fileName)
 {
 	//マネージャを生成
@@ -84,7 +89,7 @@ void Fbx::Draw(Transform& transform)
 	//Direct3D::pContext_->DrawIndexed(indexNum_, 0, 0);
 
 	//描画
-	Direct3D::pContext_->DrawIndexed(, 0, 0);
+	Direct3D::pContext_->DrawIndexed(polygonCount_ * 3, 0, 0);
 }
 
 HRESULT Fbx::InitVertex(fbxsdk::FbxMesh* mesh)
@@ -123,7 +128,7 @@ HRESULT Fbx::InitVertex(fbxsdk::FbxMesh* mesh)
 		MessageBox(NULL, "頂点バッファの作成に失敗しました", "エラー", MB_OK);
 	
 	}
-	
+	return S_OK;
 }
 
 HRESULT Fbx::InitIndex(fbxsdk::FbxMesh* mesh)

@@ -75,7 +75,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
     Sprite* pSprite = new Sprite;
     hr = pSprite->Initialize();
     Fbx* pFbx = new Fbx;
-    hr = pFbx->Load("oden.fbx");
+    hr = pFbx->Load("Assets\\oden.fbx");
 
     //メッセージループ（何か起きるのを待つ）
     MSG msg;
@@ -118,6 +118,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
     //解放処理
     //SAFE_DELETE(pQuad);
     SAFE_DELETE(pDice);
+    SAFE_DELETE(pFbx);
     SAFE_DELETE(pSprite);
     Direct3D::Release();
    
