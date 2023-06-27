@@ -226,7 +226,7 @@ HRESULT Direct3D::InitShader2D()
 	{
 		//エラー処理
 		MessageBox(NULL, "頂点シェーダーの作成に失敗しました", "エラー", MB_OK);
-		SAFE_RELEASE(pCompileVS);
+		//SAFE_RELEASE(pCompileVS);
 		//解放処理
 		return hr;
 	}
@@ -328,6 +328,5 @@ void Direct3D::Release()
 
 	SAFE_RELEASE(pRenderTargetView_);
 	SAFE_RELEASE(pSwapChain_);
-	SAFE_RELEASE(pContext_);
-	SAFE_RELEASE(pDevice_);
+	
 }

@@ -1,9 +1,9 @@
 #include <Windows.h>
 #include"Direct3D.h"
 //#include"Quad.h"
-#include"Dice.h"
+//#include"Dice.h"
 #include"Camera.h"
-#include"Sprite.h"
+//#include"Sprite.h"
 #include"Fbx.h"
 //定数宣言
 const char* WIN_CLASS_NAME = "SampleGame";  //ウィンドウクラス名
@@ -67,13 +67,13 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 
     Camera::Initialize();
  
-    //pQuad = new Quad;
+    //Quad*pQuad = new Quad;
       //pQuad->Initialize();
 
-    Dice* pDice = new Dice;
-    hr = pDice->Initialize();
-    Sprite* pSprite = new Sprite;
-    hr = pSprite->Initialize();
+    //Dice* pDice = new Dice;
+    //hr = pDice->Initialize();
+    //Sprite* pSprite = new Sprite;
+    //hr = pSprite->Initialize();
     Fbx* pFbx = new Fbx;
     hr = pFbx->Load("Assets\\oden.fbx");
 
@@ -98,18 +98,20 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
             angle += 0.05;
             //XMMATRIX mat = XMMatrixRotationY(XMConvertToRadians(angle)) * XMMatrixTranslation(0,3,0);
 
+            //Transform quadTransform;
             Transform diceTransform;
             Transform fbxTransform;
-            diceTransform.position_.y = 3.0f;
-            diceTransform.rotate_.y = angle;
-            pDice->Draw(diceTransform);
+            //diceTransform.position_.y = 3.0f;
+            //diceTransform.rotate_.y = angle;
+            //pQuad->Draw(quadTransform);
+            //pDice->Draw(diceTransform);
             pFbx->Draw(fbxTransform);
 
             Transform spriteTransform;
             spriteTransform.scale_.x = 512.0f / 800.0f;
             spriteTransform.scale_.y = 256.0f / 600.0f;
             //mat = XMMatrixScaling(512.0f/800.0f, 256.0f/600.0f, 1.0f);
-            pSprite->Draw(spriteTransform);
+            //pSprite->Draw(spriteTransform);
 
             Direct3D::EndDraw();
         }
@@ -117,9 +119,9 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 
     //解放処理
     //SAFE_DELETE(pQuad);
-    SAFE_DELETE(pDice);
+    //SAFE_DELETE(pDice);
     SAFE_DELETE(pFbx);
-    SAFE_DELETE(pSprite);
+    //SAFE_DELETE(pSprite);
     Direct3D::Release();
    
 }
