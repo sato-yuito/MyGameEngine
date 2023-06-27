@@ -1,16 +1,14 @@
 #include "Transform.h"
 
-Transform::Transform()
+Transform::Transform(): 
+    matTranslate_(XMMatrixIdentity()),
+matRotate_(XMMatrixIdentity()),
+matScale_(XMMatrixIdentity()),
+position_(XMFLOAT3(0, 0, 0)),
+rotate_(XMFLOAT3(0, 0, 0)),
+scale_(XMFLOAT3(1, 1, 1))
 {
-    //移動、回転、拡大の初期化
-    position_ = XMFLOAT3(0, 0, 0);
-    rotate_ = XMFLOAT3(0, 0, 0);
-    scale_ = XMFLOAT3(1, 1, 1);
-
-    //移動、回転、拡大それぞれの行列の初期化
-    matTranslate_ = XMMatrixIdentity();
-    matRotate_ = XMMatrixIdentity();
-    matScale_ = XMMatrixIdentity();
+    
 }
 
 Transform::~Transform()
@@ -33,7 +31,6 @@ void Transform::Calclation()
 
 XMMATRIX Transform::GetWorldMatrix()
 {
-    Calclation();
     return matScale_* matRotate_* matTranslate_;
 }
 

@@ -3,7 +3,7 @@
 #include <DirectXMath.h>
 #include <cassert>
 #include <vector>
-
+#include "Quad.h"
 //•Ï”
 namespace Direct3D
 {

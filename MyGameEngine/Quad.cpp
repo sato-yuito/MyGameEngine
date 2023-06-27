@@ -180,12 +180,11 @@ HRESULT Quad::LoadTexture()
 //コンスタントバッファに各種情報を渡す
 void Quad::PassDataToCB(Transform transform)
 {
-
 	CONSTANT_BUFFER cb;
 	cb.matWVP = XMMatrixTranspose(transform.GetWorldMatrix() * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());
 	cb.matNormal = XMMatrixTranspose(transform.GetNormalMatrix());
 
-    D3D11_MAPPED_SUBRESOURCE pdata;
+	D3D11_MAPPED_SUBRESOURCE pdata;
 	Direct3D::pContext_->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのデータアクセスを止める
 	memcpy_s(pdata.pData, pdata.RowPitch, (void*)(&cb), sizeof(cb));	// データを値を送る
 
@@ -198,6 +197,7 @@ void Quad::PassDataToCB(Transform transform)
 	Direct3D::pContext_->PSSetShaderResources(0, 1, &pSRV);
 
 	Direct3D::pContext_->Unmap(pConstantBuffer_, 0);	//再開
+
 
 }
 
