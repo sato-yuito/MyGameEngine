@@ -71,10 +71,10 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
     //Quad*pQuad = new Quad;
       //pQuad->Initialize();
 
-    //Dice* pDice = new Dice;
-    //hr = pDice->Initialize();
-    //Sprite* pSprite = new Sprite;
-    //hr = pSprite->Initialize();
+    /*Dice* pDice = new Dice;
+    hr = pDice->Initialize();
+    Sprite* pSprite = new Sprite;
+    hr = pSprite->Initialize();*/
     Fbx* pFbx = new Fbx;
     hr = pFbx->Load("Assets\\oden.fbx");
 
@@ -104,13 +104,13 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
             //Transform quadTransform;
             Transform diceTransform;
             //Transform fbxTransform;
-            diceTransform.position_.y = 0.0f;
-            //diceTransform.rotate_.y = angle;
+            //diceTransform.position_.y = 0.0f;
+            diceTransform.rotate_.y = angle;
             //pQuad->Draw(quadTransform);
             //pDice->Draw(diceTransform);
             pFbx->Draw(diceTransform);
 
-           // Transform spriteTransform;
+            //Transform spriteTransform;
             //spriteTransform.scale_.x = 512.0f / 800.0f;
             //spriteTransform.scale_.y = 256.0f / 600.0f;
             //mat = XMMatrixScaling(512.0f/800.0f, 256.0f/600.0f, 1.0f);

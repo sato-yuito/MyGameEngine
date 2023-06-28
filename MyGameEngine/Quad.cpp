@@ -48,7 +48,6 @@ void Quad::Draw(Transform& transform)
 
 	Direct3D::SetShader(SHADER_3D);
 	transform.Calclation();//トランスフォームを計算
-	
 	//コンスタントバッファに情報を渡す
 	PassDataToCB(transform);
 
@@ -57,6 +56,9 @@ void Quad::Draw(Transform& transform)
 
 	//描画
 	Direct3D::pContext_->DrawIndexed(index_.size(), 0, 0);
+
+
+
 }
 
 void Quad::Release()
@@ -178,6 +180,7 @@ HRESULT Quad::LoadTexture()
 //コンスタントバッファに各種情報を渡す
 void Quad::PassDataToCB(Transform transform)
 {
+
 	CONSTANT_BUFFER cb;
 	cb.matWVP = XMMatrixTranspose(transform.GetWorldMatrix() * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());
 	cb.matNormal = XMMatrixTranspose(transform.GetNormalMatrix());

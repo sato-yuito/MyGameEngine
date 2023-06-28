@@ -29,6 +29,7 @@ class Fbx
 	{
 		XMVECTOR position;
 		XMVECTOR uv;
+		XMVECTOR normal;
 	};
 
 	

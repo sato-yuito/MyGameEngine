@@ -43,7 +43,7 @@ void Dice::InitVertexData()
 void Dice::InitIndexData()
 {
 	//インデックス情報
-	int index[] = { 0,2,3, 0,1,2,
+	index_ = { 0,2,3, 0,1,2,
 		            4,7,6, 4,6,5,
 		            8,11,10, 8,10,9,
 		            12,14,15, 12,13,14,
