@@ -48,6 +48,7 @@ void Quad::Draw(Transform& transform)
 
 	Direct3D::SetShader(SHADER_3D);
 	transform.Calclation();//トランスフォームを計算
+	
 	//コンスタントバッファに情報を渡す
 	PassDataToCB(transform);
 
@@ -56,9 +57,6 @@ void Quad::Draw(Transform& transform)
 
 	//描画
 	Direct3D::pContext_->DrawIndexed(index_.size(), 0, 0);
-
-
-
 }
 
 void Quad::Release()
@@ -197,7 +195,6 @@ void Quad::PassDataToCB(Transform transform)
 	Direct3D::pContext_->PSSetShaderResources(0, 1, &pSRV);
 
 	Direct3D::pContext_->Unmap(pConstantBuffer_, 0);	//再開
-
 
 }
 

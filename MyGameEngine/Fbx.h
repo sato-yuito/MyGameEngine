@@ -2,11 +2,13 @@
 #include <d3d11.h>
 #include <fbxsdk.h>
 #include <string>
+#include<vector>
 #include "Transform.h"
 #include"Texture.h"
 #pragma comment(lib, "LibFbxSDK-MD.lib")
 #pragma comment(lib, "LibXml2-MD.lib")
 #pragma comment(lib, "zlib-MD.lib")
+
 
 class Texture;
 class Fbx
@@ -40,7 +42,7 @@ class Fbx
 	ID3D11Buffer** pIndexBuffer_;
 	ID3D11Buffer* pConstantBuffer_;
 	MATERIAL* pMaterialList_;
-
+	std::vector<int>indexCount_;
 	void InitVertex(fbxsdk::FbxMesh* mesh);
 	void InitIndex(fbxsdk::FbxMesh* mesh);
 	void IntConstantBuffer();

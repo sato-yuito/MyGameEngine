@@ -108,8 +108,11 @@ void Fbx::InitVertex(fbxsdk::FbxMesh* mesh)
 void Fbx::InitIndex(fbxsdk::FbxMesh* mesh)
 {
 	pIndexBuffer_ = new ID3D11Buffer * [materialCount_];
+	indexCount_ = std::vector<int>(materialCount_);
 
+	
 	int* index = new int[polygonCount_ * 3];
+	
 
 	for (int i = 0; i < materialCount_; i++)
 	{
@@ -131,7 +134,9 @@ void Fbx::InitIndex(fbxsdk::FbxMesh* mesh)
 					count++;
 				}
 			}
+			
 		}
+		indexCount_[i] = count;
 
 		D3D11_BUFFER_DESC   bd;
 		bd.Usage = D3D11_USAGE_DEFAULT;
@@ -223,26 +228,27 @@ void Fbx::Draw(Transform& transform)
 	cb.matWVP = XMMatrixTranspose(transform.GetWorldMatrix() * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());
 	cb.matNormal = XMMatrixTranspose(transform.GetNormalMatrix());
 
-	D3D11_MAPPED_SUBRESOURCE pdata;
-	Direct3D::pContext_->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのデータアクセスを止める
-	memcpy_s(pdata.pData, pdata.RowPitch, (void*)(&cb), sizeof(cb));	// データを値を送る
-
-
-
-	Direct3D::pContext_->Unmap(pConstantBuffer_, 0);	//再開
-
-
-
-	//頂点バッファ、インデックスバッファ、コンスタントバッファをパイプラインにセット
-	//頂点バッファ
-	UINT stride = sizeof(VERTEX);
-	UINT offset = 0;
-	Direct3D::pContext_->IASetVertexBuffers(0, 1, &pVertexBuffer_, &stride, &offset);
-
-
-
 	for (int i = 0; i < materialCount_; i++)
 	{
+	  D3D11_MAPPED_SUBRESOURCE pdata;
+	  Direct3D::pContext_->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのデータアクセスを止める
+	  memcpy_s(pdata.pData, pdata.RowPitch, (void*)(&cb), sizeof(cb));	// データを値を送る
+
+
+
+	    Direct3D::pContext_->Unmap(pConstantBuffer_, 0);	//再開
+
+
+
+	  //頂点バッファ、インデックスバッファ、コンスタントバッファをパイプラインにセット
+	  //頂点バッファ
+	   UINT stride = sizeof(VERTEX);
+	   UINT offset = 0;
+	   Direct3D::pContext_->IASetVertexBuffers(0, 1, &pVertexBuffer_, &stride, &offset);
+
+
+
+	
 		// インデックスバッファーをセット
 		stride = sizeof(int);
 		offset = 0;
@@ -261,7 +267,7 @@ void Fbx::Draw(Transform& transform)
 		}
 
 		//描画
-		Direct3D::pContext_->DrawIndexed(polygonCount_ * 3, 0, 0);
+		Direct3D::pContext_->DrawIndexed(indexCount_[i], 0, 0);
 	}
 
 }

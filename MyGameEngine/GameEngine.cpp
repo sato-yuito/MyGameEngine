@@ -94,6 +94,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
         else
         {
             Camera::Update();
+            
+            Direct3D::BeginDraw();
             //ƒQ[ƒ€‚Ìˆ—
             static float angle = 0;
             angle += 0.05;
@@ -102,7 +104,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
             //Transform quadTransform;
             Transform diceTransform;
             //Transform fbxTransform;
-            diceTransform.position_.y = 3.0f;
+            diceTransform.position_.y = 0.0f;
             //diceTransform.rotate_.y = angle;
             //pQuad->Draw(quadTransform);
             //pDice->Draw(diceTransform);
