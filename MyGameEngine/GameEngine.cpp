@@ -6,6 +6,7 @@
 //#include"Sprite.h"
 #include"Fbx.h"
 #include"Transform.h"
+#include"Input.h"
 //íËêîêÈåæ
 const char* WIN_CLASS_NAME = "SampleGame";  //ÉEÉBÉìÉhÉEÉNÉâÉXñº
 const char* MENU_BAR_NAME = "Let's make game";
@@ -67,6 +68,9 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
     }
 
     Camera::Initialize();
+
+    //DirectInputÇÃèâä˙âª
+    Input::Initialize(hWnd);
  
     //Quad*pQuad = new Quad;
       //pQuad->Initialize();
@@ -100,7 +104,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
             static float angle = 0;
             angle += 0.05;
             //XMMATRIX mat = XMMatrixRotationY(XMConvertToRadians(angle)) * XMMatrixTranslation(0,3,0);
-
+           
             //Transform quadTransform;
             Transform diceTransform;
             //Transform fbxTransform;
@@ -116,6 +120,13 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
             //mat = XMMatrixScaling(512.0f/800.0f, 256.0f/600.0f, 1.0f);
             //pSprite->Draw(spriteTransform);
 
+            //ì¸óÕèÓïÒÇÃçXêV
+            Input::Update();
+            if (Input::IsKey(DIK_ESCAPE))
+            {
+                PostQuitMessage(0);
+            }
+
             Direct3D::EndDraw();
         }
     }
@@ -125,6 +136,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
     //SAFE_DELETE(pDice);
     
     //SAFE_DELETE(pSprite);
+    Input::Release();
     Direct3D::Release();
    
 }
@@ -133,10 +145,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)//ñºë
 {
     switch (msg)
     {
-    
+       
     case WM_DESTROY:
     PostQuitMessage(0);  //ÉvÉçÉOÉâÉÄèIóπ
         return 0;
     }
+
+   
     return DefWindowProc(hWnd, msg, wParam, lParam);
 }
