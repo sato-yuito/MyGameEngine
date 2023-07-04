@@ -5,6 +5,8 @@ namespace Input
 	LPDIRECTINPUTDEVICE8 pKeyDevice = nullptr;//デバイスオブジェクト
 	BYTE keyState[256] ;//押されているかどうかの変数を配列で用意
 	BYTE prevKeyState[256];    //前フレームでの各キーの状態
+	XMVECTOR mousePosition;
+
 
 	HRESULT Initialize(HWND hWnd)
 	{
@@ -59,6 +61,16 @@ namespace Input
 			return true;
 		}
 		return false;
+	}
+
+	void SetMousePosition(int x, int y)
+	{
+		mousePosition = XMVectorSet((float)x, (float)y, 0, 0);
+	}
+
+	XMVECTOR GetMousePosition()
+	{
+		return mousePosition;
 	}
 
 	void Release()

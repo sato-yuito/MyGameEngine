@@ -146,6 +146,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)//ñºë
 {
     switch (msg)
     {
+       case WM_MOUSEMOVE:
+       Input::SetMousePosition(LOWORD(lParam), HIWORD(lParam));
+       return 0;
        case WM_DESTROY:
        PostQuitMessage(0);  //ÉvÉçÉOÉâÉÄèIóπ
         return 0;
