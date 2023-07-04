@@ -1,12 +1,7 @@
 #include <Windows.h>
-#include"Direct3D.h"
-//#include"Quad.h"
-//#include"Dice.h"
-#include"Camera.h"
-//#include"Sprite.h"
-#include"Fbx.h"
-#include"Transform.h"
-#include"Input.h"
+#include"Engine/Direct3D.h"
+#include"Engine/Camera.h"
+#include"Engine/Input.h"
 //定数宣言
 const char* WIN_CLASS_NAME = "SampleGame";  //ウィンドウクラス名
 const char* MENU_BAR_NAME = "Let's make game";
@@ -69,24 +64,13 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 
    Camera::Initialize();
     
-
-    //DirectInputの初期化
+   //DirectInputの初期化
    hr =  Input::Initialize(hWnd);
    if (FAILED(hr))
    {
        PostQuitMessage(0);  //プログラム終了
    }
  
-    //Quad*pQuad = new Quad;
-      //pQuad->Initialize();
-
-    /*Dice* pDice = new Dice;
-    hr = pDice->Initialize();
-    Sprite* pSprite = new Sprite;
-    hr = pSprite->Initialize();*/
-    Fbx* pFbx = new Fbx;
-    hr = pFbx->Load("Assets\\oden.fbx");
-
     //メッセージループ（何か起きるのを待つ）
     MSG msg;
     ZeroMemory(&msg, sizeof(msg));
@@ -102,47 +86,29 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
         //メッセージなし
         else
         {
+            //カメラの処理
             Camera::Update();
             
-            Direct3D::BeginDraw();
+            
             //ゲームの処理
-            static float angle = 0;
-            angle += 0.05;
-            //XMMATRIX mat = XMMatrixRotationY(XMConvertToRadians(angle)) * XMMatrixTranslation(0,3,0);
            
-            //Transform quadTransform;
-            Transform diceTransform;
-            //Transform fbxTransform;
-            //diceTransform.position_.y = 0.0f;
-            diceTransform.rotate_.y = angle;
-            //pQuad->Draw(quadTransform);
-            //pDice->Draw(diceTransform);
-            pFbx->Draw(diceTransform);
-
-            //Transform spriteTransform;
-            //spriteTransform.scale_.x = 512.0f / 800.0f;
-            //spriteTransform.scale_.y = 256.0f / 600.0f;
-            //mat = XMMatrixScaling(512.0f/800.0f, 256.0f/600.0f, 1.0f);
-            //pSprite->Draw(spriteTransform);
 
             //入力情報の更新
             Input::Update();
             
+            //描画処理
+            Direct3D::BeginDraw();
 
             Direct3D::EndDraw();
         }
     }
 
-    //解放処理
-    //SAFE_DELETE(pQuad);
-    //SAFE_DELETE(pDice);
-    //SAFE_DELETE(pSprite);
-    SAFE_DELETE(pFbx);
+    
     Input::Release();
     Direct3D::Release();
 }
 
-LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)//名前は何でもいい
+LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
     switch (msg)
     {
