@@ -98,10 +98,10 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
             Input::Update();
 
             //ゲームの処理
+            
+            //ルートジョブからすべてのオブジェクトのドローを呼ぶ
             pRootJob->Update();
 
-            //ルートジョブからすべてのオブジェクトのドローを呼ぶ
-            
             //描画処理
             Direct3D::BeginDraw();
 
