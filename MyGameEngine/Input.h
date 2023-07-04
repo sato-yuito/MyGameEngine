@@ -1,7 +1,6 @@
 #pragma once
 #include <dInput.h>
-#include"DirectXTex.h"
-#include"DirectXTex.inl"
+#include <DirectXMath.h>
 
 #pragma comment(lib, "dxguid.lib")
 #pragma comment(lib, "dInput8.lib")

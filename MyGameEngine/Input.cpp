@@ -46,7 +46,7 @@ namespace Input
 	bool IsKeyDown(int keyCode)
 	{
 		//¡‚Í‰Ÿ‚µ‚Ä‚ÄA‘O‰ñ‚Í‰Ÿ‚µ‚Ä‚È‚¢
-		if (IsKey(keyCode)&&!(prevKeyState[keyCode]&0x80))
+		if (IsKey(keyCode)&&!prevKeyState[keyCode]&0x80)
 		{
 			return true;
 		}
@@ -56,7 +56,7 @@ namespace Input
 	bool IsKeyUp(int keyCode)
 	{
 		//¡‚Í‰Ÿ‚µ‚Ä‚¢‚È‚­‚Ä‘O‰ñ‚Í‰Ÿ‚µ‚½
-		if (!IsKey(keyCode) && (prevKeyState[keyCode] & 0x80))
+		if (!IsKey(keyCode) && prevKeyState[keyCode] & 0x80)
 		{
 			return true;
 		}
