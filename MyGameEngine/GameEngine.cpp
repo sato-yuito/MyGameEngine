@@ -67,10 +67,15 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
         PostQuitMessage(0);  //プログラム終了
     }
 
-    Camera::Initialize();
+   Camera::Initialize();
+    
 
     //DirectInputの初期化
-    Input::Initialize(hWnd);
+   hr =  Input::Initialize(hWnd);
+   if (FAILED(hr))
+   {
+       PostQuitMessage(0);  //プログラム終了
+   }
  
     //Quad*pQuad = new Quad;
       //pQuad->Initialize();
@@ -122,10 +127,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 
             //入力情報の更新
             Input::Update();
-            if (Input::IsKey(DIK_ESCAPE))
-            {
-                PostQuitMessage(0);
-            }
+            
 
             Direct3D::EndDraw();
         }
@@ -134,23 +136,19 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
     //解放処理
     //SAFE_DELETE(pQuad);
     //SAFE_DELETE(pDice);
-    
     //SAFE_DELETE(pSprite);
+    SAFE_DELETE(pFbx);
     Input::Release();
     Direct3D::Release();
-   
 }
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)//名前は何でもいい
 {
     switch (msg)
     {
-       
-    case WM_DESTROY:
-    PostQuitMessage(0);  //プログラム終了
+       case WM_DESTROY:
+       PostQuitMessage(0);  //プログラム終了
         return 0;
     }
-
-   
     return DefWindowProc(hWnd, msg, wParam, lParam);
 }

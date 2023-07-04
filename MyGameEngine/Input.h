@@ -1,6 +1,4 @@
 #pragma once
-#pragma once
-
 #include <dInput.h>
 
 #pragma comment(lib, "dxguid.lib")
@@ -11,9 +9,11 @@
 
 namespace Input
 {
-	void Initialize(HWND hWnd);
+	HRESULT Initialize(HWND hWnd);
 	void Update();
 	bool IsKey(int keyCode);
+	bool IsKeyDown(int keyCode);
+	bool IsKeyUp(int keyCode);
 	void Release();
 };
 
