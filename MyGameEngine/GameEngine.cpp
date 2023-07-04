@@ -2,6 +2,7 @@
 #include"Engine/Direct3D.h"
 #include"Engine/Camera.h"
 #include"Engine/Input.h"
+#include"Engine/RootJob.h"
 //定数宣言
 const char* WIN_CLASS_NAME = "SampleGame";  //ウィンドウクラス名
 const char* MENU_BAR_NAME = "Let's make game";
@@ -10,6 +11,8 @@ const int WINDOW_HEIGHT = 600; //ウィンドウの高さ
 
 //プロトタイプ宣言
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+
+RootJob * pRootJob = nullptr;
 
 //エントリーポイント
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nCmdShow)
@@ -70,7 +73,9 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
    {
        PostQuitMessage(0);  //プログラム終了
    }
- 
+
+   pRootJob = new RootJob;
+   pRootJob->Initialize();
     //メッセージループ（何か起きるのを待つ）
     MSG msg;
     ZeroMemory(&msg, sizeof(msg));
@@ -89,12 +94,13 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
             //カメラの処理
             Camera::Update();
             
-            
-            //ゲームの処理
-           
-
             //入力情報の更新
             Input::Update();
+
+            //ゲームの処理
+            pRootJob->Update();
+
+            //ルートジョブからすべてのオブジェクトのドローを呼ぶ
             
             //描画処理
             Direct3D::BeginDraw();
@@ -103,7 +109,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
         }
     }
 
-    
+    pRootJob->Release();
     Input::Release();
     Direct3D::Release();
 }
