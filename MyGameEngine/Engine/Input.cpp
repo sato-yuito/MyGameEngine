@@ -7,7 +7,6 @@ namespace Input
 	BYTE prevKeyState[256];    //前フレームでの各キーの状態
 	XMVECTOR mousePosition;
 
-
 	HRESULT Initialize(HWND hWnd)
 	{
 		HRESULT hr; //エラー処理用

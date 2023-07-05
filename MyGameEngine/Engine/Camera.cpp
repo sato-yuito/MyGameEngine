@@ -8,6 +8,7 @@ namespace Camera
 	XMMATRIX viewMatrix_;	//ビュー行列
 	XMMATRIX projMatrix_;	//プロジェクション行列
 }
+
 //初期化
 void Camera::Initialize()
 {

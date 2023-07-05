@@ -107,8 +107,6 @@ void Fbx::InitVertex(fbxsdk::FbxMesh* mesh)
 	}
 }
 
-
-
 //インデックスバッファ準備
 void Fbx::InitIndex(fbxsdk::FbxMesh* mesh)
 {
@@ -250,17 +248,12 @@ void Fbx::Draw(Transform& transform)
 
 	    Direct3D::pContext_->Unmap(pConstantBuffer_, 0);	//再開
 
-
-
 	  //頂点バッファ、インデックスバッファ、コンスタントバッファをパイプラインにセット
 	  //頂点バッファ
 	   UINT stride = sizeof(VERTEX);
 	   UINT offset = 0;
 	   Direct3D::pContext_->IASetVertexBuffers(0, 1, &pVertexBuffer_, &stride, &offset);
 
-
-
-	
 		// インデックスバッファーをセット
 		stride = sizeof(int);
 		offset = 0;

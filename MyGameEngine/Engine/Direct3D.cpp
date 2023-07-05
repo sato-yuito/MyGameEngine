@@ -32,7 +32,7 @@ HRESULT Direct3D::Initialize(int winW, int winH, HWND hWnd)
 	HRESULT hr; //エラー処理用
 
 	///////////////////////////いろいろ準備するための設定///////////////////////////////
-//いろいろな設定項目をまとめた構造体
+    //いろいろな設定項目をまとめた構造体
 	DXGI_SWAP_CHAIN_DESC scDesc;
 
 	//とりあえず全部0
@@ -158,7 +158,6 @@ HRESULT Direct3D::InitShader()
 	}
 
 	return S_OK;
-
 
 }
 
@@ -323,17 +322,12 @@ void Direct3D::BeginDraw()
 	pContext_->ClearDepthStencilView(pDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 }
 
-
-
 //描画終了
-
 void Direct3D::EndDraw()
 {
 	//スワップ（バックバッファを表に表示する）
 	pSwapChain_->Present(0, 0);
 }
-
-
 
 //解放処理
 void Direct3D::Release()
@@ -349,5 +343,4 @@ void Direct3D::Release()
 
 	SAFE_RELEASE(pRenderTargetView_);
 	SAFE_RELEASE(pSwapChain_);
-	
 }

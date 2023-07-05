@@ -6,7 +6,6 @@ Sprite::Sprite()
 	pConstantBuffer_(nullptr),
 	pTexture_(nullptr)
 {
-
 }
 
 Sprite::~Sprite()
