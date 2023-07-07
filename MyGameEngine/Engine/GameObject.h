@@ -21,5 +21,16 @@ public:
 	virtual void Update()  = 0;
 	virtual void Draw()  = 0;
 	virtual void Release()  = 0;
+
+	template <class T>
+	void Instantiate(GameObject* parent)
+	{
+		T* p;
+		p = new T(parent);
+		p->Initialize();
+		childList_.push_back(p);
+	}
+	void DrawSub();
+	void UpdateSub();
 };
 
