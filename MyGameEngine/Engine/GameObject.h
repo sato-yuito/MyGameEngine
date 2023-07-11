@@ -30,7 +30,11 @@ public:
 		p->Initialize();
 		childList_.push_back(p);
 	}
+	void KillMe();
+	bool Isdead();
 	void DrawSub();
 	void UpdateSub();
+	void ReleaseSub();
+	
 };
 

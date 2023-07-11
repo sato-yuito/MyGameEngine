@@ -1,8 +1,12 @@
 #include <Windows.h>
+#include <stdlib.h>
 #include"Engine/Direct3D.h"
 #include"Engine/Camera.h"
 #include"Engine/Input.h"
 #include"Engine/RootJob.h"
+
+#pragma comment(lib, "winmm.lib")
+
 //定数宣言
 const char* WIN_CLASS_NAME = "SampleGame";  //ウィンドウクラス名
 const char* MENU_BAR_NAME = "Let's make game";
@@ -91,6 +95,34 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
         //メッセージなし
         else
         {
+            timeBeginPeriod(1);
+            static DWORD countFps = 0;
+            static DWORD startTime = timeGetTime();
+            DWORD nowTime = timeGetTime();
+            static DWORD lastUpdateTime = nowTime;
+
+            if (nowTime - startTime >= 1000)
+            {
+                char str[16];
+                wsprintf(str, "%u", countFps);
+                SetWindowText(hWnd, str);
+
+                countFps = 0;
+                startTime = nowTime;
+            }
+
+            if ((nowTime - lastUpdateTime)*60 <= 1000.0f)
+            {
+                continue;
+            }
+            lastUpdateTime = nowTime;
+
+
+            countFps++;
+
+          
+
+            timeEndPeriod(1);
             //カメラの処理
             Camera::Update();
             
@@ -112,7 +144,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
         }
     }
 
-    pRootJob->Release();
+    pRootJob->ReleaseSub();
     Input::Release();
     Direct3D::Release();
 }
