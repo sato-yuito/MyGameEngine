@@ -120,7 +120,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 
             countFps++;
 
-          
+            
 
             timeEndPeriod(1);
             //ƒJƒƒ‰‚Ìˆ—

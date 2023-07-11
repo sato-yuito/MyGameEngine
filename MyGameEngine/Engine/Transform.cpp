@@ -19,12 +19,14 @@ void Transform::Calclation()
 {
     //à⁄ìÆçsóÒ
     matTranslate_ = XMMatrixTranslation(position_.x, position_.y, position_.z);
+
     //âÒì]çsóÒ
     XMMATRIX rotate_X, rotate_Y, rotate_Z;
     rotate_X = XMMatrixRotationX(XMConvertToRadians(rotate_.x));
     rotate_Y = XMMatrixRotationY(XMConvertToRadians(rotate_.y));
     rotate_Z = XMMatrixRotationZ(XMConvertToRadians(rotate_.z));
     matRotate_ = rotate_Z * rotate_X * rotate_Y;
+
     //ägëÂçsóÒ
     matScale_ = XMMatrixScaling(scale_.x, scale_.y, scale_.z);
 }

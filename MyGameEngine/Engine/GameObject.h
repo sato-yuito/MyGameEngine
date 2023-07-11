@@ -6,6 +6,8 @@
 
 class GameObject
 {
+	bool dead_; //Á‹ƒtƒ‰ƒO
+
 protected:
 	std::list<GameObject*>	childList_;
 	Transform				transform_;
@@ -23,15 +25,15 @@ public:
 	virtual void Release()  = 0;
 
 	template <class T>
-	void Instantiate(GameObject* parent)
+	GameObject* Instantiate(GameObject* parent)
 	{
 		T* p;
 		p = new T(parent);
 		p->Initialize();
 		childList_.push_back(p);
+		return p;
 	}
 	void KillMe();
-	bool Isdead();
 	void DrawSub();
 	void UpdateSub();
 	void ReleaseSub();
