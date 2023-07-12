@@ -15,24 +15,24 @@ Player::~Player()
 //‰Šú‰»
 void Player::Initialize()
 {
-
 	pFbx = new Fbx;
 	pFbx->Load("Assets/oden.fbx");
 	this->transform_.scale_.x = 0.5;
 	this->transform_.scale_.y = 0.5;
 	this->transform_.scale_.z = 0.5;
 	Instantiate<oden>(this);
-	
+	GameObject*pCO2 = Instantiate<oden>(this);
+	pCO2->SetPosition(-2, 1, 0);
 }
 
 //XV
 void Player::Update()
 {
-	this->transform_.rotate_.y ++;
-	if (Input::IsKey(DIK_ESCAPE))
+	transform_.rotate_.y ++;
+	if (transform_.rotate_.y > 600)
 	{
 		KillMe();
-	}
+    }
 }
 
 //•`‰æ

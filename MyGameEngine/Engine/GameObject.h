@@ -30,7 +30,7 @@ public:
 		T* p;
 		p = new T(parent);
 		p->Initialize();
-		childList_.push_back(p);
+		parent->childList_.push_back(p);
 		return p;
 	}
 	void KillMe();
@@ -38,5 +38,19 @@ public:
 	void UpdateSub();
 	void ReleaseSub();
 	
+	//アクセス関数
+	XMFLOAT3 GetPosition() { return transform_.position_; }
+	XMFLOAT3 GetRotate() { return transform_.rotate_; }
+	XMFLOAT3 GetScale() { return transform_.scale_; }
+	void SetPosition(XMFLOAT3 position) { transform_.position_ = position; }
+	void SetPosition(float x, float y, float z) { SetPosition(XMFLOAT3(x, y, z)); }
+	void SetRotate(XMFLOAT3 rotate) { transform_.rotate_ = rotate; }
+	void SetRotate(float x, float y, float z) { SetRotate(XMFLOAT3(x, y, z)); }
+	void SetRotateX(float x) { SetRotate(x, transform_.rotate_.y, transform_.rotate_.z); }
+	void SetRotateY(float y) { SetRotate(transform_.rotate_.x, y, transform_.rotate_.z); }
+	void SetRotateZ(float z) { SetRotate(transform_.rotate_.x, transform_.rotate_.y, z); }
+	void SetScale(XMFLOAT3 scale) { transform_.scale_ = scale; }
+	void SetScale(float x, float y, float z) { SetScale(XMFLOAT3(x, y, z)); }
+
 };
 

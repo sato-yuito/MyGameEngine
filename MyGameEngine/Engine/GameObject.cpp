@@ -6,9 +6,10 @@ GameObject::GameObject()
 }
 
 GameObject::GameObject(GameObject* parent, const std::string& name)
+	:pParent_(parent),objectName_(name),dead_(false)
 {
-	
-
+	if (pParent_ )
+		this->transform_.pParent_ = &(parent->transform_);
 }
 
 GameObject::~GameObject()
@@ -74,3 +75,4 @@ void GameObject::ReleaseSub()
 	}
 	Release();
 }
+

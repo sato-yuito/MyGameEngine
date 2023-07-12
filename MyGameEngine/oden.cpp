@@ -15,27 +15,27 @@ oden::~oden()
 //‰Šú‰»
 void oden::Initialize()
 {
-
 	pFbx = new Fbx;
 	pFbx->Load("Assets/oden.fbx");
-	this->transform_.position_.x = 0.2;
-	this->transform_.position_.y = 0.2;
-	this->transform_.position_.z = 0.2;
-
-
+	transform_.scale_.x = 0.2f;
+	transform_.scale_.y = 0.2f;
+	transform_.scale_.z = 0.2f;
+	transform_.position_.x = 2.0f;
+	transform_.position_.y = 1.0f;
 }
 
 //XV
 void oden::Update()
 {
 	this->transform_.rotate_.y++;
-	
+	if (transform_.rotate_.y > 300)
+		KillMe();
 }
 
 //•`‰æ
 void oden::Draw()
 {
-	pFbx->Draw(this->transform_);
+	pFbx->Draw(transform_);
 }
 
 //ŠJ•ú
