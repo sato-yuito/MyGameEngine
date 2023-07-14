@@ -4,7 +4,7 @@
 #include"Engine/Camera.h"
 #include"Engine/Input.h"
 #include"Engine/RootJob.h"
-
+#include"Engine/Model.h"
 #pragma comment(lib, "winmm.lib")
 
 //’è”éŒ¾
@@ -144,9 +144,11 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
         }
     }
 
+    //‚»‚ê‚¼‚ê‚ÌƒNƒ‰ƒX‚ÌŠJ•úˆ—
     pRootJob->ReleaseSub();
     Input::Release();
     Direct3D::Release();
+    Model::Relase();
 }
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)

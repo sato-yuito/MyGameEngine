@@ -1,6 +1,6 @@
 #include "oden.h"
 #include"Engine/Input.h"
-
+#include"Engine/Model.h"
 //コンストラクタ
 oden::oden(GameObject* parent)
 	:GameObject(parent, "oden"), pFbx(nullptr)
@@ -15,30 +15,36 @@ oden::~oden()
 //初期化
 void oden::Initialize()
 {
-	pFbx = new Fbx;
-	pFbx->Load("Assets/oden.fbx");
+	hModel = Model::Load("Assets/oden.fbx");
+	assert(hModel >= 0);
+
 	transform_.scale_.x = 0.2f;
 	transform_.scale_.y = 0.2f;
 	transform_.scale_.z = 0.2f;
-	transform_.position_.x = 2.0f;
-	transform_.position_.y = 1.0f;
 }
 
 //更新
 void oden::Update()
 {
 	this->transform_.rotate_.y++;
-	if (transform_.rotate_.y > 300)
+	transform_.position_.z += 0.5f;
+	if (transform_.position_.z > 50)
+	{
 		KillMe();
+	}
+	/*if (transform_.rotate_.y > 300)
+		KillMe();*/
 }
 
 //描画
 void oden::Draw()
 {
-	pFbx->Draw(transform_);
+	Model::SetTransform(hModel, transform_);
+	Model::Draw(hModel);
 }
 
 //開放
 void oden::Release()
 {
+	
 }

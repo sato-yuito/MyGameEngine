@@ -5,6 +5,7 @@ class Player :
     public GameObject
 {
     Fbx* pFbx;
+    int hModel_;
 public:
     //コンストラクタ
    Player(GameObject* parent);

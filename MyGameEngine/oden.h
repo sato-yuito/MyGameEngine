@@ -5,6 +5,7 @@ class oden :
     public GameObject
 {
     Fbx* pFbx;
+    int hModel;
 public:
     //コンストラクタ
     oden(GameObject* parent);
