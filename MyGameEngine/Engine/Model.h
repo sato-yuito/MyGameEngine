@@ -24,6 +24,6 @@ namespace Model
 	int Load(string filename);
 	void SetTransform(int hModel, Transform transform);
 	void Draw(int hModel);
-	void Relase();
+	void Release();
 };
 

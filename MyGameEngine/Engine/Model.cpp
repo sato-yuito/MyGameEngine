@@ -43,7 +43,7 @@ void Model::Draw(int hModel)
 	modelList[hModel]->fbx_->Draw(modelList[hModel]->transform_);
 }
 
-void Model::Relase()
+void Model::Release()
 {
 	bool isReffered = false;
 	for (int i = 0; i < modelList.size(); i++)

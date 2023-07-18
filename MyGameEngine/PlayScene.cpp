@@ -12,7 +12,6 @@ PlayScene::PlayScene(GameObject* parent)
 void PlayScene::Initialize()
 {
 	Instantiate<Player>(this);
-	
 }
 
 //XV
