@@ -4,6 +4,7 @@
 #include <list>
 #include <string>
 
+using std::string;
 class GameObject
 {
 	bool dead_; //消去フラグ
@@ -23,7 +24,7 @@ public:
 	virtual void Update()  = 0;
 	virtual void Draw()  = 0;
 	virtual void Release()  = 0;
-
+	
 	template <class T>
 	GameObject* Instantiate(GameObject* parent)
 	{
@@ -33,11 +34,21 @@ public:
 		parent->childList_.push_back(p);
 		return p;
 	}
+
 	void KillMe();
+	
 	void DrawSub();
+	
 	void UpdateSub();
+	
 	void ReleaseSub();
 	
+	GameObject* FindChildObject(string _objName);
+	
+	GameObject* GetRootJob();
+	
+	GameObject* FindObject(string _objName);
+
 	//アクセス関数
 	XMFLOAT3 GetPosition() { return transform_.position_; }
 	XMFLOAT3 GetRotate() { return transform_.rotate_; }

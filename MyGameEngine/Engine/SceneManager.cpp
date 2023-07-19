@@ -5,6 +5,7 @@
 #include"Model.h"
 using namespace Direct3D;
 SceneManager::SceneManager(GameObject* parent)
+	:GameObject(parent, "SceneManager")
 {
 }
 
@@ -53,6 +54,10 @@ void SceneManager::Release()
 {
 }
 
+/// <summary>
+/// w’è‚µ‚½ƒV[ƒ“‚ğnextSceneID_‚É‘ã“ü‚·‚é
+/// </summary>
+/// <param name="_next"></param>
 void SceneManager::ChangeScene(SCENE_ID _next)
 {
 	nextSceneID_ = _next;
