@@ -117,10 +117,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
             }
             lastUpdateTime = nowTime;
 
-
             countFps++;
-
-            
 
             timeEndPeriod(1);
             //カメラの処理
@@ -132,9 +129,6 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
             pRootJob->UpdateSub();
             //ゲームの処理
             
-            //ルートジョブからすべてのオブジェクトのドローを呼ぶ
-          
-
             //描画処理
             Direct3D::BeginDraw();
 
@@ -146,9 +140,12 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 
     //それぞれのクラスの開放処理
     pRootJob->ReleaseSub();
+
     Input::Release();
+    
     Direct3D::Release();
-    Model::Relase();
+    
+    Model::Release();
 }
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)

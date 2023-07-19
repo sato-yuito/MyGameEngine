@@ -4,6 +4,7 @@
 #include <cassert>
 #include <vector>
 #include "Quad.h"
+
 //•Ï”
 namespace Direct3D
 {
@@ -23,7 +24,6 @@ namespace Direct3D
 	};
 	SHADER_BUNDLE shaderBundle[SHADER_MAX];
 }
-
 
 
 //‰Šú‰»

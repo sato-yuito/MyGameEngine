@@ -46,11 +46,10 @@ HRESULT Fbx::Load(std::string fileName)
 	InitVertex(mesh);		//頂点バッファ準備
 	InitIndex(mesh);		//インデックスバッファ準備
 	IntConstantBuffer();	//コンスタントバッファ準備
-	InitMaterial(pNode);
+	InitMaterial(pNode);//マテリアルの準備
 
 	//カレントディレクトリを元に戻す
 	SetCurrentDirectory(defaultCurrentDir);
-
 
 	//マネージャ解放
 	pFbxManager->Destroy();
