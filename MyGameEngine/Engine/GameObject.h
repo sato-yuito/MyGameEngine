@@ -4,6 +4,8 @@
 #include <list>
 #include <string>
 
+class   SphereCollider;
+
 using std::string;
 class GameObject
 {
@@ -14,6 +16,7 @@ protected:
 	Transform				transform_;
 	GameObject*				pParent_;
 	std::string				objectName_;
+	SphereCollider*         pCollider_;
 
 public:
 	GameObject();
@@ -25,16 +28,6 @@ public:
 	virtual void Draw()  = 0;
 	virtual void Release()  = 0;
 	
-	template <class T>
-	GameObject* Instantiate(GameObject* parent)
-	{
-		T* p;
-		p = new T(parent);
-		p->Initialize();
-		parent->childList_.push_back(p);
-		return p;
-	}
-
 	void KillMe();
 	
 	void DrawSub();
@@ -48,6 +41,25 @@ public:
 	GameObject* GetRootJob();
 	
 	GameObject* FindObject(string _objName);
+
+	
+	void AddCollider(SphereCollider* pCollider);
+
+	void Collision(GameObject* pTarget);
+
+	void RoundRobin(GameObject* pTarget);
+
+	virtual void onCollision(GameObject* pTarget){}
+
+	template <class T>
+	GameObject* Instantiate(GameObject* parent)
+	{
+		T* p;
+		p = new T(parent);
+		p->Initialize();
+		parent->childList_.push_back(p);
+		return p;
+	}
 
 	//アクセス関数
 	XMFLOAT3 GetPosition() { return transform_.position_; }

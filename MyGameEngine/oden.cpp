@@ -1,6 +1,7 @@
 #include "oden.h"
 #include"Engine/Input.h"
 #include"Engine/Model.h"
+#include"Engine/SphereCollider.h"
 //コンストラクタ
 oden::oden(GameObject* parent)
 	:GameObject(parent, "oden"), pFbx(nullptr)
@@ -21,6 +22,9 @@ void oden::Initialize()
 	transform_.scale_.x = 0.2f;
 	transform_.scale_.y = 0.2f;
 	transform_.scale_.z = 0.2f;
+
+	SphereCollider* collision = new SphereCollider(1.0);
+	AddCollider(collision);
 }
 
 //更新

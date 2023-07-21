@@ -1,9 +1,12 @@
 #include "SceneManager.h"
-#include"../TestScene.h"
-#include "Direct3D.h"
-#include"../PlayScene.h"
 #include"Model.h"
+#include "Direct3D.h"
+#include"../TestScene.h"
+#include"../PlayScene.h"
+
+
 using namespace Direct3D;
+
 SceneManager::SceneManager(GameObject* parent)
 	:GameObject(parent, "SceneManager")
 {

@@ -1,7 +1,7 @@
 #include "PlayScene.h"
 #include"Engine/Fbx.h"
 #include"Player.h"
-
+#include"Enemy.h"
 //コンストラクタ
 PlayScene::PlayScene(GameObject* parent)
 	: GameObject(parent, "PlayScene")
@@ -12,6 +12,7 @@ PlayScene::PlayScene(GameObject* parent)
 void PlayScene::Initialize()
 {
 	Instantiate<Player>(this);
+	Instantiate<Enemy>(this);
 }
 
 //更新
