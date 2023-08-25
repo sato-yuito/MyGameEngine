@@ -2,7 +2,7 @@
 #include"Model.h"
 #include "Direct3D.h"
 #include"../TestScene.h"
-#include"../PlayScene.h"
+
 
 
 using namespace Direct3D;
@@ -40,9 +40,6 @@ void SceneManager::Update()
 		{
 		case SCENE_ID_TEST:
 			Instantiate<TestScene>(this);
-			break;
-		case SCENE_ID_PLAY:
-			Instantiate<PlayScene>(this);
 			break;
 		}
 		currentScneID_ = nextSceneID_;
