@@ -1,13 +1,16 @@
 #pragma once
 #include "Engine/GameObject.h"
-class Player : public GameObject
+class Controller: public GameObject
 {
+
+    int camType_;
+
 public:
     //コンストラクタ
-    Player(GameObject* parent);
+    Controller(GameObject* parent);
 
     //デストラクタ
-    ~Player();
+    ~Controller();
 
     //初期化
     void Initialize() override;
