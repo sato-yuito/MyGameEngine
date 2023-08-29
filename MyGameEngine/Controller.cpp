@@ -22,10 +22,13 @@
  void Controller::Update()
  {
 
+     //¶‰ñ“]
      if (Input::IsKey(DIK_LEFT))
      {
          transform_.rotate_.y -= 1.0f;
      }
+
+     //‰E‰ñ“]
      if (Input::IsKey(DIK_RIGHT))
      {
          transform_.rotate_.y += 1.0f;
@@ -33,6 +36,7 @@
 
      //transform_.rotate_.y‚Ì’l‚É‡‚í‚¹‚Ä‚x²‰ñ“]‚³‚¹‚és—ñ
      XMMATRIX mRotateY = XMMatrixRotationY(XMConvertToRadians(transform_.rotate_.y));
+
 
 
      if (Input::IsKey(DIK_UP))
