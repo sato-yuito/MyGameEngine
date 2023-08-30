@@ -38,7 +38,7 @@
      XMMATRIX mRotateY = XMMatrixRotationY(XMConvertToRadians(transform_.rotate_.y));
 
 
-
+     //上回転
      if (Input::IsKey(DIK_UP))
      {
          transform_.rotate_.x += 1.0f;
@@ -48,6 +48,7 @@
          }
      }
 
+     //下回転
      if (Input::IsKey(DIK_DOWN))
      {
          transform_.rotate_.x -= 1.0f;
@@ -60,45 +61,6 @@
      //回転行列
      XMMATRIX mRotateX = XMMatrixRotationX(XMConvertToRadians(transform_.rotate_.x));
      
-     //現在の位置情報を取得
-     //XMVECTOR vPos = XMLoadFloat3(&transform_.position_);
-
-    //前後移動ベクトル
-    //XMFLOAT3 frontMove = { 0, 0, 0.1f };                //奥向きのXMFLOAT3構造体を用意し
-    //XMVECTOR vMove = XMLoadFloat3(&frontMove);               //それをベクトルにする
-    //vMove = XMVector3TransformCoord(vMove, mRotate);    //戦車の向きに合わせて回転
-
-
-    /*if (Input::IsKey(DIK_W))
-    {
-        vPos += vMove;
-        XMStoreFloat3(&transform_.position_, vPos);
-    }
-    if (Input::IsKey(DIK_S))
-    {
-        vPos -= vMove;
-        XMStoreFloat3(&transform_.position_, vPos);
-    }
-
-    //左右移動ベクトル
-    XMFLOAT3 rightMove = { 0.1f, 0, 0 };                //右向きのXMFLOAT3構造体を用意し
-    vMove = XMLoadFloat3(&rightMove);               //それをベクトルにする
-    vMove = XMVector3TransformCoord(vMove, mRotate);    //戦車の向きに合わせて回転
-
-
-    if (Input::IsKey(DIK_D))
-    {
-        vPos += vMove;
-        XMStoreFloat3(&transform_.position_, vPos);
-    }
-    if (Input::IsKey(DIK_A))
-    {
-        vPos -= vMove;
-        XMStoreFloat3(&transform_.position_, vPos);
-    }
-
-    XMMATRIX mRotate = XMMatrixRotationY(XMConvertToRadians(transform_.rotate_.y));*/
-
     //現在位置をベクトルにしておく
     XMVECTOR vPos = XMLoadFloat3(&transform_.position_);
 
