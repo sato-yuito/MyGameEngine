@@ -5,6 +5,9 @@
 #include"Engine/Input.h"
 #include"Engine/RootJob.h"
 #include"Engine/Model.h"
+#include"DirectXCollision.h"
+
+//リンカ
 #pragma comment(lib, "winmm.lib")
 
 //定数宣言
@@ -21,6 +24,17 @@ RootJob * pRootJob = nullptr;
 //エントリーポイント
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nCmdShow)
 {  
+    XMVECTOR beginV = XMVectorSet(1,5,1,0);
+    XMVECTOR beginP = XMVectorSet(0, -1, 0, 0);
+    XMVECTOR P1 = XMVectorSet(0, 0, 0, 0);
+    XMVECTOR P2 = XMVectorSet(0, 0, 3, 0);
+    XMVECTOR P3 = XMVectorSet(3, 0, 0, 0);
+    float dist;
+    
+    bool result = TriangleTests::Intersects(beginV, beginP, P1, P2, P3, dist);
+
+    int a;
+
 	//ウィンドウクラス（設計図）を作成
    WNDCLASSEX wc;
    wc.cbSize = sizeof(WNDCLASSEX);             //この構造体のサイズ

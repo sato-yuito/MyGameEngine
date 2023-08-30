@@ -1,5 +1,17 @@
 #include "Stage.h"
 #include "Engine/Model.h"
+
+
+void Stage::SetBlock(int _x, int _z, BLOCKTYPE _type)
+{
+    table_[_x][_z].type = _type;
+}
+
+void Stage::SetBlockHeght(int _x, int _z, int _height)
+{
+    table_[_x][_z].height = _height;
+}
+
 //コンストラクタ
 Stage::Stage(GameObject* parent)
     :GameObject(parent, "Stage")
@@ -13,7 +25,7 @@ Stage::Stage(GameObject* parent)
     {
         for (int z = 0; z < height_; z++)
         {
-            table_[x][z] = 0;
+            SetBlock(x, z, DEFAULT);
         }
     }
 }
@@ -45,9 +57,13 @@ void Stage::Initialize()
         {
             for (int x = 0; x < width_; x++)
             {
-                table_[x][z] = x % 5;
+                SetBlock(x, z, (BLOCKTYPE)(z % 5));
+                SetBlockHeght(x, z,x%4);
             }
          }
+
+       
+
 }
 
 //更新
@@ -58,25 +74,34 @@ void Stage::Update()
 //描画
 void Stage::Draw()
 {
-    //Model::SetTransform(hModel_, transform_);
-    //Model::Draw(hModel_);
-    Transform blockTrans;
-    int type = 0;
+   
+   
+    
     for (int x = 0; x < width_; x++)
     {
         for (int z = 0; z < height_; z++)
         {
-            blockTrans.position_.x = x;
-            blockTrans.position_.z = z;
-
-            type = table_[x][z];
-            Model::SetTransform(hModel_[type], blockTrans);
-            Model::Draw(hModel_[type]);
+            for (int y = 0; y < table_[x][z].height+1; y++)
+            {
+                int  type = table_[x][z].type;
+                Transform blockTrans;
+                blockTrans.position_.x = x;
+                blockTrans.position_.y = y;
+                blockTrans.position_.z = z;
+                
+              
+                Model::SetTransform(hModel_[type], blockTrans);
+                Model::Draw(hModel_[type]);
+            }
         }
     }
+   
 }
 
 //開放
 void Stage::Release()
 {
 }
+
+
+

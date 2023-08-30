@@ -5,19 +5,25 @@ namespace {
     const int MODEL_MAX{ 5 };
     const int width_{ 15 };
     const int height_{ 15 };
+    
     enum BLOCKTYPE
     {
         DEFAULT,BRICK,GRASS,SAND,WATER
     };
+   
 };
 
-
-//◆◆◆を管理するクラス
+struct BLOCK
+{
+    BLOCKTYPE type;
+    int height;
+};
+//Stageを管理するクラス
 class Stage : public GameObject
 {
     int hModel_[MODEL_MAX];    //モデル番号
-    int table_[width_] [height_];
-    
+    BLOCK table_[width_] [height_];
+  
 public:
     //コンストラクタ
     Stage(GameObject* parent);
@@ -36,5 +42,8 @@ public:
 
     //開放
     void Release() override;
+
+    void SetBlock(int _x, int _z, BLOCKTYPE _type);
+    void SetBlockHeght(int _x, int _z, int _height);
 };
 
