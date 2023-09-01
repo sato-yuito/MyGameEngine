@@ -4,6 +4,8 @@
 #include "Camera.h"
 #include "Texture.h"
 #include<DirectXMath.h>
+#include"DirectXCollision.h"
+
 Fbx::Fbx()
 {
 }
@@ -286,17 +288,17 @@ void Fbx::RayCast(RayCastData& rayData)
 	{
 		for (int poly = 0; poly < (indexCount_[material]/3); poly++)
 		{
-			int v0 = pIndex_[material][poly * 3 + 0];
-			int v1 = pIndex_[material][poly * 3 + 1];
-			int v2 = pIndex_[material][poly * 3 + 2];
-			XMVECTOR v0 =   pVertices_[poly].position;
-			XMVECTOR v1 = pVertices_[poly].position;
-			XMVECTOR v2 = pVertices_[poly].position;
+			int i0 = pIndex_[material][poly * 3 + 0];
+			int i1 = pIndex_[material][poly * 3 + 1];
+			int i2 = pIndex_[material][poly * 3 + 2];
+			XMVECTOR v0 =   pVertices_[i0].position;
+			XMVECTOR v1 = pVertices_[i1].position;
+			XMVECTOR v2 = pVertices_[i2].position;
 		    
-			XMVECTOR start = new rayData;
-			XMVECTOR dir = ;
+			XMVECTOR start = XMLoadFloat3(&rayData.start);
+			XMVECTOR dir = XMLoadFloat3(&rayData.dir);
 			float dist;
-			rayData.hit = TriangleTests::Intesect(start,dir,v0,v1,v2,dist);
+			rayData.hit = TriangleTests::Intersects(start,dir,v0,v1,v2,dist);
 			if (rayData.hit)
 			{
 				return;
