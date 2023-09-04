@@ -61,9 +61,6 @@ void Stage::Initialize()
                 SetBlockHeght(x, z,x%4);
             }
          }
-
-       
-
 }
 
 //çXêV
@@ -73,10 +70,7 @@ void Stage::Update()
 
 //ï`âÊ
 void Stage::Draw()
-{
-   
-   
-    
+{ 
     for (int x = 0; x < width_; x++)
     {
         for (int z = 0; z < height_; z++)

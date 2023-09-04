@@ -24,7 +24,7 @@ RootJob * pRootJob = nullptr;
 //エントリーポイント
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nCmdShow)
 {  
-    XMVECTOR beginV = XMVectorSet(1,5,1,0);
+   /* XMVECTOR beginV = XMVectorSet(1,5,1,0);
     XMVECTOR beginP = XMVectorSet(0, -1, 0, 0);
     XMVECTOR P1 = XMVectorSet(0, 0, 0, 0);
     XMVECTOR P2 = XMVectorSet(0, 0, 3, 0);
@@ -33,7 +33,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
     
     bool result = TriangleTests::Intersects(beginV, beginP, P1, P2, P3, dist);
 
-    int a;
+    int a;*/
 
 	//ウィンドウクラス（設計図）を作成
    WNDCLASSEX wc;
@@ -83,7 +83,16 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
         PostQuitMessage(0);  //プログラム終了
     }
 
-   Camera::Initialize();
+
+    Fbx* pFbx = new Fbx;
+    pFbx->Load("Assets/BoxBrick.fbx");
+    RayCastData data;
+    data.start = XMFLOAT3(0,5,0);
+    data.dir = XMFLOAT3(0,-1,0);
+    pFbx->RayCast(data);
+    int b;
+   
+    Camera::Initialize();
     
    //DirectInputの初期化
    hr =  Input::Initialize(hWnd);
