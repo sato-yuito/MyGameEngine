@@ -1,6 +1,6 @@
 #pragma once
 #include "Engine/GameObject.h"
-
+#include<Windows.h>
 namespace {
     const int MODEL_MAX{ 5 };
     const int width_{ 15 };
@@ -24,6 +24,8 @@ class Stage : public GameObject
     int hModel_[MODEL_MAX];    //モデル番号
     BLOCK table_[width_] [height_];
   
+    int mode_;
+    int select_;
 public:
     //コンストラクタ
     Stage(GameObject* parent);
@@ -42,6 +44,8 @@ public:
 
     //開放
     void Release() override;
+
+    BOOL DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp);
 
     void SetBlock(int _x, int _z, BLOCKTYPE _type);
     void SetBlockHeght(int _x, int _z, int _height);

@@ -6,7 +6,9 @@
 #include"Engine/RootJob.h"
 #include"Engine/Model.h"
 #include"DirectXCollision.h"
+
 #include"resource.h"
+#include"Stage.h"
 //リンカ
 #pragma comment(lib, "winmm.lib")
 
@@ -105,7 +107,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
    pRootJob = new RootJob(nullptr);
    pRootJob->Initialize();
 
-   HWND hDlg = CreateDialog(インスタンスハンドル, MAKEINTRESOURCE(ダイアログのＩＤ), 親ウィンドウのハンドル, (DLGPROC)プロシージャ名);
+   HWND hDlg = CreateDialog(hInstance, MAKEINTRESOURCE(IDD_DIALOG1), hWnd, (DLGPROC)DialogProc);
+   
 
     //メッセージループ（何か起きるのを待つ）
     MSG msg;
@@ -189,11 +192,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
     return DefWindowProc(hWnd, msg, wParam, lParam);
 }
 
+//ダイアログプロシージャ
 BOOL CALLBACK DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
 {
-    switch (msg)
-    {
-
-    }
-    return FALSE;
+    Stage* pStage = (Stage*)pRootJob->FindObject("Stage");
+    return pStage->DialogProc(hDlg, msg, wp, lp);
 }
