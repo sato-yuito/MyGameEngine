@@ -1,6 +1,9 @@
 #pragma once
 #include "Engine/GameObject.h"
 #include<Windows.h>
+#include"Engine/Direct3D.h"
+
+using namespace Direct3D;
 namespace {
     const int MODEL_MAX{ 5 };
     const int width_{ 15 };
