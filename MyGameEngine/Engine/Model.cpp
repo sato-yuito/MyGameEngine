@@ -67,5 +67,18 @@ void Model::Release()
 
 void Model::RayCast(int hModel, RayCastData& rayData)
 {
+	modelList[hModel]->transform_.Calclation();
+	//ワールド行列の逆行列
+	XMMATRIX wInv = XMMatrixInverse(nullptr, modelList[hModel]->transform_.GetWorldMatrix());
+	//レイの追加点を求める
+	XMVECTOR vpass{ rayData.start.x + rayData.dir.x, 
+		            rayData.start.y + rayData.dir.y ,
+					rayData.start.z + rayData.dir.z ,
+					rayData.start.w + rayData.dir.w };
+	XMVECTOR vstart = XMLoadFloat4(&rayData.start);
+	vstart = XMVector3TransformCoord(vstart, wInv);
+	vpass = XMVector3TransformCoord(vpass, wInv);
+	vpass = vpass; -vstart;
+	XMStoreFloat4(&rayData.dir, vpass);
 	modelList[hModel]->fbx_->RayCast(rayData);
 }

@@ -1,7 +1,8 @@
 #include "Stage.h"
 #include "Engine/Model.h"
 #include"resource.h"
-
+#include"Engine/Camera.h"
+#include"Engine/Input.h"
 void Stage::SetBlock(int _x, int _z, BLOCKTYPE _type)
 {
     table_[_x][_z].type = _type;
@@ -79,13 +80,44 @@ void Stage::Update()
     //ビューポート
     XMMATRIX invVP = XMMatrixInverse(nullptr, vp);
     //プロジェクション変換
-    XMMATRIX invProj =
+    XMMATRIX invProj = XMMatrixInverse(nullptr ,Camera::GetProjectionMatrix());
     //ビュー変換
-    XMMATRIX invView =
-    XMFLOAT3 mousePosFront = ;
+    XMMATRIX invView = XMMatrixInverse(nullptr, Camera::GetViewMatrix());
+    XMFLOAT3 mousePosFront = Input::GetMousePosition();
     mousePosFront.z = 0.0f;
-    XMFLOAT3 mousePosBack = ;
+    XMFLOAT3 mousePosBack = Input::GetMousePosition();
     mousePosBack.z = 1.0f;
+    //mousePosFrontをベクトルに変換
+    XMVECTOR vMouseFront = XMLoadFloat3(&mousePosFront);
+    //vMouseFrontに上三つをかける
+    vMouseFront = XMVector3TransformCoord(vMouseFront, invVP * invProj * invView);
+    //mousePosBackをベクトルに変換
+    XMVECTOR vMousePosBack = XMLoadFloat3(&mousePosBack);
+    //vMousePosBackに上三つをかける
+    vMousePosBack = XMVector3TransformCoord(vMousePosBack, invVP * invProj * invView);
+
+    for (int x = 0; x < 15; x++)
+    {
+        for (int z = 0; z < 15; z++)
+        {
+            for (int y = 0; y < table_[x][y].height + 1; y++)
+            {
+                RayCastData data;
+                XMStoreFloat4(&data.start, vMouseFront);
+                XMStoreFloat4(&data.dir,vMousePosBack -vMouseFront);
+                Transform trans;
+                trans.position_.x = x;
+                trans.position_.y = y;
+                trans.position_.z = z;
+                Model::SetTransform(hModel_[0], trans);
+                Model::RayCast(hModel_[0], data);
+                if (data.hit)
+                {
+                    return;
+                }
+            }
+        }
+    }
 }
 
 //描画
