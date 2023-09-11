@@ -4,8 +4,7 @@
 #include <string>
 #include<vector>
 #include "Transform.h"
-#include"Texture.h"
-#include"DirectXCollision.h"
+
 #pragma comment(lib, "LibFbxSDK-MD.lib")
 #pragma comment(lib, "LibXml2-MD.lib")
 #pragma comment(lib, "zlib-MD.lib")

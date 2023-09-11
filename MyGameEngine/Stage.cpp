@@ -54,14 +54,14 @@ void Stage::Initialize()
             hModel_[i] = Model::Load(fname_base+modelname[i]);
             assert(hModel_[i] >= 0);
         }
-        for (int z = 0; z < height_; z++)
+        /*for (int z = 0; z < height_; z++)
         {
             for (int x = 0; x < width_; x++)
             {
                 SetBlock(x, z, (BLOCKTYPE)(z % 5));
                 SetBlockHeght(x, z,x%4);
             }
-         }
+         }*/
 }
 
 //更新
@@ -70,12 +70,16 @@ void Stage::Update()
     float w = (float)(scrWidth /2.0f );
     float h = (float)(scrHeight /2.0f );
 
+    if (!Input::IsMouseButtonDown(0))
+    {
+        return;
+    }
     XMMATRIX vp =
     {
         w, 0, 0,0,
         0,-h, 0,0,
         0, 0, 1,0,
-        w, h, 0,0
+        w, h, 0,1
     };
     //ビューポート
     XMMATRIX invVP = XMMatrixInverse(nullptr, vp);
@@ -100,7 +104,7 @@ void Stage::Update()
     {
         for (int z = 0; z < 15; z++)
         {
-            for (int y = 0; y < table_[x][y].height + 1; y++)
+            for (int y = 0; y < table_[x][z].height + 1; y++)
             {
                 RayCastData data;
                 XMStoreFloat4(&data.start, vMouseFront);
@@ -110,10 +114,13 @@ void Stage::Update()
                 trans.position_.y = y;
                 trans.position_.z = z;
                 Model::SetTransform(hModel_[0], trans);
+
                 Model::RayCast(hModel_[0], data);
+
                 if (data.hit)
                 {
-                    return;
+                    table_[x][z].height++;
+                    break;
                 }
             }
         }

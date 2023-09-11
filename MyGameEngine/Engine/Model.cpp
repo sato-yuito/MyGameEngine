@@ -75,10 +75,18 @@ void Model::RayCast(int hModel, RayCastData& rayData)
 		            rayData.start.y + rayData.dir.y ,
 					rayData.start.z + rayData.dir.z ,
 					rayData.start.w + rayData.dir.w };
+	
 	XMVECTOR vstart = XMLoadFloat4(&rayData.start);
+	
 	vstart = XMVector3TransformCoord(vstart, wInv);
+	
+	XMStoreFloat4(&rayData.start, vstart); 
+
 	vpass = XMVector3TransformCoord(vpass, wInv);
+	
 	vpass = vpass; -vstart;
+	
 	XMStoreFloat4(&rayData.dir, vpass);
+	
 	modelList[hModel]->fbx_->RayCast(rayData);
 }
