@@ -19,7 +19,14 @@ namespace {
 struct BLOCK
 {
     BLOCKTYPE type;
+    
     int height;
+};
+enum Mode
+{
+    up,
+    down,
+    change
 };
 //Stageを管理するクラス
 class Stage : public GameObject
@@ -27,7 +34,7 @@ class Stage : public GameObject
     int hModel_[MODEL_MAX];    //モデル番号
     BLOCK table_[width_] [height_];
   
-    int mode_;
+    Mode mode_;
     int select_;
 public:
     //コンストラクタ

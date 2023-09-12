@@ -69,7 +69,9 @@ void Stage::Update()
 {
     float w = (float)(scrWidth /2.0f );
     float h = (float)(scrHeight /2.0f );
-
+    int inX = -1;//x座標を入れる変数名
+    int inZ = -1;//z座標を入れる変数名
+    float distance = -1;//距離を入れる
     if (!Input::IsMouseButtonDown(0))
     {
         return;
@@ -117,14 +119,37 @@ void Stage::Update()
 
                 Model::RayCast(hModel_[0], data);
 
+                
                 if (data.hit)
                 {
-                    table_[x][z].height++;
+                    if (distance > data.dist|| distance == -1)
+                        //マウスをクリックした場所だけを選択する
+                    {
+                        inX = x;
+                        inZ = z;
+                        distance = data.dist;
+                    }
                     break;
                 }
+                
             }
+           
         }
+       
     }
+    switch (mode_)
+    {
+    case(up):
+        table_[inX][inZ].height++;
+        break;
+    case(down):
+        if (table_[inX][inZ].height > 0)
+            table_[inX][inZ].height--;
+        break;
+    case(change):
+        SetBlock(inX,inZ, (BLOCKTYPE)select_);
+    }
+    
 }
 
 //描画
@@ -176,7 +201,22 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
         return true;
 
     case WM_COMMAND:
-
+        switch (LOWORD(wp))
+        {
+        case IDC_COMBO1:
+            select_ = static_cast<int>(SendMessage(GetDlgItem(hDlg, IDC_COMBO1), CB_GETCURSEL, 0, 0));
+            break;
+        case IDC_RADIO_UP:
+            mode_ = up;
+            break;
+        case IDC_RADIO_down:
+            mode_ = down;
+            break;
+        case IDC_RADIO3:
+            mode_ = change;
+            break;
+        }
+       
     }
     return FALSE;
 }
