@@ -119,7 +119,6 @@ void Stage::Update()
 
                 Model::RayCast(hModel_[0], data);
 
-                
                 if (data.hit)
                 {
                     if (distance > data.dist|| distance == -1)
