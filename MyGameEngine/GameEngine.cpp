@@ -26,16 +26,6 @@ RootJob * pRootJob = nullptr;
 //エントリーポイント
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nCmdShow)
 {  
-   /* XMVECTOR beginV = XMVectorSet(1,5,1,0);
-    XMVECTOR beginP = XMVectorSet(0, -1, 0, 0);
-    XMVECTOR P1 = XMVectorSet(0, 0, 0, 0);
-    XMVECTOR P2 = XMVectorSet(0, 0, 3, 0);
-    XMVECTOR P3 = XMVectorSet(3, 0, 0, 0);
-    float dist;
-    
-    bool result = TriangleTests::Intersects(beginV, beginP, P1, P2, P3, dist);
-
-    int a;*/
 
 	//ウィンドウクラス（設計図）を作成
    WNDCLASSEX wc;
@@ -48,7 +38,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
    wc.hIcon = LoadIcon(NULL, IDI_APPLICATION); //アイコン
    wc.hIconSm = LoadIcon(NULL, IDI_WINLOGO);   //小さいアイコン
    wc.hCursor = LoadCursor(NULL, IDC_ARROW);   //マウスカーソル
-   wc.lpszMenuName = NULL;                     //メニュー（なし）
+   wc.lpszMenuName = MAKEINTRESOURCE(IDR_MENU1);                     //メニュー（なし）
    wc.cbClsExtra = 0;
    wc.cbWndExtra = 0;
    wc.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH); //背景（白）
@@ -56,7 +46,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 
     //ウィンドウサイズの計算
     RECT winRect = { 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT };
-    AdjustWindowRect(&winRect, WS_OVERLAPPEDWINDOW, FALSE);
+    AdjustWindowRect(&winRect, WS_OVERLAPPEDWINDOW, TRUE);
     int winW = winRect.right - winRect.left;     //ウィンドウ幅
     int winH = winRect.bottom - winRect.top;     //ウィンドウ高さ
 
@@ -84,16 +74,6 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
     {
         PostQuitMessage(0);  //プログラム終了
     }
-
-
-   /* Fbx* pFbx = new Fbx;
-    pFbx->Load("Assets/BoxBrick.fbx");
-    RayCastData data;
-    data.start = XMFLOAT3(0,5,0);
-    data.dir = XMFLOAT3(0,-1,0);
-    pFbx->RayCast(data);
-    int a = 6;
-    a++;*/
 
     Camera::Initialize();
     
@@ -178,6 +158,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
     Model::Release();
 }
 
+//ウィンドウプロシージャ
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
     switch (msg)
@@ -188,6 +169,23 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
        case WM_DESTROY:
        PostQuitMessage(0);  //プログラム終了
         return 0;
+       case WM_COMMAND:
+           while(LOWORD(wParam))
+           {
+               case ID_MENU_SAVE:
+                  HANDLE hFile = CreateFile
+                      (
+                          "SAVE.map",                 //ファイル名
+                          GENERIC_WRITE,           //アクセスモード（書き込み用）
+                          0,                      //共有（なし）
+                          NULL,                   //セキュリティ属性（継承しない）
+                          CREATE_ALWAYS,           //作成方法
+                          FILE_ATTRIBUTE_NORMAL,  //属性とフラグ（設定なし）
+                          NULL
+                      );                  //拡張属性（なし）
+
+           }
+       
     }
     return DefWindowProc(hWnd, msg, wParam, lParam);
 }

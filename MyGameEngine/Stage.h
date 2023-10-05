@@ -26,7 +26,8 @@ enum Mode
 {
     up,
     down,
-    change
+    change,
+    keep,
 };
 //StageÇä«óùÇ∑ÇÈÉNÉâÉX
 class Stage : public GameObject
@@ -56,7 +57,7 @@ public:
     void Release() override;
 
     BOOL DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp);
-
+    BOOL MenuProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp);
     void SetBlock(int _x, int _z, BLOCKTYPE _type);
     void SetBlockHeght(int _x, int _z, int _height);
 };

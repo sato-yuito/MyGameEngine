@@ -3,6 +3,7 @@
 #include"resource.h"
 #include"Engine/Camera.h"
 #include"Engine/Input.h"
+
 void Stage::SetBlock(int _x, int _z, BLOCKTYPE _type)
 {
     table_[_x][_z].type = _type;
@@ -54,14 +55,7 @@ void Stage::Initialize()
             hModel_[i] = Model::Load(fname_base+modelname[i]);
             assert(hModel_[i] >= 0);
         }
-        /*for (int z = 0; z < height_; z++)
-        {
-            for (int x = 0; x < width_; x++)
-            {
-                SetBlock(x, z, (BLOCKTYPE)(z % 5));
-                SetBlockHeght(x, z,x%4);
-            }
-         }*/
+   
 }
 
 //更新
@@ -147,6 +141,7 @@ void Stage::Update()
         break;
     case(change):
         SetBlock(inX,inZ, (BLOCKTYPE)select_);
+   
     }
     
 }
@@ -166,13 +161,11 @@ void Stage::Draw()
                 blockTrans.position_.y = y;
                 blockTrans.position_.z = z;
                 
-              
                 Model::SetTransform(hModel_[type], blockTrans);
                 Model::Draw(hModel_[type]);
             }
         }
     }
-   
 }
 
 //開放
@@ -190,7 +183,6 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
         SendMessage(GetDlgItem(hDlg,IDC_RADIO_UP), BM_SETCHECK, BST_CHECKED, 0);
         
         //コンボボックスの初期値
-   
         SendMessage(GetDlgItem(hDlg, IDC_COMBO1), CB_ADDSTRING, 0, LPARAM("デフォルト"));
         SendMessage(GetDlgItem(hDlg, IDC_COMBO1), CB_ADDSTRING, 0, LPARAM("レンガ"));
         SendMessage(GetDlgItem(hDlg, IDC_COMBO1), CB_ADDSTRING, 0, LPARAM("草"));
@@ -214,6 +206,7 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
         case IDC_RADIO3:
             mode_ = change;
             break;
+       
         }
        
     }
