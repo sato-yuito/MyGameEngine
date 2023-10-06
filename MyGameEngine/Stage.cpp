@@ -14,6 +14,11 @@ void Stage::SetBlockHeght(int _x, int _z, int _height)
     table_[_x][_z].height = _height;
 }
 
+void Stage::GetBlock(int _x, int _z, BLOCKTYPE _type)
+{
+    return _type;
+}
+
 //コンストラクタ
 Stage::Stage(GameObject* parent)
     :GameObject(parent, "Stage")

@@ -169,22 +169,59 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
        case WM_DESTROY:
        PostQuitMessage(0);  //プログラム終了
         return 0;
+        //それぞれのデータを保存するためのもの
        case WM_COMMAND:
            while(LOWORD(wParam))
            {
+                case ID_MENU_NEW:
+                    OutputDebugString("NEWFILE");
+                    break;
+                case ID_MENU_OPEN:
+                    OutputDebugString("openFile");
+                    break;
                case ID_MENU_SAVE:
+                   char fileName[MAX_PATH] = "無題.map";  //ファイル名を入れる変数
+                   //「ファイルを保存」ダイアログの設定
+                   OPENFILENAME ofn;                         	//名前をつけて保存ダイアログの設定用構造体
+                   ZeroMemory(&ofn, sizeof(ofn));            	//構造体初期化
+                   ofn.lStructSize = sizeof(OPENFILENAME);   	//構造体のサイズ
+                   ofn.lpstrFilter = TEXT("マップデータ(*.map)\0*.map\0")        //─┬ファイルの種類
+                       TEXT("すべてのファイル(*.*)\0*.*\0\0");     //─┘
+                   ofn.lpstrFile = fileName;               	//ファイル名
+                   ofn.nMaxFile = MAX_PATH;               	//パスの最大文字数
+                   ofn.Flags = OFN_OVERWRITEPROMPT;   		//フラグ（同名ファイルが存在したら上書き確認）
+                   ofn.lpstrDefExt = "map";                  	//デフォルト拡張子
+                   //「ファイルを保存」ダイアログ
+                   BOOL selFile;
+                   selFile = GetSaveFileName(&ofn);
+                   //キャンセルしたら中断
+                   if (selFile == FALSE) return;
+
+                   //ファイルの作成
                   HANDLE hFile = CreateFile
                       (
-                          "SAVE.map",                 //ファイル名
+                          "SAVE.map",               //ファイル名
                           GENERIC_WRITE,           //アクセスモード（書き込み用）
                           0,                      //共有（なし）
-                          NULL,                   //セキュリティ属性（継承しない）
-                          CREATE_ALWAYS,           //作成方法
-                          FILE_ATTRIBUTE_NORMAL,  //属性とフラグ（設定なし）
-                          NULL
-                      );                  //拡張属性（なし）
-
+                          NULL,                  //セキュリティ属性（継承しない）
+                          CREATE_ALWAYS,        //作成方法
+                          FILE_ATTRIBUTE_NORMAL,//属性とフラグ（設定なし）
+                          NULL                 //拡張属性（なし）
+                      );        
+                  std::string WriteSaveFile;
+                  for (int x = 0; x < 15; x++)
+                  {
+                      for (int z = 0; z < 15; z++)
+                      {
+                          for (int y = 0; y <table_[x][z].height_ + 1; y++)
+                          {
+                              WriteSaveFile += std::to_string(static_cast <int>(table_[x][z].type)) + " " + std::to_string(table_[x][z].height) + "";
+                          }
+                      }
+                  }
            }
+           
+
        
     }
     return DefWindowProc(hWnd, msg, wParam, lParam);
@@ -195,4 +232,6 @@ BOOL CALLBACK DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
 {
     Stage* pStage = (Stage*)pRootJob->FindObject("Stage");
     return pStage->DialogProc(hDlg, msg, wp, lp);
+
+   
 }
