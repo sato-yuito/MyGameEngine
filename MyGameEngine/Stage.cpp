@@ -13,10 +13,14 @@ void Stage::SetBlockHeght(int _x, int _z, int _height)
 {
     table_[_x][_z].height = _height;
 }
-
-void Stage::GetBlock(int _x, int _z, BLOCKTYPE _type)
+int  Stage::GetBlock(int _x, int _z)
 {
-    return _type;
+    return  table_[_x][_z].type;
+}
+
+int Stage::GetBlockHeght(int _x, int _z)
+{
+    return table_[_x][_z].height;
 }
 
 //コンストラクタ

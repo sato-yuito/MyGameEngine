@@ -60,7 +60,7 @@ public:
     BOOL MenuProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp);
     void SetBlock(int _x, int _z, BLOCKTYPE _type);
     void SetBlockHeght(int _x, int _z, int _height);
-    void GetBlock(int _x, int _z, BLOCKTYPE _type);
-    void GetBlockHeght(int _x, int _z, int _height);
+    int GetBlock(int _x, int _z);
+    int GetBlockHeght(int _x, int _z);
 };
 

@@ -213,10 +213,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
                   {
                       for (int z = 0; z < 15; z++)
                       {
-                          for (int y = 0; y <table_[x][z].height_ + 1; y++)
-                          {
-                              WriteSaveFile += std::to_string(static_cast <int>(table_[x][z].type)) + " " + std::to_string(table_[x][z].height) + "";
-                          }
+                         WriteSaveFile += std::to_string(GetBlock()) + " " + std::to_string(Stage::GetBlockHeght) + "";
                       }
                   }
            }
