@@ -245,7 +245,7 @@ void Stage::Save()
     //ファイルの作成
     HANDLE hFile = CreateFile
     (
-        "SAVE.map",               //ファイル名
+        "SAVE",               //ファイル名
         GENERIC_WRITE,           //アクセスモード（書き込み用）
         0,                      //共有（なし）
         NULL,                  //セキュリティ属性（継承しない）
