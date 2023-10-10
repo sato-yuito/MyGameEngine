@@ -217,7 +217,6 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
         case IDC_RADIO3:
             mode_ = change;
             break;
-      
         }
        
     }
@@ -232,7 +231,7 @@ void Stage::Save()
     ZeroMemory(&ofn, sizeof(ofn));            	//構造体初期化
     ofn.lStructSize = sizeof(OPENFILENAME);   	//構造体のサイズ
     ofn.lpstrFilter = TEXT("マップデータ(*.map)\0*.map\0")        //─┬ファイルの種類
-        TEXT("すべてのファイル(*.*)\0*.*\0\0");     //─┘
+    TEXT("すべてのファイル(*.*)\0*.*\0\0");     //─┘
     ofn.lpstrFile = fileName;               	//ファイル名
     ofn.nMaxFile = MAX_PATH;               	//パスの最大文字数
     ofn.Flags = OFN_OVERWRITEPROMPT;   		//フラグ（同名ファイルが存在したら上書き確認）
@@ -246,7 +245,7 @@ void Stage::Save()
     //ファイルの作成
     HANDLE hFile = CreateFile
     (
-        "SAVE.txt",               //ファイル名
+        "SAVE.map",               //ファイル名
         GENERIC_WRITE,           //アクセスモード（書き込み用）
         0,                      //共有（なし）
         NULL,                  //セキュリティ属性（継承しない）
@@ -270,7 +269,7 @@ void Stage::Save()
         (DWORD)strlen(WriteSaveFile.c_str()),   //書き込む文字数
         &dwBytes,                //書き込んだサイズを入れる変数
         NULL);                   //オーバーラップド構造体（今回は使わない）
-    CloseHandle(hFile);
+  
     //ファイルのサイズを取得
     DWORD fileSize = GetFileSize(hFile, NULL);
 
@@ -287,4 +286,3 @@ void Stage::Save()
     CloseHandle(hFile);
 }
 
-Stage*Stage::FindObject(string _filename)

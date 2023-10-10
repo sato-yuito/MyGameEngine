@@ -63,6 +63,5 @@ public:
     int GetBlock(int _x, int _z);
     int GetBlockHeght(int _x, int _z);
     void Save();
-    Stage*FindObject(string _filename);
 };
 

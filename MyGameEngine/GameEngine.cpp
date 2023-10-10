@@ -180,7 +180,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
                OutputDebugString("openFile");
                break;
               case  ID_MENU_SAVE:
-                  GameObject::FindObject();
+                  ((Stage*)pRootJob->FindObject("Stage"))->Save();
                   break;
            }
            
