@@ -231,7 +231,7 @@ void Stage::Save()
     ZeroMemory(&ofn, sizeof(ofn));            	//構造体初期化
     ofn.lStructSize = sizeof(OPENFILENAME);   	//構造体のサイズ
     ofn.lpstrFilter = TEXT("マップデータ(*.map)\0*.map\0")        //─┬ファイルの種類
-    TEXT("すべてのファイル(*.*)\0*.*\0\0");     //─┘
+                      TEXT("すべてのファイル(*.*)\0*.*\0\0");     //─┘
     ofn.lpstrFile = fileName;               	//ファイル名
     ofn.nMaxFile = MAX_PATH;               	//パスの最大文字数
     ofn.Flags = OFN_OVERWRITEPROMPT;   		//フラグ（同名ファイルが存在したら上書き確認）

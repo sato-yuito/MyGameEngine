@@ -171,7 +171,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
         return 0;
         //ÇªÇÍÇºÇÍÇÃÉfÅ[É^Çï€ë∂Ç∑ÇÈÇΩÇﬂÇÃÇ‡ÇÃ
        case WM_COMMAND:
-           while(LOWORD(wParam))
+           switch (LOWORD(wParam))
            {
               case ID_MENU_NEW:
                OutputDebugString("NEWFILE");
