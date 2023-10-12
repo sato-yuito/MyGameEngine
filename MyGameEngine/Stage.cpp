@@ -3,7 +3,7 @@
 #include"resource.h"
 #include"Engine/Camera.h"
 #include"Engine/Input.h"
-
+#include<fstream>
 void Stage::SetBlock(int _x, int _z, BLOCKTYPE _type)
 {
     table_[_x][_z].type = _type;
@@ -286,3 +286,18 @@ void Stage::Save()
     CloseHandle(hFile);
 }
 
+//保存したファイルを画面上に出す
+void Stage::LoadAndDrawMap(const char* filename)
+{
+    std::ifstream file(filename);
+    for (int x = 0; x < 15; x++)
+    {
+        for (int z = 0; z < 15; z++)
+        {
+            int blockType, blockHeight;
+            file >> blockType >> blockHeight;
+            SetBlock(x, z, static_cast<BLOCKTYPE>(blockType));
+            SetBlockHeght(x, z, blockHeight);
+        }
+    }
+}

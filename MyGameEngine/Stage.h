@@ -63,5 +63,6 @@ public:
     int GetBlock(int _x, int _z);
     int GetBlockHeght(int _x, int _z);
     void Save();
+    void LoadAndDrawMap(const char* filename);
 };
 
