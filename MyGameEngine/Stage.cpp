@@ -288,4 +288,17 @@ void Stage::Save()
     CloseHandle(hFile);
 }
 
-
+void Stage::LoadAndDrawMap(const char* filename)
+{
+    std::ifstream file(filename);
+    for (int x = 0; x < 15; x++)
+    {
+        for (int z = 0; z < 15; z++)
+        {
+            int blockType, blockHeight;
+            file >> blockType >> blockHeight;
+            SetBlock(x, z, static_cast<BLOCKTYPE>(blockType));
+            SetBlockHeght(x, z, blockHeight);
+        }
+    }
+}

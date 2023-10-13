@@ -177,7 +177,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
                OutputDebugString("NEWFILE");
                break;
               case ID_MENU_OPEN:
-               OutputDebugString("openFile");
+                  ((Stage*)pRootJob->FindObject("Stage"))->LoadAndDrawMap();
                break;
               case  ID_MENU_SAVE:
               ((Stage*)pRootJob->FindObject("Stage"))->Save();
