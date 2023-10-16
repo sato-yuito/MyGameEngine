@@ -340,7 +340,7 @@ void Stage::LoadAndDrawMap()
         for (int z = 0; z < 15; z++)
         {
             int blockType, blockHeight;
-             blockType >> blockHeight;
+             data>>blockType >> blockHeight;
             SetBlock(x, z, static_cast<BLOCKTYPE>(blockType));
             SetBlockHeght(x, z, blockHeight);
         }
