@@ -4,6 +4,8 @@
 #include"Engine/Camera.h"
 #include"Engine/Input.h"
 #include<fstream>
+#include <sstream>
+#include<string>
 void Stage::SetBlock(int _x, int _z, BLOCKTYPE _type)
 {
     table_[_x][_z].type = _type;
@@ -259,7 +261,7 @@ void Stage::Save()
     {
         for (int z = 0; z < 15; z++)
         {
-            WriteSaveFile += std::to_string(GetBlock(x,z)) + "  " + std::to_string(GetBlockHeght(x, z))+" , ";
+            WriteSaveFile += std::to_string(GetBlock(x,z)) + " " + std::to_string(GetBlockHeght(x, z))+" , ";
         }
     }
     DWORD dwBytes = 0;  //‘‚«ž‚ÝˆÊ’u
@@ -333,16 +335,23 @@ void Stage::LoadAndDrawMap()
 
     //ƒLƒƒƒ“ƒZƒ‹‚µ‚½‚ç’†’f
     if (selFile == FALSE) return;
-
-   
-    for (int x = 0; x < 15; x++)
+    
+    std::string fileContents;
+    std::ifstream file(fileName);
+    while (std::getline(file, fileContents))
     {
-        for (int z = 0; z < 15; z++)
+        for (int x = 0; x < 15; x++)
         {
-            int blockType, blockHeight;
-             data>>blockType >> blockHeight;
-            SetBlock(x, z, static_cast<BLOCKTYPE>(blockType));
-            SetBlockHeght(x, z, blockHeight);
+            for (int z = 0; z < 15; z++)
+            {
+                std::stringstream str{ fileContents };
+                int blockType, blockHeight;
+                str >> blockType >> blockHeight;
+                SetBlock(x, z, static_cast<BLOCKTYPE>(blockType));
+                SetBlockHeght(x, z, blockHeight);
+            }
         }
     }
+
+  
 }
