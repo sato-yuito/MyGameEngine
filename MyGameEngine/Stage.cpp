@@ -6,6 +6,7 @@
 #include<fstream>
 #include <sstream>
 #include<string>
+#include<iostream>
 void Stage::SetBlock(int _x, int _z, BLOCKTYPE _type)
 {
     table_[_x][_z].type = _type;
@@ -219,7 +220,6 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
         case IDC_RADIO3:
             mode_ = change;
             break;
-       
         }
        
     }
@@ -261,10 +261,11 @@ void Stage::Save()
     {
         for (int z = 0; z < 15; z++)
         {
-            WriteSaveFile += std::to_string(GetBlock(x,z)) + ',' + std::to_string(GetBlockHeght(x, z)) + ',';
+            WriteSaveFile += std::to_string(GetBlock(x,z)) + std::to_string(GetBlockHeght(x, z)) ;
+            WriteSaveFile += ",";
         }
-        
-    }'\n';
+        WriteSaveFile +="\n";
+    }
     DWORD dwBytes = 0;  //書き込み位置
     //ファイルの書き込み
     WriteFile(
@@ -311,7 +312,7 @@ void Stage::LoadAndDrawMap()
     HANDLE hFile;        //ファイルのハンドル
     hFile = CreateFile(
         fileName,                 //ファイル名
-        GENERIC_READ,           //アクセスモード（書き込み用）
+        GENERIC_READ,           //アクセスモード（読み込み用）
         0,                      //共有（なし）
         NULL,                   //セキュリティ属性（継承しない）
         OPEN_ALWAYS,           //作成方法
@@ -339,22 +340,36 @@ void Stage::LoadAndDrawMap()
 
     std::string fileContents;
     std::stringstream str{ data };
-    if(std::getline(str, fileContents))
-    {
-        for (int x = 0; x < 15; x++)
+   for (int x = 0; x < 15; x++)
+   {       
+     for (int z = 0; z < 15; z++)
         {
-            for (int z = 0; z < 15; z++)
-            {
-
-                std::string blockTypeStr, blockHeightStr;
-                str >> blockTypeStr >> blockHeightStr;
-                int blocType = std::stoi(blockTypeStr);
-                int blockHeight = std::stoi(blockHeightStr);
-                SetBlock(x, z, static_cast<BLOCKTYPE>(blocType));
-                SetBlockHeght(x, z, blockHeight);
-            }
-        }
+           if (std::getline(str, fileContents, ','))
+          {
+               try
+               {
+                   std::string blockTypeStr, blockHeightStr;
+                   str >> blockTypeStr >> blockHeightStr;
+                   int blocType = std::stoi(blockTypeStr);
+                   int blockHeight = std::stoi(blockHeightStr);
+                   SetBlock(x, z, static_cast<BLOCKTYPE>(blocType));
+                   SetBlockHeght(x, z, blockHeight);
+               }
+               catch (const std::invalid_argument& ) {
+                   // エラーハンドリング: 不正な引数例外
+                   // 不正な値が渡されたときの処理をここに記述
+                   std::cout << "エラーー" << std::endl;
+               }
+               catch (const std::out_of_range& ) {
+                   std::cout << "エラーー" << std::endl;
+               }
+               
+               
+           }
+      }
+    
     }
+   delete[] data;
 }
                     
 
