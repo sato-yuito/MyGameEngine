@@ -261,9 +261,10 @@ void Stage::Save()
     {
         for (int z = 0; z < 15; z++)
         {
-            WriteSaveFile += std::to_string(GetBlock(x,z)) + " " + std::to_string(GetBlockHeght(x, z))+" , ";
+            WriteSaveFile += std::to_string(GetBlock(x,z)) + ',' + std::to_string(GetBlockHeght(x, z)) + ',';
         }
-    }
+        
+    }'\n';
     DWORD dwBytes = 0;  //書き込み位置
     //ファイルの書き込み
     WriteFile(
