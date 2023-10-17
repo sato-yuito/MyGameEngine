@@ -335,23 +335,28 @@ void Stage::LoadAndDrawMap()
 
     //ƒLƒƒƒ“ƒZƒ‹‚µ‚½‚ç’†’f
     if (selFile == FALSE) return;
-    
+
     std::string fileContents;
-    std::ifstream file(fileName);
-    while (std::getline(file, fileContents))
+    std::stringstream str{ data };
+    if(std::getline(str, fileContents))
     {
         for (int x = 0; x < 15; x++)
         {
             for (int z = 0; z < 15; z++)
             {
-                std::stringstream str{ fileContents };
-                int blockType, blockHeight;
-                str >> blockType >> blockHeight;
-                SetBlock(x, z, static_cast<BLOCKTYPE>(blockType));
+
+                std::string blockTypeStr, blockHeightStr;
+                str >> blockTypeStr >> blockHeightStr;
+                int blocType = std::stoi(blockTypeStr);
+                int blockHeight = std::stoi(blockHeightStr);
+                SetBlock(x, z, static_cast<BLOCKTYPE>(blocType));
                 SetBlockHeght(x, z, blockHeight);
             }
         }
     }
-
-  
 }
+                    
+
+
+                
+         
