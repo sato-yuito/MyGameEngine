@@ -308,6 +308,7 @@ void Stage::LoadAndDrawMap()
     //「ファイルを保存」ダイアログ
     BOOL selFile;
     selFile = GetOpenFileName(&ofn);
+    if (selFile == FALSE) return;
 
     HANDLE hFile;        //ファイルのハンドル
     hFile = CreateFile(
@@ -335,36 +336,34 @@ void Stage::LoadAndDrawMap()
         &dwBytes,  //読み込んだサイズ
         NULL);     //オーバーラップド構造体（今回は使わない）
 
-    //キャンセルしたら中断
-    if (selFile == FALSE) return;
+    CloseHandle(hFile);
 
-    std::string fileContents;
-    std::stringstream str{ data };
+  
+    std::stringstream str(data);
    for (int x = 0; x < 15; x++)
    {       
      for (int z = 0; z < 15; z++)
         {
-           if (std::getline(str, fileContents, ','))
-          {
-               try
-               {
-                   std::string blockTypeStr, blockHeightStr;
-                   str >> blockTypeStr >> blockHeightStr;
-                   int blocType = std::stoi(blockTypeStr);
-                   int blockHeight = std::stoi(blockHeightStr);
-                   SetBlock(x, z, static_cast<BLOCKTYPE>(blocType));
-                   SetBlockHeght(x, z, blockHeight);
-               }
-               catch (const std::invalid_argument& ) {
-                   // エラーハンドリング: 不正な引数例外
-                   // 不正な値が渡されたときの処理をここに記述
-                   std::cout << "エラーー" << std::endl;
-               }
-               catch (const std::out_of_range& ) {
-                   std::cout << "エラーー" << std::endl;
-               } 
-           }
-      }
+         std::string fileContents;
+         if (std::getline(str, fileContents, ',')) {
+             std::istringstream dataStream(fileContents);
+             try {
+                 std::string blockTypeStr, blockHeightStr;
+                 if (std::getline(dataStream, blockTypeStr, ' ') && std::getline(dataStream, blockHeightStr)) {
+                     int blockType = std::stoi(blockTypeStr);
+                     int blockHeight = std::stoi(blockHeightStr);
+                     SetBlock(x, z, static_cast<BLOCKTYPE>(blockType));
+                     SetBlockHeght(x, z, blockHeight);
+                 }
+             }
+             catch (const std::invalid_argument&) {
+                 std::cout << "エラー: 不正な引数例外" << std::endl;
+             }
+             catch (const std::out_of_range&) {
+                 std::cout << "エラー: 範囲外例外" << std::endl;
+             }
+         }
+        }
    }
   
 }
