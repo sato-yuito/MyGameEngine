@@ -362,14 +362,11 @@ void Stage::LoadAndDrawMap()
                }
                catch (const std::out_of_range& ) {
                    std::cout << "ƒGƒ‰[[" << std::endl;
-               }
-               
-               
+               } 
            }
       }
-    
-    }
-   delete[] data;
+   }
+  
 }
                     
 
