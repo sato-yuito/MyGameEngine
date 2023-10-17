@@ -337,33 +337,33 @@ void Stage::LoadAndDrawMap()
         NULL);     //オーバーラップド構造体（今回は使わない）
 
     CloseHandle(hFile);
-
-  
     std::stringstream str(data);
    for (int x = 0; x < 15; x++)
    {       
      for (int z = 0; z < 15; z++)
-        {
+     {
          std::string fileContents;
-         if (std::getline(str, fileContents, ',')) {
+         if (std::getline(str, fileContents, ',')) 
+         {
              std::istringstream dataStream(fileContents);
-             try {
-                 std::string blockTypeStr, blockHeightStr;
-                 if (std::getline(dataStream, blockTypeStr, ' ') && std::getline(dataStream, blockHeightStr)) {
+             std::string blockTypeStr, blockHeightStr;
+             std::istringstream iss(fileContents);
+             if (std::getline(iss, blockTypeStr, ' ') && std::getline(iss, blockHeightStr, ' '))
+             {
+                 try {
                      int blockType = std::stoi(blockTypeStr);
                      int blockHeight = std::stoi(blockHeightStr);
                      SetBlock(x, z, static_cast<BLOCKTYPE>(blockType));
                      SetBlockHeght(x, z, blockHeight);
                  }
-             }
-             catch (const std::invalid_argument&) {
-                 std::cout << "エラー: 不正な引数例外" << std::endl;
-             }
-             catch (const std::out_of_range&) {
-                 std::cout << "エラー: 範囲外例外" << std::endl;
-             }
+                 catch (const std::invalid_argument&) {
+                     std::cout << "エラー: 不正な引数例外" << std::endl;
+                 }
+                 catch (const std::out_of_range&) {
+                     std::cout << "エラー: 範囲外例外" << std::endl;
+                 }
          }
-        }
+     }
    }
   
 }
