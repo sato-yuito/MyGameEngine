@@ -350,7 +350,8 @@ void Stage::LoadAndDrawMap()
              std::istringstream iss(fileContents);
              if (std::getline(iss, blockTypeStr, ' ') && std::getline(iss, blockHeightStr, ' '))
              {
-                 try {
+                 try
+                 {
                      int blockType = std::stoi(blockTypeStr);
                      int blockHeight = std::stoi(blockHeightStr);
                      SetBlock(x, z, static_cast<BLOCKTYPE>(blockType));
@@ -362,6 +363,7 @@ void Stage::LoadAndDrawMap()
                  catch (const std::out_of_range&) {
                      std::cout << "エラー: 範囲外例外" << std::endl;
                  }
+             }
          }
      }
    }
