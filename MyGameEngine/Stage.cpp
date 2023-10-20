@@ -261,7 +261,7 @@ void Stage::Save()
     {
         for (int z = 0; z < 15; z++)
         {
-            WriteSaveFile += std::to_string(GetBlock(x,z)) + std::to_string(GetBlockHeght(x, z)) ;
+            WriteSaveFile += std::to_string(GetBlock(x,z)) +" "+ std::to_string(GetBlockHeght(x, z));
             WriteSaveFile += ",";
         }
         WriteSaveFile +="\n";
@@ -337,36 +337,26 @@ void Stage::LoadAndDrawMap()
         NULL);     //オーバーラップド構造体（今回は使わない）
 
     CloseHandle(hFile);
+    int TableZ = 0;
     std::stringstream str(data);
-   for (int x = 0; x < 15; x++)
-   {       
-     for (int z = 0; z < 15; z++)
-     {
-         std::string fileContents;
-         if (std::getline(str, fileContents, ',')) 
-         {
-             std::istringstream dataStream(fileContents);
-             std::string blockTypeStr, blockHeightStr;
-             std::istringstream iss(fileContents);
-             if (std::getline(iss, blockTypeStr, ' ') && std::getline(iss, blockHeightStr, ' '))
-             {
-                 try
-                 {
-                     int blockType = std::stoi(blockTypeStr);
-                     int blockHeight = std::stoi(blockHeightStr);
-                     SetBlock(x, z, static_cast<BLOCKTYPE>(blockType));
-                     SetBlockHeght(x, z, blockHeight);
-                 }
-                 catch (const std::invalid_argument&) {
-                     std::cout << "エラー: 不正な引数例外" << std::endl;
-                 }
-                 catch (const std::out_of_range&) {
-                     std::cout << "エラー: 範囲外例外" << std::endl;
-                 }
-             }
-         }
-     }
-   }
+    std::string mapstring;
+    while (std::getline(str, mapstring))
+    {
+        int TableX = 0;
+        std::stringstream sttrr(mapstring);
+        std::string MapString;
+        while (std::getline(sttrr, MapString, ','))
+        {
+            std::stringstream strr(MapString);
+            int blocktype, blockheight;
+            strr >> blocktype >> blockheight;
+            SetBlock(TableX, TableZ, static_cast<BLOCKTYPE>(blocktype));
+            SetBlockHeght(TableX, TableZ, blockheight);
+            TableX++;
+            TableZ++;
+        }
+       
+    }
   
 }
                     
