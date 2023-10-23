@@ -337,12 +337,12 @@ void Stage::LoadAndDrawMap()
         NULL);     //オーバーラップド構造体（今回は使わない）
 
     CloseHandle(hFile);
-    int TableZ = 0;
+    int TableX = 0;
     std::stringstream str(data);
     std::string mapstring;
     while (std::getline(str, mapstring))
     {
-        int TableX = 0;
+        int TableZ = 0;
         std::stringstream sttrr(mapstring);
         std::string MapString;
         while (std::getline(sttrr, MapString, ','))
@@ -352,10 +352,11 @@ void Stage::LoadAndDrawMap()
             strr >> blocktype >> blockheight;
             SetBlock(TableX, TableZ, static_cast<BLOCKTYPE>(blocktype));
             SetBlockHeght(TableX, TableZ, blockheight);
-            TableX++;
             TableZ++;
+           
         }
        
+        TableX++;
     }
   
 }
