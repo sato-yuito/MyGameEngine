@@ -360,6 +360,41 @@ void Stage::LoadAndDrawMap()
     }
   
 }
+
+void Stage::DeleteRange()
+{
+    bool isSelecting = false; // ユーザが範囲選択中かどうかを示すフラグ
+    int startX, startZ; // 選択範囲の開始座標
+    int endX, endZ; // 選択範囲の終了座標
+
+    // マウスドラッグの開始
+    if (Input::IsMouseButtonDown(0) && !isSelecting)
+    {
+        isSelecting = true;
+        XMFLOAT3 mousePos = Input::GetMousePosition();
+        startX = static_cast<int>(mousePos.x); // マウス座標を座標に変換
+        startZ = static_cast<int>(mousePos.y);
+    }
+
+    // マウスドラッグの終了
+    if (!Input::IsMouseButtonDown(0) && isSelecting)
+    {
+        isSelecting = false;
+        XMFLOAT3 mousePos = Input::GetMousePosition();
+        endX = static_cast<int>(mousePos.x); // マウス座標を座標に変換
+        endZ = static_cast<int>(mousePos.y);
+
+        // 範囲内のブロックを削除
+        for (int x = startX; x <= endX; x++)
+        {
+            for (int z = startZ; z <= endZ; z++)
+            {
+                SetBlock(x, z,static_cast<BLOCKTYPE>(EMPTY));
+                SetBlockHeght(x, z, 0); // 高さ情報をクリアまたは初期化（必要に応じて）
+            }
+        }
+    }
+}
                     
 
 

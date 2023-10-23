@@ -11,7 +11,7 @@ namespace {
     
     enum BLOCKTYPE
     {
-        DEFAULT,BRICK,GRASS,SAND,WATER
+        DEFAULT, BRICK, GRASS, SAND, WATER, EMPTY
     };
    
 };
@@ -64,5 +64,6 @@ public:
     int GetBlockHeght(int _x, int _z);
     void Save();
     void LoadAndDrawMap();
+    void DeleteRange();
 };
 
