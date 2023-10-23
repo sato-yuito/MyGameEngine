@@ -64,6 +64,6 @@ public:
     int GetBlockHeght(int _x, int _z);
     void Save();
     void LoadAndDrawMap();
-    void DeleteRange();
+    void NewStage();
 };
 
