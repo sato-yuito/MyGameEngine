@@ -155,9 +155,7 @@ void Stage::Update()
         break;
     case(change):
         SetBlock(inX,inZ, (BLOCKTYPE)select_);
-   
     }
-    
 }
 
 //ï`âÊ
@@ -353,17 +351,25 @@ void Stage::LoadAndDrawMap()
             SetBlock(TableX, TableZ, static_cast<BLOCKTYPE>(blocktype));
             SetBlockHeght(TableX, TableZ, blockheight);
             TableZ++;
-           
         }
-       
         TableX++;
     }
-  
 }
 
-void Stage::NewStage()
+//êVãKçÏê¨
+void Stage::CreateNewMap() 
 {
-    
+     width_;
+     height_;
+    for (int x = 0; x < width_; x++)
+    {
+        for (int z = 0; z < height_; z++)
+        {
+            SetBlock(x, z, DEFAULT);
+            SetBlockHeght(x, z, 0);
+        }
+    }
+ 
 }
                     
 

@@ -19,7 +19,6 @@ namespace {
 struct BLOCK
 {
     BLOCKTYPE type;
-    
     int height;
 };
 enum Mode
@@ -64,6 +63,6 @@ public:
     int GetBlockHeght(int _x, int _z);
     void Save();
     void LoadAndDrawMap();
-    void NewStage();
+    void CreateNewMap();
 };
 

@@ -174,7 +174,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
            switch (LOWORD(wParam))
            {
               case ID_MENU_NEW:
-               OutputDebugString("NEWFILE");
+                  ((Stage*)pRootJob->FindObject("Stage"))->CreateNewMap();
                break;
               case ID_MENU_OPEN:
                   ((Stage*)pRootJob->FindObject("Stage"))->LoadAndDrawMap();
