@@ -26,7 +26,7 @@ enum Mode
     up,
     down,
     change,
-    keep,
+    ollchange,
 };
 //Stage‚ğŠÇ—‚·‚éƒNƒ‰ƒX
 class Stage : public GameObject

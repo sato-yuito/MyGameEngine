@@ -144,6 +144,7 @@ void Stage::Update()
         }
        
     }
+    
     switch (mode_)
     {
     case(up):
@@ -155,6 +156,15 @@ void Stage::Update()
         break;
     case(change):
         SetBlock(inX,inZ, (BLOCKTYPE)select_);
+    case(ollchange):
+        for (int x = 0; x < inX; x++)
+        {
+            for (int z = 0; z < inZ; z++)
+            {
+                table_[inX][inZ].type = (BLOCKTYPE)hModel_[select_];
+            }
+        }
+        break;
     }
 }
 
@@ -217,6 +227,9 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
             break;
         case IDC_RADIO3:
             mode_ = change;
+            break;
+        case:
+            mode_ = ollchange;
             break;
         }
        
