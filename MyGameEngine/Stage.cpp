@@ -26,8 +26,6 @@ int Stage::GetBlockHeght(int _x, int _z)
     return table_[_x][_z].height;
 }
 
-
-
 //コンストラクタ
 Stage::Stage(GameObject* parent)
     :GameObject(parent, "Stage")
@@ -69,7 +67,6 @@ void Stage::Initialize()
             hModel_[i] = Model::Load(fname_base+modelname[i]);
             assert(hModel_[i] >= 0);
         }
-   
 }
 
 //更新
@@ -156,12 +153,16 @@ void Stage::Update()
         break;
     case(change):
         SetBlock(inX,inZ, (BLOCKTYPE)select_);
-    case(ollchange):
-        for (int x = 0; x < inX; x++)
+        break;
+
+    case(olldelete):
+       
+        for (int x = 0; x < width_; x++)
         {
-            for (int z = 0; z < inZ; z++)
+            for (int z = 0; z < height_; z++)
             {
-                table_[inX][inZ].type = (BLOCKTYPE)hModel_[select_];
+                SetBlock(x, z, DEFAULT);
+                SetBlockHeght(x, z, 0);
             }
         }
         break;
@@ -228,8 +229,8 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
         case IDC_RADIO3:
             mode_ = change;
             break;
-        case:
-            mode_ = ollchange;
+        case IDC_DELETE_BLOCK:
+            mode_ = olldelete;
             break;
         }
        
