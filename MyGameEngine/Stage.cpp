@@ -156,13 +156,21 @@ void Stage::Update()
         break;
 
     case(olldelete):
-       
         for (int x = 0; x < width_; x++)
         {
             for (int z = 0; z < height_; z++)
             {
                 SetBlock(x, z, DEFAULT);
                 SetBlockHeght(x, z, 0);
+            }
+        }
+        break;
+    case(ollchange):
+        for (int x = 0; x < width_; x++)
+        {
+            for (int z = 0; z < height_; z++)
+            {
+                SetBlock(x, z, (BLOCKTYPE)select_);
             }
         }
         break;

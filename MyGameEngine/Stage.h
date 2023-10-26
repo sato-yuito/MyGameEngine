@@ -27,6 +27,7 @@ enum Mode
     down,
     change,
     olldelete,
+    ollchange,
 };
 //Stage‚ğŠÇ—‚·‚éƒNƒ‰ƒX
 class Stage : public GameObject
