@@ -240,6 +240,9 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
         case IDC_DELETE_BLOCK:
             mode_ = olldelete;
             break;
+        case IDC_OLL_CHANGE:
+            mode_ = ollchange;
+            break;
         }
        
     }
