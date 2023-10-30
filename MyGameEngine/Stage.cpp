@@ -107,9 +107,9 @@ void Stage::Update()
     //vMousePosBack‚ÉãO‚Â‚ğ‚©‚¯‚é
     vMousePosBack = XMVector3TransformCoord(vMousePosBack, invVP * invProj * invView);
 
-    for (int x = 0; x < 15; x++)
+    for (int x = 0; x < width_; x++)
     {
-        for (int z = 0; z < 15; z++)
+        for (int z = 0; z < height_; z++)
         {
             for (int y = 0; y < table_[x][z].height + 1; y++)
             {
@@ -384,8 +384,6 @@ void Stage::LoadAndDrawMap()
 //V‹Kì¬
 void Stage::CreateNewMap() 
 {
-     width_;
-     height_;
     for (int x = 0; x < width_; x++)
     {
         for (int z = 0; z < height_; z++)
@@ -394,7 +392,6 @@ void Stage::CreateNewMap()
             SetBlockHeght(x, z, 0);
         }
     }
- 
 }
                     
 
