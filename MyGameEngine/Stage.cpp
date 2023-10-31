@@ -76,9 +76,10 @@ void Stage::Update()
     float h = (float)(scrHeight /2.0f );
     int inX = -1;//xÀ•W‚ð“ü‚ê‚é•Ï”–¼
     int inZ = -1;//zÀ•W‚ð“ü‚ê‚é•Ï”–¼
+    int nowinX = -1;
+    int nowinZ = -1;
     float distance = -1;//‹——£‚ð“ü‚ê‚é
-    if (!Input::IsMouseButtonDown(0))
-    {
+    if (!Input::IsMouseButton(0)) {
         return;
     }
     XMMATRIX vp =
@@ -131,6 +132,8 @@ void Stage::Update()
                     {
                         inX = x;
                         inZ = z;
+                        nowinX = x;
+                        nowinZ = z;
                         distance = data.dist;
                     }
                     break;
@@ -145,7 +148,20 @@ void Stage::Update()
     switch (mode_)
     {
     case(up):
-        table_[inX][inZ].height++;
+        if ((nowinX == inX) && (nowinX == inZ))
+        {
+            if (Input::IsMouseButtonDown(0))
+            {
+                table_[inX][inZ].height++;
+            }
+
+        }
+        else
+        {
+            nowinX = inX;
+            inZ = nowinZ;
+            table_[inX][inZ].height++;
+        }
         break;
     case(down):
         if (table_[inX][inZ].height > 0)
