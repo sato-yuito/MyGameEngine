@@ -154,18 +154,32 @@ void Stage::Update()
             {
                 table_[inX][inZ].height++;
             }
-
+            break;
         }
         else
         {
-            nowinX = inX;
+            inX = nowinX;
             inZ = nowinZ;
             table_[inX][inZ].height++;
         }
         break;
     case(down):
-        if (table_[inX][inZ].height > 0)
+        if ((nowinX == inX) && (nowinX == inZ))
+        {
+            if (Input::IsMouseButtonDown(0) && table_[inX][inZ].height > 0)
+            {
+                table_[inX][inZ].height--;
+            }
+                
+            break;
+        }
+        else
+        {
+            inX = nowinX;
+            inZ = nowinZ;
+            if(table_[inX][inZ].height > 1)
             table_[inX][inZ].height--;
+        }
         break;
     case(change):
         SetBlock(inX,inZ, (BLOCKTYPE)select_);
