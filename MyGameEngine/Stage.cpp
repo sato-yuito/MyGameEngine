@@ -69,15 +69,14 @@ void Stage::Initialize()
         }
 }
 
+
 //更新
 void Stage::Update()
 {
     float w = (float)(scrWidth /2.0f );
     float h = (float)(scrHeight /2.0f );
-    int inX = -1;//x座標を入れる変数名
-    int inZ = -1;//z座標を入れる変数名
-    int nowinX = -1;
-    int nowinZ = -1;
+    
+   
     float distance = -1;//距離を入れる
     if (!Input::IsMouseButton(0)) {
         return;
@@ -132,8 +131,8 @@ void Stage::Update()
                     {
                         inX = x;
                         inZ = z;
-                        nowinX = x;
-                        nowinZ = z;
+                        //curBrockX = x;
+                        //curBrockZ = z;
                         distance = data.dist;
                     }
                     break;
@@ -148,23 +147,24 @@ void Stage::Update()
     switch (mode_)
     {
     case(up):
-        if ((nowinX == inX) && (nowinX == inZ))
+        if ((curBrockX == inX) && (curBrockZ == inZ))
         {
             if (Input::IsMouseButtonDown(0))
             {
                 table_[inX][inZ].height++;
             }
-            break;
+           break;
         }
+
         else
         {
-            inX = nowinX;
-            inZ = nowinZ;
+            curBrockX = inX;
+            curBrockZ = inZ;
             table_[inX][inZ].height++;
         }
         break;
     case(down):
-        if ((nowinX == inX) && (nowinX == inZ))
+        if ((curBrockX == inX) && (curBrockZ == inZ))
         {
             if (Input::IsMouseButtonDown(0) && table_[inX][inZ].height > 0)
             {
@@ -175,9 +175,9 @@ void Stage::Update()
         }
         else
         {
-            inX = nowinX;
-            inZ = nowinZ;
-            if(table_[inX][inZ].height > 1)
+            curBrockX = inX;
+            curBrockZ = inZ;
+            if(table_[inX][inZ].height > 0)
             table_[inX][inZ].height--;
         }
         break;

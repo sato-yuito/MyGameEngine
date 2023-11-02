@@ -37,6 +37,11 @@ class Stage : public GameObject
   
     Mode mode_;
     int select_;
+
+    int inX = -1;//x座標を入れる変数名
+    int inZ = -1;//z座標を入れる変数名
+    int curBrockX = -1;
+    int curBrockZ = -1;
 public:
     //コンストラクタ
     Stage(GameObject* parent);
