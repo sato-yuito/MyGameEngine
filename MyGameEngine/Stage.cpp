@@ -7,6 +7,7 @@
 #include <sstream>
 #include<string>
 #include<iostream>
+
 void Stage::SetBlock(int _x, int _z, BLOCKTYPE _type)
 {
     table_[_x][_z].type = _type;
@@ -170,7 +171,6 @@ void Stage::Update()
             {
                 table_[inX][inZ].height--;
             }
-                
             break;
         }
         else
